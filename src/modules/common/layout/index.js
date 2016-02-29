@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import TopMenuBar from './components/TopMenu';
-import LeftMenu from './components/LeftMenu';
+import { TopMenuBar, LeftMenu } from './components';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
 
