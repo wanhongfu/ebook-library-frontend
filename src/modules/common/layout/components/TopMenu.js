@@ -18,34 +18,23 @@ import {Colors, getMuiTheme, Spacing} from 'material-ui/lib/styles';
 
 class TopMenuBar extends Component {
 
-    getStyles() {
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        topMenuBarStyle: PropTypes.object,
+        topMenuTitleStyle: PropTypes.object
+    }
 
-        const styles = {
-            toolbar: {
-                position: 'fixed',
-                //zIndex: this.state.muiTheme.zIndex.appBar + 1,
-                top: 0,
-                backgroundColor: Colors.blue900,
-                minHeight: 64,
-                paddingTop: 5,
-                paddingLeft: 24
-            },
-            toolbarTitle: {
-                paddingLeft: 24,
-                position: "auto",
-                color: Colors.grey50,
-            }
-        }
-        return styles;
+    constructor(props) {
+        super(props);
     }
 
     render() {
-        const styles = this.getStyles();
 
         return (
-                <Toolbar style={styles.toolbar}>
+                <Toolbar style={this.props.topMenuBarStyle}>
+
                     <ToolbarGroup firstChild={true} float="left">
-                        <Link to="/home"><ToolbarTitle text="eBook Library" style={styles.toolbarTitle}/></Link>
+                        <Link to="/home"><ToolbarTitle text={this.props.title} style={this.props.topMenuTitleStyle}/></Link>
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
@@ -59,8 +48,8 @@ class TopMenuBar extends Component {
 
                     <ToolbarGroup float="right">
                         <Link to="/home"><IconButton tooltip="首页"><HomeIcon color={Colors.grey50}/></IconButton></Link>
-                        <Link to="/signup"><IconButton tooltip="新用户注册"><PersonAddIcon color={Colors.grey50}/></IconButton></Link>
                     </ToolbarGroup>
+
                 </Toolbar>
         );
     }
