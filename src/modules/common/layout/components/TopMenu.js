@@ -21,7 +21,8 @@ class TopMenuBar extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         topMenuBarStyle: PropTypes.object,
-        topMenuTitleStyle: PropTypes.object
+        topMenuTitleStyle: PropTypes.object,
+        leftMenuVisibleHandler: PropTypes.func
     }
 
     constructor(props) {
@@ -41,13 +42,13 @@ class TopMenuBar extends Component {
                         <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
                             <MenuItem primaryText="个人信息" leftIcon={<PersonIcon />}/>
                             <Divider />
-                            <MenuItem primaryText="退出" />
+                            <MenuItem primaryText="退出" onClick={this.props.leftMenuVisibleHandler}/>
                         </IconMenu>
                         <ToolbarSeparator />
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
-                        <Link to="/home"><IconButton tooltip="首页"><HomeIcon color={Colors.grey50}/></IconButton></Link>
+                        <IconButton tooltip="首页" ><HomeIcon color={Colors.grey50}/></IconButton>
                     </ToolbarGroup>
 
                 </Toolbar>

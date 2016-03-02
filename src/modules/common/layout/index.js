@@ -1,15 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 
-import { TopMenuBar, LeftMenu } from './components';
+import { TopMenuBar, LeftMenu, Home } from './components';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
+
+import Books from '../../library/book';
+import Users from '../../library/user';
 
 class RootApp extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            muiTheme: getMuiTheme()
+            muiTheme: getMuiTheme(),
+            leftMenuOpen: false
         }
 
     }
@@ -31,18 +35,27 @@ class RootApp extends Component {
         });
     }
 
+    leftMenuVisibleHander() {
+        const open = !this.state.leftMenuOpen;
+        this.refs.rootDiv.style.paddingLeft = open ? `280px` : `40px`;
+        this.setState({
+            leftMenuOpen: open
+        });
+    }
+
     getStyles() {
 
         const styles = {
             app: {
-                backgroundColor: Colors.grey100
+                //backgroundColor: Colors.grey100
             },
             topMenuBarStyle: {
                 position: 'fixed',
                 zIndex: this.state.muiTheme.zIndex.appBar + 1,
                 top: 0,
-                backgroundColor: Colors.blue900,
-                minHeight: 64,
+                backgroundColor: Colors.cyan500,
+                //minHeight: 64,
+                height: 64,
                 paddingTop: 5,
                 paddingLeft: 24
             },
@@ -50,7 +63,16 @@ class RootApp extends Component {
                 paddingLeft: 20,
                 //position: "auto",
                 color: Colors.grey50
-            }
+            },
+            content: {
+                paddingTop: Spacing.desktopKeylineIncrement,
+                paddingRight: `80px`,
+                paddingLeft: `40px`,
+                //minHeight: 400,
+                margin: Spacing.desktopGutter,
+                display: "block",
+                //padding: `10px 40px 40px 40px`,
+            },
         }
         return styles;
     }
@@ -58,12 +80,22 @@ class RootApp extends Component {
     render() {
 
         const styles = this.getStyles();
+        //styles.content.paddingLeft = 0;
+
         const leftMenuStyle = { zIndex: styles.topMenuBarStyle.zIndex - 1 };
         return (
             <div id="app" style={styles.app}>
-                <TopMenuBar title="eBook Library" topMenuBarStyle={styles.topMenuBarStyle} topMenuTitleStyle={styles.topMenuTitleStyle} />
+                <TopMenuBar title="eBook Library"
+                            topMenuBarStyle={styles.topMenuBarStyle}
+                            topMenuTitleStyle={styles.topMenuTitleStyle}
+                            leftMenuVisibleHandler={::this.leftMenuVisibleHander}
+                />
 
-                <LeftMenu style={leftMenuStyle} />
+                <div ref='rootDiv' style={styles.content}>
+                    <Users />
+                </div>
+
+                <LeftMenu style={leftMenuStyle} open={this.state.leftMenuOpen}/>
             </div>
         );
     }

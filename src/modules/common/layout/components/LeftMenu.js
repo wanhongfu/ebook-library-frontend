@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import LeftNav from 'material-ui/lib/left-nav';
 import List from 'material-ui/lib/lists/list';
+import Subheader from 'material-ui/lib/Subheader';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
@@ -14,13 +15,16 @@ import ListIcon from 'material-ui/lib/svg-icons/action/list';
 import NoteAddIcon from 'material-ui/lib/svg-icons/action/note-add';
 import SwapHorizIcon from 'material-ui/lib/svg-icons/action/swap-horiz';
 import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
+import AccountBoxIcon from 'material-ui/lib/svg-icons/action/account-box';
+import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 
 const SelectableList = SelectableContainerEnhance(List);
 
 class LeftMenu extends Component {
 
     static propTypes = {
-        style: PropTypes.object
+        style: PropTypes.object,
+        open: PropTypes.bool.isRequired
     }
 
     getStyles() {
@@ -38,6 +42,12 @@ class LeftMenu extends Component {
         };
     }
 
+    dispatchNewRoute(route) {
+        alert(route + " clicked");
+        //browserHistory.push(route)
+    }
+
+
     render() {
 
         const styles = this.getStyles();
@@ -45,55 +55,35 @@ class LeftMenu extends Component {
         return(
             <LeftNav style={this.props.style}
                      docked={true}
-                     open={open}
-                     containerStyle={{zIndex: zIndex.leftNav - 100}}
-            >
+                     open={this.props.open}
+                      >
                 <div style={styles.logo}>
                     eBook Store
                 </div>
 
-                <SelectableList subheader="用户" >
-                    <Link to="/signup">
-                        <ListItem
-                            leftIcon={<ListIcon />}
-                            value="signup"
-                            primaryText="列表"
-                        />
-                    </Link>
-                    <Link to="/signup">
-                        <ListItem
-                            leftIcon={<PersonAddIcon />}
-                            value="signup"
-                            primaryText="添加"
-                        />
-                    </Link>
-                </SelectableList>
+                <List>
+                    <Subheader>图书馆</Subheader>
 
-                <SelectableList subheader="图书" >
-                    <Link to="/signup">
-                        <ListItem
-                            leftIcon={<ListIcon />}
-                            value="signup"
-                            primaryText="列表"
-                        />
-                    </Link>
+                    <ListItem
+                        leftIcon={<LocalLibraryIcon />}
+                        value="books"
+                        primaryText="图书"
+                        onClick={() => this.dispatchNewRoute('/books')}
+                    />
+                </List>
 
-                    <Link to="/signup">
-                        <ListItem
-                            leftIcon={<NoteAddIcon />}
-                            value="signup"
-                            primaryText="添加"
-                        />
-                    </Link>
+                <Divider />
 
-                    <Link to="/signup">
-                        <ListItem
-                            leftIcon={<SwapHorizIcon />}
-                            value="signup"
-                            primaryText="借阅"
-                        />
-                    </Link>
-                </SelectableList>
+                <List>
+                    <Subheader>系统设置</Subheader>
+
+                    <ListItem
+                        leftIcon={<AccountBoxIcon />}
+                        value="users"
+                        primaryText="用户"
+                        onClick={() => this.dispatchNewRoute('/users')}
+                    />
+                </List>
 
             </LeftNav>
         );

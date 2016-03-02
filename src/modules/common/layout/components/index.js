@@ -1,4 +1,4 @@
-import TopMenuBar from './components/TopMenu';
-import LeftMenu from './components/LeftMenu';
+import TopMenuBar from './TopMenu';
+import LeftMenu from './LeftMenu';
 
 export { TopMenuBar, LeftMenu }
