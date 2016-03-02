@@ -16,6 +16,7 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import {Colors, getMuiTheme, Spacing} from 'material-ui/lib/styles';
+import { browserHistory } from 'react-router';
 
 class TopMenuBar extends Component {
 
@@ -36,12 +37,12 @@ class TopMenuBar extends Component {
                 <Toolbar style={this.props.topMenuBarStyle}>
 
                     <ToolbarGroup firstChild={true} float="left">
-                        <Link to="/home"><ToolbarTitle text={this.props.title} style={this.props.topMenuTitleStyle}/></Link>
+                        <ToolbarTitle text={this.props.title} style={this.props.topMenuTitleStyle}/>
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
                         <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
-                            <MenuItem primaryText="个人信息" leftIcon={<PersonIcon />}/>
+                            <MenuItem primaryText="个人信息" onClick={()=>{browserHistory.push("/users");}} leftIcon={<PersonIcon />}/>
                             <Divider />
                             <MenuItem primaryText="显示/隐藏菜单栏" leftIcon={<MenuIcon />} onClick={this.props.leftMenuVisibleHandler}/>
                         </IconMenu>
@@ -49,7 +50,7 @@ class TopMenuBar extends Component {
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
-                        <IconButton tooltip="首页" ><HomeIcon color={Colors.grey50}/></IconButton>
+                        <IconButton tooltip="首页" onClick={()=>{browserHistory.push("/home");}}><HomeIcon color={Colors.grey50}/></IconButton>
                     </ToolbarGroup>
 
                 </Toolbar>
