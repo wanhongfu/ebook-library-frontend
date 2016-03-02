@@ -18,6 +18,8 @@ import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
 import AccountBoxIcon from 'material-ui/lib/svg-icons/action/account-box';
 import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 
+import { browserHistory } from 'react-router';
+
 const SelectableList = SelectableContainerEnhance(List);
 
 class LeftMenu extends Component {
@@ -43,10 +45,8 @@ class LeftMenu extends Component {
     }
 
     dispatchNewRoute(route) {
-        alert(route + " clicked");
-        //browserHistory.push(route)
+        browserHistory.push(route);
     }
-
 
     render() {
 

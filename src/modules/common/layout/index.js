@@ -13,7 +13,7 @@ class RootApp extends Component {
         super(props, context);
         this.state = {
             muiTheme: getMuiTheme(),
-            leftMenuOpen: false
+            leftMenuOpen: true
         }
 
     }
@@ -67,7 +67,7 @@ class RootApp extends Component {
             content: {
                 paddingTop: Spacing.desktopKeylineIncrement,
                 paddingRight: `80px`,
-                paddingLeft: `40px`,
+                paddingLeft: `280px`,
                 //minHeight: 400,
                 margin: Spacing.desktopGutter,
                 display: "block",
@@ -92,7 +92,8 @@ class RootApp extends Component {
                 />
 
                 <div ref='rootDiv' style={styles.content}>
-                    <Users />
+
+                    {this.props.children}
                 </div>
 
                 <LeftMenu style={leftMenuStyle} open={this.state.leftMenuOpen}/>
