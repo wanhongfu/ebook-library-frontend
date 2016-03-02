@@ -6,6 +6,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import PersonIcon from 'material-ui/lib/svg-icons/social/person';
+import MenuIcon from 'material-ui/lib/svg-icons/navigation/menu';
 import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
 import HomeIcon from 'material-ui/lib/svg-icons/action/home';
 import Divider from 'material-ui/lib/divider';
@@ -42,7 +43,7 @@ class TopMenuBar extends Component {
                         <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
                             <MenuItem primaryText="个人信息" leftIcon={<PersonIcon />}/>
                             <Divider />
-                            <MenuItem primaryText="退出" onClick={this.props.leftMenuVisibleHandler}/>
+                            <MenuItem primaryText="显示/隐藏菜单栏" leftIcon={<MenuIcon />} onClick={this.props.leftMenuVisibleHandler}/>
                         </IconMenu>
                         <ToolbarSeparator />
                     </ToolbarGroup>
