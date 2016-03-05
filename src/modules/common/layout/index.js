@@ -92,7 +92,6 @@ class RootApp extends Component {
                 />
 
                 <div ref='rootDiv' style={styles.content}>
-
                     {this.props.children}
                 </div>
 

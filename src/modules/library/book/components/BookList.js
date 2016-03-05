@@ -10,7 +10,22 @@ import TableFooter from 'material-ui/lib/table/table-footer';
 
 class BookList extends Component {
 
+    static propTypes = {
+        books: PropTypes.array
+    }
+
     render() {
+
+        const tableRows = this.props.books.map(book => {
+            return (
+                <TableRow>
+                    <TableRowColumn>{book.title}</TableRowColumn>
+                    <TableRowColumn>{book.url}</TableRowColumn>
+                    <TableRowColumn>{book.status}</TableRowColumn>
+                    <TableRowColumn>{book.onboardDate}</TableRowColumn>
+                </TableRow>
+            );
+        });
 
         return (
 
@@ -24,37 +39,12 @@ class BookList extends Component {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableRowColumn>Big Data日知录</TableRowColumn>
-                        <TableRowColumn>http://book.douban.com/subject/25741352/</TableRowColumn>
-                        <TableRowColumn>在馆</TableRowColumn>
-                        <TableRowColumn>2016-01-02</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>Redis设计与实现</TableRowColumn>
-                        <TableRowColumn>http://book.douban.com/subject/25741352/</TableRowColumn>
-                        <TableRowColumn>在馆</TableRowColumn>
-                        <TableRowColumn>2016-01-02</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>DSL实战</TableRowColumn>
-                        <TableRowColumn>http://book.douban.com/subject/25741352/</TableRowColumn>
-                        <TableRowColumn>在馆</TableRowColumn>
-                        <TableRowColumn>2016-01-02</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>Java编程思想</TableRowColumn>
-                        <TableRowColumn>http://book.douban.com/subject/25741352/</TableRowColumn>
-                        <TableRowColumn>在馆</TableRowColumn>
-                        <TableRowColumn>2016-01-02</TableRowColumn>
-                    </TableRow>
+                    {tableRows}
                 </TableBody>
             </Table>
 
         );
-
     }
-
 }
 
 export default BookList;

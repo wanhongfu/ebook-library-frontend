@@ -20,8 +20,6 @@ import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 
 import { browserHistory } from 'react-router';
 
-const SelectableList = SelectableContainerEnhance(List);
-
 class LeftMenu extends Component {
 
     static propTypes = {

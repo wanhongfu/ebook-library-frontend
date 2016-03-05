@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import { connect } from 'react-redux'
+
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Paper from 'material-ui/lib/paper';
@@ -78,4 +80,4 @@ class Users extends Component {
 
 }
 
-export default Users;
+export default connect()(Users);;
