@@ -10,9 +10,15 @@ import { fetchBooks } from './actions';
 
 import { BookList } from './components';
 
+
+@connect(state => ({
+    books: state.bookReducer.books,
+    error: state.bookReducer.error
+}))
 class Books extends Component {
 
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         books: PropTypes.array,
         error: PropTypes.object,
     }
@@ -52,16 +58,18 @@ class Books extends Component {
                         <ContentAdd />
                     </FloatingActionButton>
                 </Paper>
+
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        books: state.bookReducer.books,
-        error: state.bookReducer.error
-    };
-};
-
-export default connect(mapStateToProps)(Books);
+//const mapStateToProps = (state) => {
+//    return {
+//        books: state.bookReducer.books,
+//        error: state.bookReducer.error
+//    };
+//};
+//
+//export default connect(mapStateToProps)(Books);
+export default Books;

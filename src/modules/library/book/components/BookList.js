@@ -18,7 +18,7 @@ class BookList extends Component {
 
         const tableRows = this.props.books.map(book => {
             return (
-                <TableRow>
+                <TableRow key={book.id}>
                     <TableRowColumn>{book.title}</TableRowColumn>
                     <TableRowColumn>{book.url}</TableRowColumn>
                     <TableRowColumn>{book.status}</TableRowColumn>
