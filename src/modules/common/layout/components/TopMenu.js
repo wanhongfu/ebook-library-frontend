@@ -6,9 +6,13 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import PersonIcon from 'material-ui/lib/svg-icons/social/person';
+import PersonOutlineIcon from 'material-ui/lib/svg-icons/social/person-outline';
 import MenuIcon from 'material-ui/lib/svg-icons/navigation/menu';
 import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
+import AccountBoxIcon from 'material-ui/lib/svg-icons/action/account-box';
 import HomeIcon from 'material-ui/lib/svg-icons/action/home';
+import PowerSettingNewIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
+import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 import Divider from 'material-ui/lib/divider';
 import IconButton from 'material-ui/lib/icon-button';
 
@@ -42,15 +46,18 @@ class TopMenuBar extends Component {
 
                     <ToolbarGroup float="right">
                         <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
-                            <MenuItem primaryText="个人信息" onClick={()=>{browserHistory.push("/users");}} leftIcon={<PersonIcon />}/>
+                            <MenuItem primaryText="我的信息" onClick={()=>{browserHistory.push("/users");}} leftIcon={<PersonIcon />}/>
                             <Divider />
-                            <MenuItem primaryText="显示/隐藏菜单栏" leftIcon={<MenuIcon />} onClick={this.props.leftMenuVisibleHandler}/>
+                            <MenuItem primaryText="退出登陆" leftIcon={<PowerSettingNewIcon />} onClick={()=>{}}/>
                         </IconMenu>
+                        <IconButton tooltip="显示/隐藏菜单栏" onClick={this.props.leftMenuVisibleHandler}><MenuIcon color={Colors.grey50}/></IconButton>
                         <ToolbarSeparator />
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
                         <IconButton tooltip="首页" onClick={()=>{browserHistory.push("/home");}}><HomeIcon color={Colors.grey50}/></IconButton>
+                        <IconButton tooltip="图书" onClick={()=>{browserHistory.push("/books");}}><LocalLibraryIcon color={Colors.grey50}/></IconButton>
+                        <IconButton tooltip="用户列表" onClick={()=>{browserHistory.push("/users");}}><AccountBoxIcon color={Colors.grey50}/></IconButton>
                     </ToolbarGroup>
 
                 </Toolbar>

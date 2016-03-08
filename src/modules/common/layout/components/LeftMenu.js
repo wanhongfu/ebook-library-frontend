@@ -34,7 +34,7 @@ class LeftMenu extends Component {
                 fontSize: 24,
                 color: Typography.textFullWhite,
                 lineHeight: `${Spacing.desktopKeylineIncrement}px`,
-                fontWeight: Typography.fontWeightLight,
+
                 backgroundColor: Colors.cyan500,
                 paddingLeft: Spacing.desktopGutter,
                 marginBottom: 8
@@ -56,7 +56,7 @@ class LeftMenu extends Component {
                      open={this.props.open}
                       >
                 <div style={styles.logo}>
-                    eBook Store
+                    eBook Library
                 </div>
 
                 <List>

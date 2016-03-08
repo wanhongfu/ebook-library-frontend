@@ -57,12 +57,13 @@ class RootApp extends Component {
                 //minHeight: 64,
                 height: 64,
                 paddingTop: 5,
-                paddingLeft: 24
+                paddingLeft: 24,
             },
             topMenuTitleStyle: {
                 paddingLeft: 20,
                 //position: "auto",
-                color: Colors.grey50
+                color: Colors.grey50,
+                fontSize: 24,
             },
             content: {
                 paddingTop: Spacing.desktopKeylineIncrement,
