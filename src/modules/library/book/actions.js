@@ -4,6 +4,7 @@ import { parseJSON, checkHttpStatus, createConstants } from '../../../utils';
 
 export const FetchBookConstants = createConstants(
     'FETCH_BOOK',
+    'FETCHING_BOOK',
     'FETCH_BOOK_SUCCESS',
     'FETCH_BOOK_FAILURE'
 );
@@ -27,11 +28,21 @@ export function fetchBooks() {
     };
 }
 
+export function fetchingBooks() {
+    return {
+        type: FetchBookConstants.FETCHING_BOOK,
+        payload: {
+            fetching: true
+        }
+    };
+}
+
 export function fetchBooksSuccess(bookList) {
     return {
         type: FetchBookConstants.FETCH_BOOK_SUCCESS,
         payload: {
-            books: bookList
+            books: bookList,
+            fetching: false
         }
     };
 }

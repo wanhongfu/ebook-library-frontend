@@ -15,7 +15,13 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 class BookList extends Component {
 
     static propTypes = {
-        books: PropTypes.array
+        books: PropTypes.array,
+        viewDetailAction: PropTypes.func
+    }
+
+    viewDetail(bookId) {
+        const {viewDetailAction} = this.props;
+        viewDetailAction(bookId);
     }
 
     render() {
@@ -33,6 +39,7 @@ class BookList extends Component {
                             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                         >
+                            <MenuItem primaryText="详细信息" onClick={(bookId) => {this.viewDetail(book.id)}}/>
                             <MenuItem primaryText="修改" onClick={()=>{alert(`修改${book.id}`);}}/>
                             <MenuItem primaryText="删除" onClick={()=>{alert(`删除${book.id}`);}} />
                         </IconMenu>
