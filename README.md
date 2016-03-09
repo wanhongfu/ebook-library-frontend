@@ -1,4 +1,4 @@
-# ebook-library-frontend
+# p2p-book-library-frontend
 
 A demo application for playing with [ReactJS](http://facebook.github.io/react).
 
