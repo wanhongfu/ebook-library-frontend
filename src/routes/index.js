@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router';
 import RootApp from '../modules/common/layout';
 import Home from '../modules/common/Home';
 import Books from '../modules/library/book';
-import Users from '../modules/library/user';
+import Users from '../modules/user';
 
 import { fillStore } from '../utils';
 

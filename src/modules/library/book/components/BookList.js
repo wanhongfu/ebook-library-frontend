@@ -29,7 +29,7 @@ class BookList extends Component {
         const tableRows = this.props.books.map(book => {
             return (
                 <TableRow key={book.id}>
-                    <TableRowColumn style={{width: `30%`,}}>{book.title}</TableRowColumn>
+                    <TableRowColumn style={{width: `30%`,}} >{book.title}</TableRowColumn>
                     <TableRowColumn style={{width: `30%`,}}>{book.url}</TableRowColumn>
                     <TableRowColumn style={{width: `10%`,}}>{book.status}</TableRowColumn>
                     <TableRowColumn style={{width: `20%`,}}>{book.onboardDate}</TableRowColumn>

@@ -5,7 +5,7 @@ import { TopMenuBar, LeftMenu, Home } from './components';
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
 
 import Books from '../../library/book';
-import Users from '../../library/user';
+import Users from '../../user';
 
 class RootApp extends Component {
 

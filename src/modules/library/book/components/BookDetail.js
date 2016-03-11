@@ -59,7 +59,6 @@ class BookDetail extends Component {
         ];
 
         return (
-
             <Dialog
                 title="新图书"
                 actions={actions}
@@ -67,6 +66,7 @@ class BookDetail extends Component {
                 open={this.state.showDialog}
                 onRequestClose={::this.handleCancel}>
                 <div>
+                    <TextField disabled={true} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
                     <TextField hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
                     <TextField hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
                 </div>

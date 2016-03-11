@@ -6,6 +6,8 @@ import Snackbar from 'material-ui/lib/snackbar';
 
 import Paper from 'material-ui/lib/paper';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+
+import Loading from '../../common/Loading';
 import { fetchBooks } from './actions';
 
 import { BookList, BookDetail } from './components';
@@ -21,15 +23,19 @@ class Books extends Component {
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
         fetching: PropTypes.bool,
-        books: PropTypes.array,
+        books: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.number.isRequired,
+                title: PropTypes.string.isRequired,
+                url: PropTypes.string.isRequired,
+                status: PropTypes.string.isRequired,
+                onboardDate: PropTypes.string.isRequired
+              })
+        ),
         error: PropTypes.object,
     }
 
     constructor(props) {
         super(props);
-        //this.props.dispatch(fetchBooks());
-        if(!this.props.books) this.props.books = [];
-
         this.state = {
             showBookDetail: false,
             currentBook: {
@@ -50,10 +56,10 @@ class Books extends Component {
     }
 
     viewDetailAction(bookId) {
-        alert(bookId);
         this.setState({
             showBookDetail: true,
             currentBook: {
+                id: bookId,
                 title: 'xxxx',
                 url: 'ssss'
             }
@@ -82,26 +88,37 @@ class Books extends Component {
             position: "fixed"
         };
 
-        const content = this.props.error === null ?
-                            ( <BookList books={this.props.books} viewDetailAction={::this.viewDetailAction}/> ) :
-                            ( <Snackbar open={true} message={this.props.error.message} action="重试" /> );
+        let content;
+
+        if(!this.props.fetching) {
+
+            const content1 = this.props.error === null ?
+                    ( <BookList books={this.props.books} viewDetailAction={::this.viewDetailAction}/> ) :
+                    ( <Snackbar open={true} message={this.props.error.message} /> );
+
+            content =  (
+                <div>
+                    {content1}
+                    <Paper circle={true} >
+                        <FloatingActionButton style={style} secondary={true} onClick={::this.handleAddClick}>
+                            <ContentAdd />
+                        </FloatingActionButton>
+                    </Paper>
+                    <BookDetail show={this.state.showBookDetail}
+                                book={this.state.currentBook}
+                                okCallback={::this.bookDetailOkCallback}
+                                cancelCallback={::this.bookDetailCancelCallback}
+                    />
+                </div>
+            );
+
+        } else {
+            content = ( <Loading /> );
+        }
 
         return (
-
             <div>
                 {content}
-                <Paper circle={true} >
-                    <FloatingActionButton style={style} secondary={true} onClick={::this.handleAddClick}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </Paper>
-
-                <BookDetail show={this.state.showBookDetail}
-                            book={this.state.currentBook}
-                            okCallback={::this.bookDetailOkCallback}
-                            cancelCallback={::this.bookDetailCancelCallback}
-                />
-
             </div>
         );
     }

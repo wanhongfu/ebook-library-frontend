@@ -14,13 +14,13 @@ export function fetchBooks() {
     return (dispatch) => {
         const endpoint = `${config.baseUrl}/api/books`;
 
+        dispatch(fetchingBooks());
+
         fetch(endpoint, { method: 'GET' })
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                setTimeout(() => {
-                    dispatch(fetchBooksSuccess(response));
-                }, 1000);
+                dispatch(fetchBooksSuccess(response));
             })
             .catch(error => {
                 dispatch(fetchBooksFailure(error));
@@ -51,9 +51,8 @@ export function fetchBooksFailure(error) {
     return {
         type: FetchBookConstants.FETCH_BOOK_FAILURE,
         payload: {
-            error: error
-            //status: error.response.status,
-            //statusText: error.response.statusText
+            error: error,
+            fetching: false
         }
     };
 }
