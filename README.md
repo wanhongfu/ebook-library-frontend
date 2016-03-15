@@ -14,8 +14,10 @@ The backend will be based on Springboot app [p2p-book-library-backend](https://g
 
 ### TODO list
 
-1. Pagination support
-2. Authentication (in progress)
-3. Integrate [redux-form](https://github.com/erikras/redux-form) & [redux-form-validation](https://github.com/posabsolute/redux-form-validator)
-4. i18n
-5. Full CRUD demo (in progress)
+1. Integrate React Route (done)
+2. Integrate Redux (done)
+3. Pagination support
+4. Authentication (in progress)
+5. Integrate [redux-form](https://github.com/erikras/redux-form) & [redux-form-validation](https://github.com/posabsolute/redux-form-validator)
+6. i18n
+7. Full CRUD demo (in progress)
