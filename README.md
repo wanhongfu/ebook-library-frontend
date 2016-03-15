@@ -18,4 +18,4 @@ The backend will be based on Springboot app [p2p-book-library-backend](https://g
 2. Authentication (in progress)
 3. Integrate redux-form & redux-form-validation
 4. i18n
-
+5. Full CRUD demo
