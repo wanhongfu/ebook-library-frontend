@@ -15,6 +15,7 @@ The backend will be based on Springboot app [p2p-book-library-backend](https://g
 ### TODO list
 
 1. Pagination support
-2. Authentication
+2. Authentication (in progress)
 3. Integrate redux-form & redux-form-validation
 4. i18n
+
