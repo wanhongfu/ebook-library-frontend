@@ -11,3 +11,10 @@ The backend will be based on Springboot app [p2p-book-library-backend](https://g
 3. go to p2p-book-library-frontend folder, run "npm install"
 4. run "npm start"
 5. access localhost:3000 from browser
+
+### TODO list
+
+1. Pagination support
+2. Authentication
+3. Integrate redux-form & redux-form-validation
+4. i18n
