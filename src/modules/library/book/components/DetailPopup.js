@@ -4,13 +4,14 @@ import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 
-class BookDetail extends Component {
+class BookDetailPopup extends Component {
 
     static propTypes = {
-        book: PropTypes.object,
+        book: PropTypes.object.isRequired,
         show: PropTypes.bool,
-        okCallback: PropTypes.func.isRequired,
-        cancelCallback: PropTypes.func.isRequired,
+        readonly: PropTypes.bool.isRequired,
+        onOk: PropTypes.func.isRequired,
+        onCancel: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -33,14 +34,14 @@ class BookDetail extends Component {
 
     handleCancel() {
         this.setState({showDialog: false});
-        const {cancelCallback} = this.props;
-        cancelCallback();
+        const {onCancel} = this.props;
+        onCancel();
     };
 
     handleOK() {
         this.setState({showDialog: false});
-        const {okCallback} = this.props;
-        okCallback();
+        const {onOk} = this.props;
+        onOk();
     };
 
     render() {
@@ -58,6 +59,8 @@ class BookDetail extends Component {
             />
         ];
 
+        const {readonly} = this.props;
+
         return (
             <Dialog
                 title="新图书"
@@ -66,9 +69,9 @@ class BookDetail extends Component {
                 open={this.state.showDialog}
                 onRequestClose={::this.handleCancel}>
                 <div>
-                    <TextField disabled={true} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
-                    <TextField hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
-                    <TextField hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
+                    <TextField disabled={readonly} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
+                    <TextField disabled={readonly} hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
+                    <TextField disabled={readonly} hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
                 </div>
             </Dialog>
 
@@ -77,4 +80,4 @@ class BookDetail extends Component {
 
 }
 
-export default BookDetail;
+export default BookDetailPopup;

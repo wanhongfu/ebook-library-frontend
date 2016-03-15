@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import { Link } from 'react-router';
+
 import Table from 'material-ui/lib/table/table';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 import TableRow from 'material-ui/lib/table/table-row';
@@ -12,19 +14,17 @@ import IconButton from 'material-ui/lib/icon-button';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
-class BookList extends Component {
+class BookListView extends Component {
 
     static propTypes = {
         books: PropTypes.array,
-        viewDetailAction: PropTypes.func
-    }
-
-    viewDetail(bookId) {
-        const {viewDetailAction} = this.props;
-        viewDetailAction(bookId);
+        onViewBookDetail: PropTypes.func,
+        onViewBookDetailPopup: PropTypes.func
     }
 
     render() {
+
+        const {onViewBookDetail, onViewBookDetailPopup} = this.props;
 
         const tableRows = this.props.books.map(book => {
             return (
@@ -39,7 +39,9 @@ class BookList extends Component {
                             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                         >
-                            <MenuItem primaryText="详细信息" onClick={(bookId) => {this.viewDetail(book.id)}}/>
+
+                            <MenuItem primaryText="详细信息" onClick={onViewBookDetail.bind(this, book.id)}/>
+                            <MenuItem primaryText="详细信息(Popup)" onClick={onViewBookDetailPopup.bind(this, book)}/>
                             <MenuItem primaryText="修改" onClick={()=>{alert(`修改${book.id}`);}}/>
                             <MenuItem primaryText="删除" onClick={()=>{alert(`删除${book.id}`);}} />
                         </IconMenu>
@@ -69,4 +71,4 @@ class BookList extends Component {
     }
 }
 
-export default BookList;
+export default BookListView;

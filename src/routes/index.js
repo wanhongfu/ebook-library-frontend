@@ -3,18 +3,19 @@ import { Route, IndexRoute } from 'react-router';
 
 import RootApp from '../modules/common/layout';
 import Home from '../modules/common/Home';
-import Books from '../modules/library/book';
+import * as Book from '../modules/library/book';
 import Users from '../modules/user';
 
 import { fillStore } from '../utils';
 
 const appRouters = (
 
-    <Route path="/" component={RootApp}>
-        <IndexRoute component={Home} />
-        <Route path="home" component={Home}/>
-        <Route path="users" component={Users} />
-        <Route path="books" component={Books} />
+    <Route component={RootApp}>
+        <Route path="/" component={Home}/>
+        <Route path="/home" component={Home}/>
+        <Route path="/users" component={Users} />
+        <Route path="/books" component={Book.List} />
+        <Route path="/books/:id" component={Book.View} />
     </Route>
 
 );

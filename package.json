@@ -27,7 +27,9 @@
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
     "react-mixin": "^3.0.3",
-    "redux-logger": "^2.0.4"
+    "redux-logger": "^2.0.4",
+    "query-string": "^3.0.1",
+    "bluebird": "^3.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",

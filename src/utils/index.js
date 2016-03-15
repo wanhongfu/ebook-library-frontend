@@ -1,3 +1,5 @@
+import Promise from 'bluebird';
+
 export function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -29,14 +31,14 @@ export function createConstants(...constants) {
     }, {});
 }
 
-export function fillStore(redux, nextState, components) {
-    return components.map(Component => {
+export function fillStore(store, nextState, components) {
+    return Promise.all(components.map(Component => {
         Component = Component && Component.WrappedComponent || Component;
 
         if (!Component || !Component.fillStore) { return; }
 
-        Component.fillStore(redux, nextState);
-    });
+        Component.fillStore(store, nextState);
+    }));
 
     //return Promise.all(components.map(async Component => {
     //    Component = Component && Component.WrappedComponent || Component;

@@ -1,4 +1,5 @@
-import BookList from './BookList';
-import BookDetail from './BookDetail';
+import ListView from './ListView';
+import DetailView from './DetailView';
+import DetailPopup from './DetailPopup';
 
-export { BookList, BookDetail };
+export { ListView, DetailView, DetailPopup };
