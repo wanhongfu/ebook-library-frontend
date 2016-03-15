@@ -6,12 +6,13 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import PersonIcon from 'material-ui/lib/svg-icons/social/person';
+import InputIcon from 'material-ui/lib/svg-icons/action/input'
 import PersonOutlineIcon from 'material-ui/lib/svg-icons/social/person-outline';
 import MenuIcon from 'material-ui/lib/svg-icons/navigation/menu';
 import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
 import AccountBoxIcon from 'material-ui/lib/svg-icons/action/account-box';
 import HomeIcon from 'material-ui/lib/svg-icons/action/home';
-import PowerSettingNewIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
+import ExitToAppIcon from 'material-ui/lib/svg-icons/action/exit-to-app';
 import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 import Divider from 'material-ui/lib/divider';
 import IconButton from 'material-ui/lib/icon-button';
@@ -25,10 +26,13 @@ import { browserHistory } from 'react-router';
 class TopMenuBar extends Component {
 
     static propTypes = {
+        isLoginIn: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
         topMenuBarStyle: PropTypes.object,
         topMenuTitleStyle: PropTypes.object,
-        leftMenuVisibleHandler: PropTypes.func
+        onLeftMenuVisibleAction: PropTypes.func,
+        onLoginRequest: PropTypes.func,
+        onLogoutRequest: PropTypes.func
     }
 
     constructor(props) {
@@ -36,6 +40,20 @@ class TopMenuBar extends Component {
     }
 
     render() {
+
+        const userMenuItems = this.props.isLoginIn ? (
+                <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
+                    <MenuItem primaryText="我的信息" onClick={()=>{browserHistory.push("/users");}} leftIcon={<PersonIcon />}/>
+                    <Divider />
+                    <MenuItem primaryText="退出登陆" leftIcon={<ExitToAppIcon />} onClick={this.props.onLogoutRequest}/>
+                </IconMenu>
+            ) : (
+                <IconMenu iconButtonElement={<IconButton><PersonOutlineIcon color={Colors.grey50}/></IconButton>}>
+                    <MenuItem primaryText="登陆" onClick={this.props.onLoginRequest} leftIcon={<InputIcon />}/>
+                    <MenuItem primaryText="注册" leftIcon={<PersonAddIcon />} onClick={()=>{}}/>
+                </IconMenu>
+            );
+
 
         return (
                 <Toolbar style={this.props.topMenuBarStyle}>
@@ -45,13 +63,9 @@ class TopMenuBar extends Component {
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">
-                        <IconMenu iconButtonElement={<IconButton><PersonIcon color={Colors.grey50}/></IconButton>}>
-                            <MenuItem primaryText="我的信息" onClick={()=>{browserHistory.push("/users");}} leftIcon={<PersonIcon />}/>
-                            <Divider />
-                            <MenuItem primaryText="退出登陆" leftIcon={<PowerSettingNewIcon />} onClick={()=>{}}/>
-                        </IconMenu>
-                        <IconButton tooltip="显示/隐藏菜单栏" onClick={this.props.leftMenuVisibleHandler}><MenuIcon color={Colors.grey50}/></IconButton>
+                        {userMenuItems}
                         <ToolbarSeparator />
+                        <IconButton tooltip="显示/隐藏菜单栏" onClick={this.props.onLeftMenuVisibleAction}><MenuIcon color={Colors.grey50}/></IconButton>
                     </ToolbarGroup>
 
                     <ToolbarGroup float="right">

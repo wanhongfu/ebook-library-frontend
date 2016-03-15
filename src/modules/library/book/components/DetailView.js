@@ -6,13 +6,11 @@ class BookDetailView extends Component {
 
     static propTypes = {
         book: PropTypes.object.isRequired,
-        readonly: PropTypes.bool.isRequired,
-        okCallback: PropTypes.func,
-        cancelCallback: PropTypes.func,
+        readonly: PropTypes.bool.isRequired
     }
 
     render() {
-        const {book, readonly, okCallback, cancelCallback} = this.props;
+        const { book, readonly } = this.props;
 
         return (
             <div>

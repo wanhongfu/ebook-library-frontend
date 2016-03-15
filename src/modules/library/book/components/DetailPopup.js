@@ -67,7 +67,8 @@ class BookDetailPopup extends Component {
                 actions={actions}
                 modal={false}
                 open={this.state.showDialog}
-                onRequestClose={::this.handleCancel}>
+                onRequestClose={::this.handleCancel}
+            >
                 <div>
                     <TextField disabled={readonly} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
                     <TextField disabled={readonly} hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />

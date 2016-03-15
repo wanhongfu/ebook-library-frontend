@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import { TopMenuBar, LeftMenu, Home } from './components';
+import { LeftMenu, Home } from './components';
+import TopMenuContainer from './container/TopMenuContainer';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
 
@@ -35,12 +36,20 @@ class RootApp extends Component {
         });
     }
 
-    leftMenuVisibleHander() {
+    handleLeftMenuVisibleAction() {
         const open = !this.state.leftMenuOpen;
         this.refs.rootDiv.style.paddingLeft = open ? `280px` : `40px`;
         this.setState({
             leftMenuOpen: open
         });
+    }
+
+    handleLoginOkAction() {
+
+    }
+
+    handleLoginCancelAction() {
+
     }
 
     getStyles() {
@@ -86,10 +95,9 @@ class RootApp extends Component {
         const leftMenuStyle = { zIndex: styles.topMenuBarStyle.zIndex - 1 };
         return (
             <div id="app" style={styles.app}>
-                <TopMenuBar title="eBook Library"
-                            topMenuBarStyle={styles.topMenuBarStyle}
+                <TopMenuContainer topMenuBarStyle={styles.topMenuBarStyle}
                             topMenuTitleStyle={styles.topMenuTitleStyle}
-                            leftMenuVisibleHandler={::this.leftMenuVisibleHander}
+                            onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
                 />
 
                 <div ref='rootDiv' style={styles.content}>

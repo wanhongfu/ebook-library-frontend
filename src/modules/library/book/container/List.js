@@ -19,9 +19,9 @@ import { fetchBooks } from '../actions';
 class List extends Component {
 
     static propTypes = {
-        history: PropTypes.object,
+        //history: PropTypes.object,
         dispatch: PropTypes.func,
-        location: PropTypes.object,
+        //location: PropTypes.object,
         fetching: PropTypes.bool,
         books: PropTypes.arrayOf(PropTypes.shape({
                 id: PropTypes.number.isRequired,

@@ -56,7 +56,7 @@ class LeftMenu extends Component {
                      open={this.props.open}
                       >
                 <div style={styles.logo}>
-                    eBook Library
+                    P2PLib
                 </div>
 
                 <List>
