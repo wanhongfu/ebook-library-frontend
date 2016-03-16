@@ -49,20 +49,3 @@ export default(store) => {
         };
     });
 };
-
-//export default (store, client) => {
-//    return walk(Route.createRouteFromReactElement(routes), route => {
-//        route.onEnter = (nextState, transition) => {
-//            const loggedIn = !!store.getState().auth.token;
-//
-//            if (route.requireAuth && !loggedIn) {
-//                transition.to(...redirectBackAfter('/login', nextState));
-//            } else if (client) {
-//                fillStore(store, nextState, [route.component]);
-//            }
-//        };
-//    });
-//};
-
-
-//export default appRouters;

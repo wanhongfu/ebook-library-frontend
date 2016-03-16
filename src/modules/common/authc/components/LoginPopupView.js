@@ -24,7 +24,29 @@ class LoginPopupView extends Component {
     }
 
     handleOkAction() {
-        this.props.onOk(this.state.inputUsername, this.state.inputPassword);
+        const inputUsername = this.state.inputUsername || '';
+        const inputPassword = this.state.inputPassword || '';
+
+        let usernameErrMsg = null, passwordErrMsg = null, errHit = false;
+
+        if(inputUsername.trim().length === 0) {
+            usernameErrMsg = "登陆名不能空";
+            errHit = true;
+        }
+
+        if(inputPassword.trim().length === 0) {
+            passwordErrMsg = "登陆密码不能空"
+            errHit = true;
+        }
+
+        if(errHit) {
+            this.setState({
+                inputUsernameErrorMsg: usernameErrMsg,
+                inputPasswordErrorMsg: passwordErrMsg
+            });
+        } else {
+            this.props.onOk(this.state.inputUsername, this.state.inputPassword);
+        }
     }
 
     handleChange = field => event => {
@@ -54,6 +76,8 @@ class LoginPopupView extends Component {
             />
         ];
 
+        const {inputUsernameErrorMsg, inputPasswordErrorMsg} = this.state;
+
         return (
 
             <div>
@@ -64,8 +88,8 @@ class LoginPopupView extends Component {
                     onRequestClose={this.props.onCancel}
                 >
                     <div>
-                        <TextField hintText="请输入用户名" floatingLabelText="用户名" onChange={this.handleChange('inputUsername')} /><br />
-                        <TextField hintText="请输入登陆密码" type="password" floatingLabelText="密码" onChange={this.handleChange('inputPassword')} /><br />
+                        <TextField errorText={inputUsernameErrorMsg} hintText="请输入登陆名" floatingLabelText="登陆名" onChange={this.handleChange('inputUsername')} /><br />
+                        <TextField errorText={inputPasswordErrorMsg}  hintText="请输入登陆密码" type="password" floatingLabelText="密码" onChange={this.handleChange('inputPassword')} /><br />
                     </div>
                 </Dialog>
             </div>
