@@ -6,7 +6,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import PersonIcon from 'material-ui/lib/svg-icons/social/person';
-import InputIcon from 'material-ui/lib/svg-icons/action/input'
+import InputIcon from 'material-ui/lib/svg-icons/action/input';
 import PersonOutlineIcon from 'material-ui/lib/svg-icons/social/person-outline';
 import MenuIcon from 'material-ui/lib/svg-icons/navigation/menu';
 import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
@@ -23,7 +23,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import {Colors, getMuiTheme, Spacing} from 'material-ui/lib/styles';
 import { browserHistory } from 'react-router';
 
-class TopMenuBar extends Component {
+class TopMenuView extends Component {
 
     static propTypes = {
         isLoginIn: PropTypes.bool.isRequired,
@@ -80,4 +80,4 @@ class TopMenuBar extends Component {
 
 }
 
-export default TopMenuBar;
+export default TopMenuView;

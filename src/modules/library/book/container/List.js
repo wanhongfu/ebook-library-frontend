@@ -8,20 +8,19 @@ import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
 import Loading from '../../../common/Loading';
 
-import { ListView, DetailPopup } from '../components';
+import { ListView, DetailPopupView } from '../components';
 import { fetchBooks } from '../actions';
 
 @connect(state => ({
     fetching: state.books.fetching,
     books: state.books.books,
     error: state.books.error
-}))
+}), {
+    fetchBooks
+})
 class List extends Component {
 
     static propTypes = {
-        //history: PropTypes.object,
-        dispatch: PropTypes.func,
-        //location: PropTypes.object,
         fetching: PropTypes.bool,
         books: PropTypes.arrayOf(PropTypes.shape({
                 id: PropTypes.number.isRequired,
@@ -53,9 +52,14 @@ class List extends Component {
         }
     }
 
-    static fillStore(store) {
-        return store.dispatch(fetchBooks());
+    componentDidMount() {
+        console.debug('Book.List::componentDidMount');
+        this.props.fetchBooks();
     }
+
+    //static fillStore(store) {
+    //    return store.dispatch(fetchBooks());
+    //}
 
     handleViewBookDetail(bookId) {
         //this.props.history.push(`/books/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
@@ -112,7 +116,7 @@ class List extends Component {
                             <ContentAdd />
                         </FloatingActionButton>
                     </Paper>
-                    <DetailPopup show={this.state.showDetailPopup}
+                    <DetailPopupView show={this.state.showDetailPopup}
                                 book={this.state.currentBook}
                                 readonly={true}
                                 onOk={::this.handleDetailPopupOkClick}

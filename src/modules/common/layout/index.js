@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import { LeftMenu, Home } from './components';
-import TopMenuContainer from './container/TopMenuContainer';
+import { LeftMenuView } from './components';
+import TopMenu from './container/TopMenu';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
 
@@ -95,16 +95,16 @@ class RootApp extends Component {
         const leftMenuStyle = { zIndex: styles.topMenuBarStyle.zIndex - 1 };
         return (
             <div id="app" style={styles.app}>
-                <TopMenuContainer topMenuBarStyle={styles.topMenuBarStyle}
-                            topMenuTitleStyle={styles.topMenuTitleStyle}
-                            onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
+                <TopMenu topMenuBarStyle={styles.topMenuBarStyle}
+                         topMenuTitleStyle={styles.topMenuTitleStyle}
+                         onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
                 />
 
                 <div ref='rootDiv' style={styles.content}>
                     {this.props.children}
                 </div>
 
-                <LeftMenu style={leftMenuStyle} open={this.state.leftMenuOpen}/>
+                <LeftMenuView style={leftMenuStyle} open={this.state.leftMenuOpen}/>
             </div>
         );
     }

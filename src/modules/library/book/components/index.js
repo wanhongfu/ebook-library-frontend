@@ -1,5 +1,5 @@
 import ListView from './ListView';
 import DetailView from './DetailView';
-import DetailPopup from './DetailPopup';
+import DetailPopupView from './DetailPopupView';
 
-export { ListView, DetailView, DetailPopup };
+export { ListView, DetailView, DetailPopupView };

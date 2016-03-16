@@ -1,4 +1,5 @@
-import TopMenuBar from './TopMenu';
-import LeftMenu from './LeftMenu';
+import TopMenuView from './TopMenuView';
+import LeftMenuView from './LeftMenuView';
+import HomeView from './HomeView';
 
-export { TopMenuBar, LeftMenu }
+export { TopMenuView, LeftMenuView, HomeView }

@@ -20,7 +20,7 @@ import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
 
 import { browserHistory } from 'react-router';
 
-class LeftMenu extends Component {
+class LeftMenuView extends Component {
 
     static propTypes = {
         style: PropTypes.object,
@@ -90,4 +90,4 @@ class LeftMenu extends Component {
 
 }
 
-export default LeftMenu;
+export default LeftMenuView;

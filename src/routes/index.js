@@ -2,20 +2,27 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import RootApp from '../modules/common/layout';
-import Home from '../modules/common/Home';
+import Home from '../modules/common/layout/container/Home';
 import * as Book from '../modules/library/book';
 import Users from '../modules/user';
+import Login from '../modules/common/authc/container/Login';
 
 import { fillStore } from '../utils';
 
 const appRouters = (
 
-    <Route component={RootApp}>
-        <Route path="/" component={Home}/>
+    <Route path="/" component={RootApp}>
+
+        <IndexRoute component={Home}/>
         <Route path="/home" component={Home}/>
-        <Route path="/users" component={Users} />
         <Route path="/books" component={Book.List} />
         <Route path="/books/:id" component={Book.View} />
+        <Route path="/login" component={Login}/>
+
+        <Route requireAuth>
+            <Route path="/users" component={Users} />
+        </Route>
+
     </Route>
 
 );
@@ -32,8 +39,13 @@ function walk(routes, cb) {
 
 export default(store) => {
     return walk(Route.createRouteFromReactElement(appRouters), route => {
-        route.onEnter = (nextState) => {
-            fillStore(store, nextState, [route.component]);
+        route.onEnter = (nextState, replace) => {
+            const loggedIn = !!store.getState().authc.isAuthenticated;
+            if (route.requireAuth && !loggedIn) {
+                replace('/login');
+            } else {
+                fillStore(store, nextState, [route.component]);
+            }
         };
     });
 };

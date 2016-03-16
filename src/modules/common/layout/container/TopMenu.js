@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { TopMenuBar } from '../components';
-import LoginView from '../../authc/components/LoginView';
+import { TopMenuView } from '../components';
+import LoginPopupView from '../../authc/components/LoginPopupView';
 
 import { loginUser, logoutUser } from '../../authc/actions';
 
@@ -15,7 +15,7 @@ import { loginUser, logoutUser } from '../../authc/actions';
 }), {
     loginUser, logoutUser
 })
-class TopMenuContainer extends Component {
+class TopMenu extends Component {
 
     constructor(props) {
         super(props);
@@ -67,7 +67,7 @@ class TopMenuContainer extends Component {
 
         return (
             <div>
-                <TopMenuBar isLoginIn={this.props.isAuthenticated}
+                <TopMenuView isLoginIn={this.props.isAuthenticated}
                             title="P2PLib"
                             topMenuBarStyle={this.props.topMenuBarStyle}
                             topMenuTitleStyle={this.props.topMenuTitleStyle}
@@ -76,11 +76,11 @@ class TopMenuContainer extends Component {
                             onLogoutRequest={::this.handleLogoutAction}
                 />
 
-                <LoginView open={this.state.showLoginDialog} onOk={::this.handleLoginOkAction} onCancel={::this.handleLoginCancelAction} />
+                <LoginPopupView open={this.state.showLoginDialog} onOk={::this.handleLoginOkAction} onCancel={::this.handleLoginCancelAction} />
             </div>
 
         );
     }
 }
 
-export default TopMenuContainer;
+export default TopMenu;
