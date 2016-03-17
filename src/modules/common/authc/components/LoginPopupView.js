@@ -3,13 +3,15 @@ import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
+import Snackbar from 'material-ui/lib/snackbar';
 
 class LoginPopupView extends Component {
 
     static propTypes = {
         open: PropTypes.bool.isRequired,
         onCancel: PropTypes.func,
-        onOk: PropTypes.func
+        onOk: PropTypes.func,
+        serverError: PropTypes.string
     };
 
     constructor(props) {
@@ -19,7 +21,14 @@ class LoginPopupView extends Component {
             inputUsername: null,
             inputUsernameErrorMsg: null,
             inputPassword: null,
-            inputPasswordErrorMsg: null
+            inputPasswordErrorMsg: null,
+            serverError: null
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.serverError !== undefined && nextProps.serverError !== null) {
+            this.setState({ serverError: nextProps.serverError });
         }
     }
 
@@ -52,13 +61,13 @@ class LoginPopupView extends Component {
     handleChange = field => event => {
         event.preventDefault();
         const inputVal = event.target.value || '';
-        if(inputVal.length === 0){
-
+        if(inputVal.trim().length > 0){
+            this.setState({
+                ...this.state,
+                serverError: null,
+                [field]: inputVal
+            });
         }
-        this.setState({
-            ...this.state,
-            [field]: inputVal
-        });
     }
 
     render() {
@@ -76,10 +85,13 @@ class LoginPopupView extends Component {
             />
         ];
 
-        const {inputUsernameErrorMsg, inputPasswordErrorMsg} = this.state;
+        const {inputUsernameErrorMsg, inputPasswordErrorMsg, serverError} = this.state;
+        let snackbarContent = null;
+        if(serverError !== undefined && serverError !== null) {
+            snackbarContent = (<Snackbar open={true} message={serverError} onRequestClose={()=>{}}/>);
+        }
 
         return (
-
             <div>
                 <Dialog
                     title="P2PLib - 用户登陆"
@@ -92,6 +104,7 @@ class LoginPopupView extends Component {
                         <TextField errorText={inputPasswordErrorMsg}  hintText="请输入登陆密码" type="password" floatingLabelText="密码" onChange={this.handleChange('inputPassword')} /><br />
                     </div>
                 </Dialog>
+                {snackbarContent}
             </div>
         );
     }

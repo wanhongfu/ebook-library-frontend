@@ -55,8 +55,9 @@ export default class ApiClient {
         //    params.token = this.authToken;
         //    /* eslint-enable */
         //}
-        const paramDefined = params === undefined || params === null;
-        const urlWithQuery = paramDefined ? `${url}?${queryString.stringify(params)}` : `${url}`;
+        const paramUndefined = params === undefined || params === null;
+
+        const urlWithQuery = paramUndefined ? `${url}` : `${url}?${queryString.stringify(params)}`;
 
         const init = {
             method,
@@ -72,7 +73,7 @@ export default class ApiClient {
 
         return fetch(`${this.prefix}/${urlWithQuery}`, init).then(res => {
             checkHttpStatus(res);
-            return res.json();
+            return parseJSON(res);
         });
     }
 

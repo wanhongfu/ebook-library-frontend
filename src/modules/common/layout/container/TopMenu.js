@@ -13,15 +13,12 @@ import { loginUser, logoutUser } from '../../authc/actions';
     currentUser: state.authc.currentUser,
     error: state.authc.error
 }), {
-    loginUser, logoutUser
+    logoutUser
 })
 class TopMenu extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            showLoginDialog: false
-        }
     }
 
     static propTypes = {
@@ -40,27 +37,15 @@ class TopMenu extends Component {
     }
 
     handleLoginAction() {
-        this.setState({
-            showLoginDialog: true
-        });
+        this.context.router.push(`/login`);
+        //this.setState({
+        //    showLoginDialog: true
+        //});
     }
 
     handleLogoutAction() {
         this.props.logoutUser();
         this.context.router.push(`/home`);
-    }
-
-    handleLoginCancelAction() {
-        this.setState({
-            showLoginDialog: false
-        });
-    }
-
-    handleLoginOkAction(username, password) {
-        this.setState({
-            showLoginDialog: false
-        });
-        this.props.loginUser(username, password);
     }
 
     render() {
@@ -76,7 +61,6 @@ class TopMenu extends Component {
                             onLogoutRequest={::this.handleLogoutAction}
                 />
 
-                <LoginPopupView open={this.state.showLoginDialog} onOk={::this.handleLoginOkAction} onCancel={::this.handleLoginCancelAction} />
             </div>
 
         );

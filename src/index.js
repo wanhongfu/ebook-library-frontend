@@ -11,9 +11,9 @@ import appRoutes from './routes';
 const initialState = {
     //TODO should get auth info from local storage or cookie
     authc: {
-        isAuthenticated: true,
-        currentUser: 'John Zhang',
-        token: '123456789abv'
+        isAuthenticated: false,
+        currentUser: null,
+        token: null
     }
 };
 const store = configureStore(initialState);
