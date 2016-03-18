@@ -65,7 +65,14 @@ class LeftMenuView extends Component {
                     <ListItem
                         leftIcon={<LocalLibraryIcon />}
                         value="books"
-                        primaryText="图书"
+                        primaryText="所有图书"
+                        onClick={() => this.dispatchNewRoute('/books')}
+                    />
+
+                    <ListItem
+                        leftIcon={<LocalLibraryIcon />}
+                        value="books"
+                        primaryText="我借到的图书"
                         onClick={() => this.dispatchNewRoute('/books')}
                     />
                 </List>
@@ -78,7 +85,21 @@ class LeftMenuView extends Component {
                     <ListItem
                         leftIcon={<AccountBoxIcon />}
                         value="users"
-                        primaryText="用户"
+                        primaryText="我的信息"
+                        onClick={() => this.dispatchNewRoute('/users')}
+                    />
+
+                    <ListItem
+                        leftIcon={<AccountBoxIcon />}
+                        value="users"
+                        primaryText="借阅请求"
+                        onClick={() => this.dispatchNewRoute('/users')}
+                    />
+
+                    <ListItem
+                        leftIcon={<AccountBoxIcon />}
+                        value="users"
+                        primaryText="还书请求"
                         onClick={() => this.dispatchNewRoute('/users')}
                     />
                 </List>

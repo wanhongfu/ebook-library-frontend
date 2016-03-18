@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 
 import Snackbar from 'material-ui/lib/snackbar';
 
-import LoginView from '../components/LoginView';
 import LoginPopupView from '../components/LoginPopupView';
 
-import { loginUser } from '../../authc/actions';
+import { loginUser } from '../actions';
 
 @connect(state => ({
     isAuthenticated: state.authc.isAuthenticated,

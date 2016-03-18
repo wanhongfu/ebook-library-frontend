@@ -42,6 +42,7 @@ class BookListView extends Component {
 
                             <MenuItem primaryText="详细信息" onClick={onViewBookDetail.bind(this, book.id)}/>
                             <MenuItem primaryText="详细信息(Popup)" onClick={onViewBookDetailPopup.bind(this, book)}/>
+                            <MenuItem primaryText="借阅" onClick={()=>{alert(`借阅${book.id}`);}}/>
                             <MenuItem primaryText="修改" onClick={()=>{alert(`修改${book.id}`);}}/>
                             <MenuItem primaryText="删除" onClick={()=>{alert(`删除${book.id}`);}} />
                         </IconMenu>
