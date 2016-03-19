@@ -20,12 +20,18 @@ export function loginUser(username, password) {
 }
 
 function loginSuccess(username, response) {
+    const token = response.token;
+
+    //store Token to browser session storage
+    //If you use localStorage instead of sessionStorage, then this will be persisted across tabs and new windows.
+    //sessionStorage just persisted only in current tab
+    sessionStorage.setItem('token', token);
+
     return {
         type: AuthcConstants.LOGIN_SUCCESS,
         payload: {
-            token: response.token,
-            user: username,
-            error: null
+            token: token,
+            user: username
         }
     };
 }
@@ -34,7 +40,6 @@ function loginFailure(username, error) {
     return {
         type: AuthcConstants.LOGIN_FAILURE,
         payload: {
-            token: null,
             user: username,
             error: error
         }
@@ -42,6 +47,7 @@ function loginFailure(username, error) {
 }
 
 export function logoutUser() {
+    sessionStorage.setItem('token', null);
     return {
         type: AuthcConstants.LOGOUT_SUCCESS
     };

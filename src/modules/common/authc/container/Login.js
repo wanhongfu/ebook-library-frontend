@@ -26,7 +26,7 @@ class Login extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.isAuthenticated) {
+        if(nextProps.isAuthenticated) {
             this.context.router.push(`/home`);
         }
     }
