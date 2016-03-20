@@ -20,6 +20,10 @@ const authc = createReducer(initialState, {
 
     [AuthcConstants.LOGOUT_SUCCESS] : (state, payload) => {
         return { ...state, isAuthenticated: false, token: null, currentUser: null };
+    },
+
+    [AuthcConstants.ME_FROM_TOKEN] : (state, payload) => {
+        return { ...state, isAuthenticated: true, token: payload.token, currentUser: payload.user };
     }
 
 });

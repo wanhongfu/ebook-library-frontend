@@ -7,4 +7,12 @@ export default class UserAPI extends Base {
         return this.apiClient.get('api/accounts/login', {}, {email:email, password: password});
     }
 
+    loadAccountByToken(token) {
+        return this.apiClient.get('api/tokens', {}, {token:token});
+    }
+
+    logout(token) {
+        return this.apiClient.get('api/accounts/logout', {}, {token:token});
+    }
+
 }

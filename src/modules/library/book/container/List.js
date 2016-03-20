@@ -12,6 +12,8 @@ import { ListView, DetailPopupView } from '../components';
 import { fetchBooks } from '../actions';
 
 @connect(state => ({
+    currentUser: state.authc.currentUser,
+    isAuthenticated: state.authc.isAuthenticated,
     fetching: state.books.fetching,
     books: state.books.books,
     error: state.books.error
@@ -57,6 +59,7 @@ class List extends Component {
         this.props.fetchBooks();
     }
 
+    //fileStore() is depreciated, using react lifecycle method componentDidMount() instead
     //static fillStore(store) {
     //    return store.dispatch(fetchBooks());
     //}
@@ -98,14 +101,17 @@ class List extends Component {
             position: "fixed"
         };
 
+        const {books, isAuthenticated, currentUser } = this.props;
         let content;
 
         if(!this.props.fetching) {
 
             const content1 = this.props.error === null ?
-                ( <ListView books={this.props.books}
-                                onViewBookDetail={::this.handleViewBookDetail}
-                                onViewBookDetailPopup={::this.handleViewBookDetailPopup} />) :
+                ( <ListView books={books}
+                            isAuthenticated={isAuthenticated}
+                            currentUser={currentUser}
+                            onViewBookDetail={::this.handleViewBookDetail}
+                            onViewBookDetailPopup={::this.handleViewBookDetailPopup} />) :
                 ( <Snackbar open={true} message={this.props.error.message} /> );
 
             content =  (

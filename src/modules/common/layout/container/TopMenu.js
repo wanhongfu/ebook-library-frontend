@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { TopMenuView } from '../components';
 import LoginPopupView from '../../authc/components/LoginPopupView';
 
-import { loginUser, logoutUser } from '../../authc/actions';
+import { logoutUser } from '../../authc/actions';
 
 
 @connect(state => ({
@@ -38,9 +38,6 @@ class TopMenu extends Component {
 
     handleLoginAction() {
         this.context.router.push(`/login`);
-        //this.setState({
-        //    showLoginDialog: true
-        //});
     }
 
     handleLogoutAction() {

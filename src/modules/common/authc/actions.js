@@ -5,11 +5,28 @@ export const AuthcConstants = createConstants(
     'LOGIN_SUCCESS',
     'LOGIN_FAILURE',
 
-    'LOGOUT_SUCCESS'
+    'LOGOUT_SUCCESS',
+    'ME_FROM_TOKEN'
 );
 
-export function loginUser(username, password) {
+export function loadUserFromToken() {
+    return (dispatch) => {
+        const _token = sessionStorage.getItem('token') || '';
+        if(_token.length <= 0) return;
+        api.authc.loadAccountByToken(_token).then(response => {
+            dispatch({
+                type: AuthcConstants.ME_FROM_TOKEN,
+                payload: {
+                    token: _token,
+                    user: response.email
+                }
+            });
+        }).catch(error => {
+        });
+    }
+}
 
+export function loginUser(username, password) {
     return (dispatch) => {
         api.authc.login(username, password).then(response => {
             dispatch(loginSuccess(username, response));
@@ -47,10 +64,16 @@ function loginFailure(username, error) {
 }
 
 export function logoutUser() {
-    sessionStorage.setItem('token', null);
-    return {
-        type: AuthcConstants.LOGOUT_SUCCESS
-    };
+    return (dispatch) => {
+        const _token = sessionStorage.getItem('token') || '';
+        if(_token.length > 0) {
+            api.authc.logout(_token).catch(error => {});
+            sessionStorage.removeItem('token');
+        }
+        dispatch({
+            type: AuthcConstants.LOGOUT_SUCCESS
+        });
+    }
 }
 
 

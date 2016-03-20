@@ -16,7 +16,6 @@ class RootApp extends Component {
             muiTheme: getMuiTheme(),
             leftMenuOpen: true
         }
-
     }
 
     static childContextTypes = {

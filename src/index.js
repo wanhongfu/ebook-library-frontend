@@ -7,15 +7,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from './store/configureStore';
 import appRoutes from './routes';
+import {loadUserFromToken} from './modules/common/authc/actions';
 
-const initialState = {
-    //TODO should get auth info from local storage or cookie
-    authc: {
-        isAuthenticated: false,
-        currentUser: null,
-        token: null
-    }
-};
+const initialState = {};
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(browserHistory, store)
 
@@ -26,5 +20,8 @@ const Root = (
 );
 
 injectTapEventPlugin();
+
+//auto load login credential from token if it is valid
+store.dispatch(loadUserFromToken());
 
 ReactDom.render(Root, document.getElementById('app'));
