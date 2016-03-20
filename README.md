@@ -2,7 +2,7 @@
 
 A demo application for playing with ES6 + ReactJS + Redux
 
-The backend will be based on Springboot app [p2p-book-library-backend](https://github.com/wanhongfu/p2p-book-library-backend) project which is duplicated from example module 'boot-api' of [SpringSide4](https://github.com/springside/springside4).
+The backend is based on Springboot app [p2p-book-library-backend](https://github.com/wanhongfu/p2p-book-library-backend) project which is duplicated from example module 'boot-api' of [SpringSide4](https://github.com/springside/springside4).
 
 ### How to run (please ensure node and npm installed first)
 
