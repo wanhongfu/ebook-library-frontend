@@ -8,7 +8,7 @@ import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
 import Books from '../../library/book';
 import Users from '../../user';
 
-class RootApp extends Component {
+class MainLayoutView extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -110,4 +110,4 @@ class RootApp extends Component {
 
 }
 
-export default RootApp;
+export default MainLayoutView;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import RootApp from '../modules/common/layout';
+import MainLayout from '../modules/common/layout/container/MainLayout';
 import Home from '../modules/common/layout/container/Home';
 import * as Book from '../modules/library/book';
 import Users from '../modules/user';
@@ -11,7 +11,7 @@ import { fillStore } from '../utils';
 
 const appRouters = (
 
-    <Route path="/" component={RootApp}>
+    <Route path="/" component={MainLayout}>
 
         <IndexRoute component={Home}/>
         <Route path="/home" component={Home}/>
