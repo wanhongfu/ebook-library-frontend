@@ -44,6 +44,9 @@ export default(store) => {
             if (route.requireAuth && !loggedIn) {
                 replace('/login');
             } else {
+                //fillStore is no longer required as we can load init
+                // data for component from lifecycle method componentDidMount(),
+                //will be removed later
                 fillStore(store, nextState, [route.component]);
             }
         };
