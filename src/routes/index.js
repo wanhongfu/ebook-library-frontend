@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import MainLayout from '../modules/common/layout/container/MainLayout';
-import Home from '../modules/common/layout/container/Home';
+import MainLayout from '../modules/layout/container/MainLayout';
+import Home from '../modules/layout/container/Home';
 import * as Book from '../modules/library/book';
 import Users from '../modules/user';
-import Login from '../modules/common/authc/container/Login';
+import Login from '../modules/authc/container/Login';
 
 import { fillStore } from '../utils';
 

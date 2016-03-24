@@ -2,19 +2,16 @@ import React, { Component, PropTypes } from 'react';
 
 import { Link } from 'react-router';
 
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
-import TableFooter from 'material-ui/lib/table/table-footer';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
 import EditIcon from 'material-ui/lib/svg-icons/image/edit';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+
+import {
+    Table, TableHeaderColumn, TableRow, TableHeader, TableRowColumn,
+    TableBody, TableFooter, IconButton, IconMenu, MenuItem
+} from 'material-ui';
+
+import Common from '../../../../common';
 
 class BookListView extends Component {
 
@@ -23,7 +20,29 @@ class BookListView extends Component {
         currentUser: PropTypes.string,
         books: PropTypes.array,
         onViewBookDetail: PropTypes.func,
-        onViewBookDetailPopup: PropTypes.func
+        onViewBookDetailPopup: PropTypes.func,
+
+        onPageChanged: PropTypes.func,
+        currentPage: PropTypes.number,
+        totalRecNum: PropTypes.number
+    }
+
+    constructor(props) {
+        super(props);
+        //this.state = {
+        //    currentPage: 1,
+        //    totalRecNum: 200
+        //};
+    }
+
+    handlePageClick = (page) => {
+        const {onPageChanged} = this.props;
+        if(onPageChanged) {
+            onPageChanged(page);
+        }
+        //this.setState({
+        //    currentPage: page
+        //});
     }
 
     renderBookActionMenuItem(title, book, requireAuth, clickHander, rightIcon = null) {
@@ -54,7 +73,9 @@ class BookListView extends Component {
         const headerStyle = {fontSize: 16, width: `30%`};
         const headerTitle = ['书名', '豆瓣连接', '状态', '上架日期', ' '];
 
-        const tableRows = this.props.books.map(book => {
+        const tableHeaders = headerTitle.map((t, index) => (<TableHeaderColumn key={index} style={headerStyle}>{t}</TableHeaderColumn>));
+
+        const tableBodyRows = this.props.books.map(book => {
             return (
                 <TableRow key={book.id}>
                     <TableRowColumn style={rowStyle} >{book.title}</TableRowColumn>
@@ -67,17 +88,24 @@ class BookListView extends Component {
                 </TableRow>
             );
         });
-        const tableHeaders = headerTitle.map(t => (<TableHeaderColumn style={headerStyle}>{t}</TableHeaderColumn>));
+
         return (
             <Table>
                 <TableHeader>
-                    <TableRow >
+                    <TableRow>
                         {tableHeaders}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {tableRows}
+                    {tableBodyRows}
                 </TableBody>
+                <TableFooter adjustForCheckbox={true}>
+                    <TableRow>
+                        <TableRowColumn colSpan="5" style={{textAlign: 'right'}}>
+                            <Common.Paginator currentPage={this.props.currentPage} totalRecordNum={this.props.totalRecNum} onPageChange={this.handlePageClick} />
+                        </TableRowColumn>
+                    </TableRow>
+                </TableFooter>
             </Table>
         );
     }

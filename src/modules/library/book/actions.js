@@ -10,11 +10,11 @@ export const FetchBookConstants = createConstants(
     'FETCH_BOOK_FAILURE'
 );
 
-export function fetchBooks() {
+export function fetchBooks(param) {
 
     return (dispatch) => {
         dispatch(fetchingBooks());
-        api.books.list().then(response => {
+        api.books.list(param).then(response => {
             dispatch(fetchBooksSuccess(response));
         }).catch(error => {
             dispatch(fetchBooksFailure(error));
@@ -31,11 +31,13 @@ function fetchingBooks() {
     };
 }
 
-function fetchBooksSuccess(bookList) {
+function fetchBooksSuccess(response) {
     return {
         type: FetchBookConstants.FETCH_BOOK_LIST_SUCCESS,
         payload: {
-            books: bookList,
+            books: response.content,
+            currentPage: response.number+1,
+            totalRecNum: response.totalElements,
             fetching: false
         }
     };

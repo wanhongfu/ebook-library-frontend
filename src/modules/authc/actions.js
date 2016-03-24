@@ -1,5 +1,5 @@
-import { parseJSON, checkHttpStatus, createConstants } from '../../../utils';
-import api from '../../../api';
+import { parseJSON, checkHttpStatus, createConstants } from '../../utils';
+import api from '../../api';
 
 export const AuthcConstants = createConstants(
     'LOGIN_SUCCESS',

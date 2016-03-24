@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
-import { LeftMenuView } from './components';
-import TopMenu from './container/TopMenu';
+import { LeftMenuView } from './';
+import TopMenu from '../container/TopMenu';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
-
-import Books from '../../library/book';
-import Users from '../../user';
 
 class MainLayoutView extends Component {
 

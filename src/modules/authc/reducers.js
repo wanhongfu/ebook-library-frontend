@@ -1,5 +1,5 @@
 import { AuthcConstants } from './actions';
-import { createReducer } from '../../../utils';
+import { createReducer } from '../../utils';
 
 const initialState = {
     isAuthenticated: false,

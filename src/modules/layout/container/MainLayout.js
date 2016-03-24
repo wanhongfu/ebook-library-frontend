@@ -5,7 +5,7 @@ import { MainLayoutView } from '../components/';
 class MainLayout extends Component {
 
     render() {
-        return (<MainLayoutView />)
+        return (<MainLayoutView >{this.props.children}</MainLayoutView>)
     }
 
 }

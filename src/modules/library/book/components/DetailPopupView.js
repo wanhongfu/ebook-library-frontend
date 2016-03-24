@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
+import Paper from 'material-ui/lib/paper';
 
 class BookDetailPopup extends Component {
 
@@ -69,11 +70,11 @@ class BookDetailPopup extends Component {
                 open={this.state.showDialog}
                 onRequestClose={::this.handleCancel}
             >
-                <div>
-                    <TextField disabled={readonly} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
-                    <TextField disabled={readonly} hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
-                    <TextField disabled={readonly} hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
-                </div>
+                <Paper zDepth={0}>
+                    <TextField fullWidth={true} disabled={readonly} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
+                    <TextField fullWidth={true} disabled={readonly} hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
+                    <TextField fullWidth={true} disabled={readonly} hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
+                </Paper>
             </Dialog>
 
         );

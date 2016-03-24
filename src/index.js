@@ -7,7 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from './store/configureStore';
 import appRoutes from './routes';
-import {loadUserFromToken} from './modules/common/authc/actions';
+import {loadUserFromToken} from './modules/authc/actions';
 
 const initialState = {};
 const store = configureStore(initialState);
