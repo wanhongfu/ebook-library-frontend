@@ -7,7 +7,7 @@ const PaginationInfo = (props) => (
 PaginationInfo.propTypes = {
     totalPageNum: PropTypes.number.isRequired,
     currnetPage: PropTypes.number.isRequired,
-    totalRecordNum: PropTypes.number.isRequired
+    totalRecNum: PropTypes.number.isRequired
 }
 
 export default PaginationInfo;

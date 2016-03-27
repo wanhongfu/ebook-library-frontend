@@ -18,13 +18,13 @@ class Paginator extends Component {
 
         currentPage: PropTypes.number.isRequired,
         pageRange: PropTypes.number,
-        totalRecordNum: PropTypes.number.isRequired,
-        numRowsPerPage: PropTypes.number,
+        totalRecNum: PropTypes.number.isRequired,
+        pageSize: PropTypes.number,
         onPageChange: PropTypes.func
     }
 
     static defaultProps = {
-        numRowsPerPage: 5,
+        pageSize: 5,
         pageRange: 5,
         simpleNavi: false
     }
@@ -35,7 +35,8 @@ class Paginator extends Component {
     }
 
     getNumOfPages() {
-        const nbPages = Math.ceil(this.props.totalRecordNum / this.props.numRowsPerPage);
+        console.log(`pageSize=${this.props.pageSize}`)
+        const nbPages = Math.ceil(this.props.totalRecNum / this.props.pageSize);
         return nbPages <= 0 ? 1 : nbPages;
     }
 
@@ -136,7 +137,7 @@ class Paginator extends Component {
     renderPaginationInfo() {
         return (<PaginationInfo totalPageNum={this.getNumOfPages()}
                                 currnetPage={this.props.currentPage}
-                                totalRecordNum={this.props.totalRecordNum} />);
+                                totalRecNum={this.props.totalRecNum} />);
     }
 
     render(){

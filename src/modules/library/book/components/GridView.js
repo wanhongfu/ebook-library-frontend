@@ -39,7 +39,9 @@ class GridView extends Component {
                             subtitle={<span>{book.owner.name} 发布于 <b>{book.onboardDate}</b></span>}
                             actionIcon={<IconButton><MoreVertIcon color="white"/></IconButton>}
                         >
+                            /*img is for demo purpose, will be enhanced soon*/
                             <img width="220" height="220" src="http://img10.360buyimg.com/n7/jfs/t973/37/548349349/435306/2701a302/552f692dN2353ab9c.jpg"/>
+
                         </GridTile>
                     ))}
                 </GridList>

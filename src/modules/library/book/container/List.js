@@ -1,30 +1,55 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Snackbar from 'material-ui/lib/snackbar';
-
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import ListIcon from 'material-ui/lib/svg-icons/action/view-list';
-import ModuleIcon from 'material-ui/lib/svg-icons/action/view-module';
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
-import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
-import IconButton from 'material-ui/lib/icon-button';
-import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
+import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
+import { Toolbar, ToolbarGroup, IconButton, ToolbarSeparator, Snackbar } from 'material-ui';
 
 import Common from '../../../../common';
 
 import { ListView, GridView, DetailPopupView } from '../components';
 import { fetchBooks } from '../actions';
 
+
+//TODO refactor this method to a common place for reuse
+function mapPaginationState2Props(pageState) {
+    return {
+        currentPage: pageState.currentPage,
+        totalRecNum: pageState.totalRecNum,
+        pageSize: pageState.pageSize
+    };
+}
+
+//TODO refactor this method to a common place for reuse
+function mapAuthcState2Props(authcState) {
+    return {
+        currentUser: authcState.currentUser,
+        isAuthenticated: authcState.isAuthenticated,
+    }
+}
+
+//TODO refactor this method to a common place for reuse
+function mkPaginationAndSoreQueryParam2(page, size, sort=null) {
+    return {
+        page: page-1,
+        size: size,
+        sort: sort
+    }
+}
+function mkPaginationAndSoreQueryParam(page, sort=null) {
+    return {
+        page: page-1,
+        size: 10,
+        sort: sort
+    }
+}
+
 @connect(state => ({
-    currentUser: state.authc.currentUser,
-    isAuthenticated: state.authc.isAuthenticated,
     fetching: state.books.fetching,
     books: state.books.books,
     error: state.books.error,
 
-    currentPage: state.books.currentPage,
-    totalRecNum: state.books.totalRecNum
+    ...mapAuthcState2Props(state.authc),
+    ...mapPaginationState2Props(state.books)
 }), {
     fetchBooks
 })
@@ -71,11 +96,7 @@ class List extends Component {
     }
 
     componentDidMount() {
-        const param = {
-            page: 0,
-            size: 5
-        };
-        this.props.fetchBooks(param);
+        this.props.fetchBooks(mkPaginationAndSoreQueryParam2(1, 5, 'title'));
     }
 
     handleViewBookDetail(bookId) {
@@ -107,11 +128,7 @@ class List extends Component {
     }
 
     handPageChanged = (page) => {
-        const param = {
-            page: page-1,
-            size: 5
-        };
-        this.props.fetchBooks(param);
+        this.props.fetchBooks(mkPaginationAndSoreQueryParam2(page, 5, 'title'));
     }
 
     changeViewType = () => {
@@ -130,15 +147,15 @@ class List extends Component {
     getCurrentViewTypeIcon = () => {
         const {viewType} = this.state;
         if('list' === viewType) {
-            return (<IconButton onClick={this.changeViewType}><ListIcon /></IconButton>);
+            return (<IconButton onClick={this.changeViewType}><ActionList /></IconButton>);
         } else {
-            return (<IconButton onClick={this.changeViewType}><ModuleIcon /></IconButton>);
+            return (<IconButton onClick={this.changeViewType}><ActionViewModule /></IconButton>);
         }
     }
 
     renderDataList() {
-        const { books, isAuthenticated, currentUser, totalRecNum, currentPage } = this.props;
-        console.log(`totalRecNum=${totalRecNum}, current=${currentPage}`)
+        const { books, isAuthenticated, currentUser, totalRecNum, currentPage, pageSize } = this.props;
+        
         const viewProps = {
             books: books,
             isAuthenticated: isAuthenticated,
@@ -147,7 +164,7 @@ class List extends Component {
             onViewBookDetailPopup: ::this.handleViewBookDetailPopup,
         };
         return ('list' === this.state.viewType) ?
-               ( <GridView {...viewProps} /> ) : ( <ListView onPageChanged={this.handPageChanged} currentPage={currentPage} totalRecNum={totalRecNum} {...viewProps} /> );
+               ( <GridView {...viewProps} /> ) : ( <ListView onPageChanged={this.handPageChanged} pageSize={pageSize} currentPage={currentPage} totalRecNum={totalRecNum} {...viewProps} /> );
 
     }
 

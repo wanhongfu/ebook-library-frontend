@@ -36,9 +36,12 @@ function fetchBooksSuccess(response) {
         type: FetchBookConstants.FETCH_BOOK_LIST_SUCCESS,
         payload: {
             books: response.content,
+            fetching: false,
+
+            //TODO need to be refactored
             currentPage: response.number+1,
             totalRecNum: response.totalElements,
-            fetching: false
+            pageSize: response.size
         }
     };
 }

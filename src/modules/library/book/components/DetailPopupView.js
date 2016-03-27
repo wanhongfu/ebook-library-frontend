@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
-import TextField from 'material-ui/lib/text-field';
-import Paper from 'material-ui/lib/paper';
+import {Dialog, FlatButton, TextField, Paper} from 'material-ui';
 
 class BookDetailPopup extends Component {
 

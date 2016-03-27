@@ -24,15 +24,12 @@ class BookListView extends Component {
 
         onPageChanged: PropTypes.func,
         currentPage: PropTypes.number,
-        totalRecNum: PropTypes.number
+        totalRecNum: PropTypes.number,
+        pageSize: PropTypes.number,
     }
 
     constructor(props) {
         super(props);
-        //this.state = {
-        //    currentPage: 1,
-        //    totalRecNum: 200
-        //};
     }
 
     handlePageClick = (page) => {
@@ -40,9 +37,6 @@ class BookListView extends Component {
         if(onPageChanged) {
             onPageChanged(page);
         }
-        //this.setState({
-        //    currentPage: page
-        //});
     }
 
     renderBookActionMenuItem(title, book, requireAuth, clickHander, rightIcon = null) {
@@ -102,7 +96,7 @@ class BookListView extends Component {
                 <TableFooter adjustForCheckbox={true}>
                     <TableRow>
                         <TableRowColumn colSpan="5" style={{textAlign: 'right'}}>
-                            <Common.Paginator currentPage={this.props.currentPage} totalRecordNum={this.props.totalRecNum} onPageChange={this.handlePageClick} />
+                            <Common.Paginator pageSize={this.props.pageSize} currentPage={this.props.currentPage} totalRecNum={this.props.totalRecNum} onPageChange={this.handlePageClick} />
                         </TableRowColumn>
                     </TableRow>
                 </TableFooter>
