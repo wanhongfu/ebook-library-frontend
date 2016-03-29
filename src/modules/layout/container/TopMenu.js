@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { TopMenuView } from '../components';
+import TopMenuView from '../components/TopMenuView';
 import LoginPopupView from '../../authc/components/LoginPopupView';
 
 import { logoutUser } from '../../authc/actions';

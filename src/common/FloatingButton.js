@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import Paper from 'material-ui/lib/paper';
+import { Paper, FloatingActionButton } from 'material-ui';
 
 const FloatingButton = (props) => {
 
@@ -14,7 +13,7 @@ const FloatingButton = (props) => {
 
     return (
         <Paper circle={true} >
-            <FloatingActionButton style={style} secondary={true} onClick={::props.onClick}>
+            <FloatingActionButton style={style} secondary={true} onClick={props.onClick}>
                 {props.icon}
             </FloatingActionButton>
         </Paper>

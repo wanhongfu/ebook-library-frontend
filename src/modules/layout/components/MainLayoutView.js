@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { LeftMenuView } from './';
+import LeftMenuView from './LeftMenuView';
 import TopMenu from '../container/TopMenu';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
@@ -60,6 +60,7 @@ class MainLayoutView extends Component {
                 top: 0,
                 backgroundColor: Colors.cyan500,
                 //minHeight: 64,
+                width: `100%`,
                 height: 64,
                 paddingTop: 5,
                 paddingLeft: 24,
@@ -100,7 +101,9 @@ class MainLayoutView extends Component {
                     {this.props.children}
                 </div>
 
-                <LeftMenuView style={leftMenuStyle} open={this.state.leftMenuOpen}/>
+                <LeftMenuView style={leftMenuStyle} open={this.state.leftMenuOpen}
+                              onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
+                />
             </div>
         );
     }

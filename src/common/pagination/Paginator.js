@@ -4,9 +4,7 @@ import _ from 'lodash';
 
 import {TableRow, TableRowColumn, FlatButton, TableFooter} from 'material-ui';
 import { Colors } from 'material-ui/lib/styles';
-import ChevronLeftIcon from 'material-ui/lib/svg-icons/navigation/chevron-left';
-import ChevronRightIcon from 'material-ui/lib/svg-icons/navigation/chevron-right';
-import MoreHorizIcon from 'material-ui/lib/svg-icons/navigation/more-horiz';
+import { NavigationChevronLeft, NavigationChevronRight, NavigationMoreHoriz } from 'material-ui/lib/svg-icons';
 
 import PaginationIndicator from './PaginationIndicator';
 import PaginationInfo from './PaginationInfo';
@@ -35,7 +33,6 @@ class Paginator extends Component {
     }
 
     getNumOfPages() {
-        console.log(`pageSize=${this.props.pageSize}`)
         const nbPages = Math.ceil(this.props.totalRecNum / this.props.pageSize);
         return nbPages <= 0 ? 1 : nbPages;
     }
@@ -72,7 +69,7 @@ class Paginator extends Component {
                 onClick={this.onPageChange}
                 pageNum={page}
                 key = {page}
-                icon={<MoreHorizIcon />}
+                icon={<NavigationMoreHoriz />}
             />
         );
     }
@@ -81,7 +78,7 @@ class Paginator extends Component {
         return this.renderNeighbour({
             disabled: this.props.currentPage === 1,
             page: this.props.currentPage - 1,
-            icon: <ChevronLeftIcon />
+            icon: <NavigationChevronLeft />
         });
     }
 
@@ -130,7 +127,7 @@ class Paginator extends Component {
         return this.renderNeighbour({
             disabled: this.props.currentPage === this.getNumOfPages(),
             page: this.props.currentPage + 1,
-            icon: <ChevronRightIcon />
+            icon: <NavigationChevronRight />
         });
     }
 

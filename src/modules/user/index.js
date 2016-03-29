@@ -2,15 +2,8 @@ import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux'
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import FlatButton from 'material-ui/lib/flat-button';
-import Paper from 'material-ui/lib/paper';
-import DatePicker from 'material-ui/lib/date-picker/date-picker';
-import TextField from 'material-ui/lib/text-field';
-import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-
-import Dialog from 'material-ui/lib/dialog';
+import { FloatingActionButton, FlatButton, Paper, DatePicker, TextField, Dialog } from 'material-ui'
+import { SocialPersonAdd, ContentAdd } from 'material-ui/lib/svg-icons';
 
 import { UserList } from './components';
 

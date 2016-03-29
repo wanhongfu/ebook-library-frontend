@@ -9,4 +9,8 @@ export default class BookAPI extends Base {
     get(id, param) {
         return this.apiClient.get(`api/books/${id}`, {}, param);
     }
+
+    save(book, token) {
+        return this.apiClient.post(`api/books`, book, {token: token});
+    }
 }

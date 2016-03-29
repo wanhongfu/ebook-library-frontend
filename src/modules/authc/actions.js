@@ -11,8 +11,11 @@ export const AuthcConstants = createConstants(
 
 export function loadUserFromToken() {
     return (dispatch) => {
+
+        //TODO need to handle token validation in other common place for reuse
         const _token = sessionStorage.getItem('token') || '';
         if(_token.length <= 0) return;
+
         api.authc.loadAccountByToken(_token).then(response => {
             dispatch({
                 type: AuthcConstants.ME_FROM_TOKEN,

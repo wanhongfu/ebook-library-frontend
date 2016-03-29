@@ -35,6 +35,14 @@ const books = createReducer(initialState, {
 
     [FetchBookConstants.FETCH_BOOK_FAILURE]: (state, payload) => {
         return { ...state, ...mkBookState(payload) };
+    },
+
+    [FetchBookConstants.CREATE_BOOK_SUCCESS]: (state) => {
+
+    },
+
+    [FetchBookConstants.CREATE_BOOK_FAILURE]: (state, payload) => {
+
     }
 });
 

@@ -7,7 +7,11 @@ export const FetchBookConstants = createConstants(
     'FETCH_BOOK_LIST_FAILURE',
 
     'FETCH_BOOK_SUCCESS',
-    'FETCH_BOOK_FAILURE'
+    'FETCH_BOOK_FAILURE',
+
+    'CREATE_BOOK',
+    'CREATE_BOOK_SUCCESS',
+    'CREATE_BOOK_FAILURE'
 );
 
 export function fetchBooks(param) {
@@ -62,6 +66,18 @@ export function fetchSingleBook(id) {
             dispatch({type: FetchBookConstants.FETCH_BOOK_SUCCESS, payload: {book: book}});
         }).catch(error => {
             dispatch({type: FetchBookConstants.FETCH_BOOK_FAILURE, payload: {error: error}});
+        });
+    }
+}
+
+export function saveBook(book) {
+    return (dispatch) => {
+        const _token = sessionStorage.getItem('token') || '';
+        if(_token.length <= 0) return;
+        api.books.save(book, _token).then(response => {
+            dispatch({type: FetchBookConstants.CREATE_BOOK_SUCCESS});
+        }).catch(error => {
+            dispatch({type: FetchBookConstants.CREATE_BOOK_FAILURE, payload: {error: error}});
         });
     }
 }

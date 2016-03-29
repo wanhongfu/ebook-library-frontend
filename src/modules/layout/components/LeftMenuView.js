@@ -1,22 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 
-import LeftNav from 'material-ui/lib/left-nav';
-import List from 'material-ui/lib/lists/list';
-import Subheader from 'material-ui/lib/Subheader';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Divider from 'material-ui/lib/divider';
-import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+import { LeftNav, List, ListItem, Divider, Subheader } from 'material-ui';
+import {ActionAccountBox, MapsLocalLibrary} from 'material-ui/lib/svg-icons';
 import { Colors, Spacing, Typography } from 'material-ui/lib/styles';
-import zIndex from 'material-ui/lib/styles/zIndex';
 
-import HomeIcon from 'material-ui/lib/svg-icons/action/home';
-import ListIcon from 'material-ui/lib/svg-icons/action/list';
-import NoteAddIcon from 'material-ui/lib/svg-icons/action/note-add';
-import SwapHorizIcon from 'material-ui/lib/svg-icons/action/swap-horiz';
-import PersonAddIcon from 'material-ui/lib/svg-icons/social/person-add';
-import AccountBoxIcon from 'material-ui/lib/svg-icons/action/account-box';
-import LocalLibraryIcon from 'material-ui/lib/svg-icons/maps/local-library';
+import './layout.css';
 
 import { browserHistory } from 'react-router';
 
@@ -24,7 +12,8 @@ class LeftMenuView extends Component {
 
     static propTypes = {
         style: PropTypes.object,
-        open: PropTypes.bool.isRequired
+        open: PropTypes.bool.isRequired,
+        onLeftMenuVisibleAction: PropTypes.func,
     }
 
     getStyles() {
@@ -55,7 +44,7 @@ class LeftMenuView extends Component {
                      docked={true}
                      open={this.props.open}
                       >
-                <div style={styles.logo}>
+                <div className="app-title" onClick={this.props.onLeftMenuVisibleAction}>
                     P2PLib
                 </div>
 
@@ -63,14 +52,14 @@ class LeftMenuView extends Component {
                     <Subheader>图书馆</Subheader>
 
                     <ListItem
-                        leftIcon={<LocalLibraryIcon />}
+                        leftIcon={<MapsLocalLibrary />}
                         value="books"
                         primaryText="所有图书"
                         onClick={() => this.dispatchNewRoute('/books')}
                     />
 
                     <ListItem
-                        leftIcon={<LocalLibraryIcon />}
+                        leftIcon={<MapsLocalLibrary />}
                         value="books"
                         primaryText="我借到的图书"
                         onClick={() => this.dispatchNewRoute('/books')}
@@ -83,21 +72,21 @@ class LeftMenuView extends Component {
                     <Subheader>系统设置</Subheader>
 
                     <ListItem
-                        leftIcon={<AccountBoxIcon />}
+                        leftIcon={<ActionAccountBox />}
                         value="users"
                         primaryText="我的信息"
                         onClick={() => this.dispatchNewRoute('/users')}
                     />
 
                     <ListItem
-                        leftIcon={<AccountBoxIcon />}
+                        leftIcon={<ActionAccountBox />}
                         value="users"
                         primaryText="借阅请求"
                         onClick={() => this.dispatchNewRoute('/users')}
                     />
 
                     <ListItem
-                        leftIcon={<AccountBoxIcon />}
+                        leftIcon={<ActionAccountBox />}
                         value="users"
                         primaryText="还书请求"
                         onClick={() => this.dispatchNewRoute('/users')}

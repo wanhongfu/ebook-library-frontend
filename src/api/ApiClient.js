@@ -34,11 +34,12 @@ export default class ApiClient {
         });
     }
 
-    post(requestUrl, payload = {}) {
+    post(requestUrl, payload = {}, params = {}) {
         return this.request({
             url: requestUrl,
             method: 'post',
-            body: payload
+            body: payload,
+            params
         });
     }
 

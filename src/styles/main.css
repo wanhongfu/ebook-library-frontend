@@ -1,0 +1,26 @@
+@import "font-icons/style.css";
+
+a {
+    color: #ff4081;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}

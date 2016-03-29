@@ -2,10 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { Link } from 'react-router';
 
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
-import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
-import EditIcon from 'material-ui/lib/svg-icons/image/edit';
-
+import { NavigationMoreVert, ActionDelete, ImageEdit } from 'material-ui/lib/svg-icons';
 import {
     Table, TableHeaderColumn, TableRow, TableHeader, TableRowColumn,
     TableBody, TableFooter, IconButton, IconMenu, MenuItem
@@ -48,15 +45,15 @@ class BookListView extends Component {
         const {onViewBookDetail, onViewBookDetailPopup} = this.props;
         return (
             <IconMenu
-                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
                 anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                 targetOrigin={{horizontal: 'left', vertical: 'top'}}
             >
                 {this.renderBookActionMenuItem('详细信息', book, false, onViewBookDetail.bind(this, book.id))}
                 {this.renderBookActionMenuItem('详细信息(Popup)', book, false, onViewBookDetailPopup.bind(this, book))}
                 {this.renderBookActionMenuItem('借阅', book, true, ()=>{})}
-                {this.renderBookActionMenuItem('修改', book, true, ()=>{}, <EditIcon />)}
-                {this.renderBookActionMenuItem('删除', book, true, ()=>{}, <DeleteIcon />)}
+                {this.renderBookActionMenuItem('修改', book, true, ()=>{}, <ImageEdit />)}
+                {this.renderBookActionMenuItem('删除', book, true, ()=>{}, <ActionDelete />)}
             </IconMenu>
         );
     }
@@ -96,7 +93,11 @@ class BookListView extends Component {
                 <TableFooter adjustForCheckbox={true}>
                     <TableRow>
                         <TableRowColumn colSpan="5" style={{textAlign: 'right'}}>
-                            <Common.Paginator pageSize={this.props.pageSize} currentPage={this.props.currentPage} totalRecNum={this.props.totalRecNum} onPageChange={this.handlePageClick} />
+                            <Common.Paginator pageSize={this.props.pageSize}
+                                              currentPage={this.props.currentPage}
+                                              totalRecNum={this.props.totalRecNum}
+                                              onPageChange={this.handlePageClick}
+                            />
                         </TableRowColumn>
                     </TableRow>
                 </TableFooter>

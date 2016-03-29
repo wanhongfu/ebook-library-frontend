@@ -2,11 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
-import { Toolbar, ToolbarGroup, IconButton, ToolbarSeparator, Snackbar } from 'material-ui';
+import { Toolbar, ToolbarGroup, IconButton, Snackbar } from 'material-ui';
 
 import Common from '../../../../common';
 
-import { ListView, GridView, DetailPopupView } from '../components';
+import ListView from '../components/ListView';
+import GridView from '../components/GridView';
+import DetailPopupView from '../components/DetailPopupView';
 import { fetchBooks } from '../actions';
 
 
@@ -85,13 +87,8 @@ class List extends Component {
         this.state = {
             viewType: 'grid',
             showDetailPopup: false,
-            currentBook: {
-                id: null,
-                title: null,
-                url: null,
-                status: null,
-                onboardDate: null
-            }
+            currentBook: this.mkEmptyBookObj(),
+            popupEditable: false
         }
     }
 
@@ -107,15 +104,25 @@ class List extends Component {
     handleViewBookDetailPopup(book) {
         this.setState({
             showDetailPopup: true,
-            currentBook: book
+            currentBook: book,
+            popupEditable: false
         });
     }
 
-    handleAddClick() {
-        alert('add');
+    handleAddClick = () => {
+        this.setState({
+            showDetailPopup: true,
+            currentBook: this.mkEmptyBookObj(),
+            popupEditable: true
+        });
     }
 
-    handleDetailPopupOkClick() {
+    handleDetailPopupOkClick(book) {
+
+        if(this.state.popupEditable) {
+
+        }
+
         this.setState({
             showDetailPopup: false
         });
@@ -144,6 +151,16 @@ class List extends Component {
         }
     }
 
+    mkEmptyBookObj() {
+        return {
+            id: null,
+            title: null,
+            url: null,
+            status: null,
+            onboardDate: null
+        };
+    }
+
     getCurrentViewTypeIcon = () => {
         const {viewType} = this.state;
         if('list' === viewType) {
@@ -164,15 +181,23 @@ class List extends Component {
             onViewBookDetailPopup: ::this.handleViewBookDetailPopup,
         };
         return ('list' === this.state.viewType) ?
-               ( <GridView {...viewProps} /> ) : ( <ListView onPageChanged={this.handPageChanged} pageSize={pageSize} currentPage={currentPage} totalRecNum={totalRecNum} {...viewProps} /> );
+               ( <GridView {...viewProps} /> ) :
+               ( <ListView onPageChanged={this.handPageChanged}
+                           pageSize={pageSize}
+                           currentPage={currentPage}
+                           totalRecNum={totalRecNum}
+                           {...viewProps}
+                />);
 
     }
 
     renderToolbar() {
+        const style = {
+            height: `48px`,
+        }
         return (
-            <Toolbar>
-                <ToolbarGroup float="right">
-                    <ToolbarSeparator />
+            <Toolbar style={style}>
+                <ToolbarGroup>
                     {this.getCurrentViewTypeIcon()}
                 </ToolbarGroup>
             </Toolbar>
@@ -189,10 +214,11 @@ class List extends Component {
     }
 
     renderDetailPopup() {
+        const {popupEditable, showDetailPopup, currentBook} = this.state;
         return (
-            <DetailPopupView show={this.state.showDetailPopup}
-                                book={this.state.currentBook}
-                                readonly={true}
+            <DetailPopupView show={showDetailPopup}
+                                book={currentBook}
+                                readonly={!popupEditable}
                                 onOk={::this.handleDetailPopupOkClick}
                                 onCancel={::this.handleDetailPopupCancelClick}
             />

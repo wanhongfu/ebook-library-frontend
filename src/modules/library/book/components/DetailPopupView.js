@@ -30,30 +30,49 @@ class BookDetailPopup extends Component {
         });
     }
 
-    handleCancel() {
+    handleCancel = () => {
         this.setState({showDialog: false});
         const {onCancel} = this.props;
         onCancel();
     };
 
-    handleOK() {
+    handleOK = () => {
         this.setState({showDialog: false});
         const {onOk} = this.props;
         onOk();
     };
+
+    handleChange = field => event => {
+        event.preventDefault();
+        const inputVal = event.target.value || '';
+        if(inputVal.trim().length > 0){
+            this.setState({
+                currentBook: {
+                    ...this.state.currentBook,
+                    [field]: inputVal
+                }
+            });
+        }
+    }
+
+    renderIdTextField() {
+        if(this.props.readonly) {
+            return (<div><TextField fullWidth={true} disabled={true} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br /></div>);
+        }
+    }
 
     render() {
 
         const actions = [
             <FlatButton
                 label="取消"
-                onTouchTap={::this.handleCancel}
+                onTouchTap={this.handleCancel}
             />,
             <FlatButton
                 label="确定"
                 primary={true}
                 keyboardFocused={true}
-                onTouchTap={::this.handleOK}
+                onTouchTap={this.handleOK}
             />
         ];
 
@@ -68,9 +87,18 @@ class BookDetailPopup extends Component {
                 onRequestClose={::this.handleCancel}
             >
                 <Paper zDepth={0}>
-                    <TextField fullWidth={true} disabled={readonly} hintText="ID" floatingLabelText="ID" defaultValue={this.state.currentBook.id}/><br />
-                    <TextField fullWidth={true} disabled={readonly} hintText="书名" floatingLabelText="书名" defaultValue={this.state.currentBook.title}/><br />
-                    <TextField fullWidth={true} disabled={readonly} hintText="豆瓣连接" floatingLabelText="豆瓣连接" defaultValue={this.state.currentBook.url}/><br />
+                    {this.renderIdTextField()}
+                    <TextField fullWidth={true} disabled={readonly} hintText="书名"
+                               floatingLabelText="书名" defaultValue={this.state.currentBook.title}
+                               onChange={this.handleChange('title')}
+                    />
+                    <br />
+                    <TextField fullWidth={true} disabled={readonly} hintText="豆瓣连接"
+                               floatingLabelText="豆瓣连接"
+                               defaultValue={this.state.currentBook.url}
+                               onChange={this.handleChange('url')}
+                    />
+                    <br />
                 </Paper>
             </Dialog>
 
