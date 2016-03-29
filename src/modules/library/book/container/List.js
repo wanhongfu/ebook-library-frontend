@@ -128,7 +128,7 @@ class List extends Component {
         });
     }
 
-    handleDetailPopupCancelClick() {
+    handleDetailPopupCancelClick = () => {
         this.setState({
             showDetailPopup: false
         });
@@ -220,7 +220,7 @@ class List extends Component {
                                 book={currentBook}
                                 readonly={!popupEditable}
                                 onOk={::this.handleDetailPopupOkClick}
-                                onCancel={::this.handleDetailPopupCancelClick}
+                                onCancel={this.handleDetailPopupCancelClick}
             />
         );
     }
