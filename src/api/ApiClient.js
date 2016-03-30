@@ -69,13 +69,13 @@ export default class ApiClient {
         };
 
         if (method !== 'get' && method !== 'head') {
-            init.body = body;
+            init.body = JSON.stringify(body);
         }
 
-        return fetch(`${this.prefix}/${urlWithQuery}`, init).then(res => {
-            checkHttpStatus(res);
-            return parseJSON(res);
-        });
+        return fetch(`${this.prefix}/${urlWithQuery}`, init)
+            .then(checkHttpStatus)
+            .then(res => { return parseJSON(res);})
+            .catch(error => {throw error});
     }
 
     setAuthToken(authToken) {

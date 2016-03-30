@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import TopMenuView from '../components/TopMenuView';
-import LoginPopupView from '../../authc/components/LoginPopupView';
-
 import { logoutUser } from '../../authc/actions';
 
 
@@ -44,6 +42,10 @@ class TopMenu extends Component {
         this.props.logoutUser();
         this.context.router.push(`/home`);
     }
+    
+    handleSignupAction() {
+        this.context.router.push('/signup');
+    }
 
     render() {
 
@@ -56,8 +58,8 @@ class TopMenu extends Component {
                             onLeftMenuVisibleAction={this.props.onLeftMenuVisibleAction}
                             onLoginRequest={::this.handleLoginAction}
                             onLogoutRequest={::this.handleLogoutAction}
+                            onSignupRequest={::this.handleSignupAction} 
                 />
-
             </div>
 
         );

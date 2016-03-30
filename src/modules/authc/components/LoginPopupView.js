@@ -88,7 +88,7 @@ class LoginPopupView extends Component {
         const {inputUsernameErrorMsg, inputPasswordErrorMsg, serverError} = this.state;
         let snackbarContent = null;
         if(serverError !== undefined && serverError !== null) {
-            snackbarContent = (<Snackbar open={true} message={serverError} onRequestClose={()=>{}}/>);
+            snackbarContent = (<Snackbar open={true} message={serverError} />);
         }
 
         return (

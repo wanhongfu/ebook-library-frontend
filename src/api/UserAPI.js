@@ -15,4 +15,8 @@ export default class UserAPI extends Base {
         return this.apiClient.get('api/accounts/logout', {}, {token:token});
     }
 
+    create(user) {
+        return this.apiClient.post('api/accounts', {...user}, {});
+    }
+
 }

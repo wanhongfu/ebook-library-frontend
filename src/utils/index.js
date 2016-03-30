@@ -4,13 +4,18 @@ export function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    const error = new Error(response.statusText);
+    const body = parseJSON(response);
+    const error = new Error(body ? body.message : response.statusText);
     error.response = response;
     throw error;
 }
 
 export function parseJSON(response) {
-    return response.json();
+    const ct = response.headers.get('Content-Type');
+    if(ct && ct != null) {
+        return response.json();
+    }
+    return response;
 }
 
 export function createReducer(initialState, reducerMap) {

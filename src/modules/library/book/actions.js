@@ -1,4 +1,4 @@
-import { parseJSON, checkHttpStatus, createConstants } from '../../../utils';
+import { createConstants } from '../../../utils';
 import api from '../../../api';
 
 export const FetchBookConstants = createConstants(

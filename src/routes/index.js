@@ -6,6 +6,7 @@ import Home from '../modules/layout/container/Home';
 import * as Book from '../modules/library/book';
 import Users from '../modules/user';
 import Login from '../modules/authc/container/Login';
+import Signup from '../modules/user/container/Signup';
 
 import { fillStore } from '../utils';
 
@@ -17,7 +18,8 @@ const appRouters = (
         <Route path="/home" component={Home}/>
         <Route path="/books" component={Book.List} />
         <Route path="/books/:id" component={Book.View} />
-        <Route path="/login" component={Login}/>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
 
         <Route requireAuth>
             <Route path="/users" component={Users} />
