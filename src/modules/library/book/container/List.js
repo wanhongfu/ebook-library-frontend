@@ -13,23 +13,6 @@ import { fetchBooks } from '../actions';
 
 
 //TODO refactor this method to a common place for reuse
-function mapPaginationState2Props(pageState) {
-    return {
-        currentPage: pageState.currentPage,
-        totalRecNum: pageState.totalRecNum,
-        pageSize: pageState.pageSize
-    };
-}
-
-//TODO refactor this method to a common place for reuse
-function mapAuthcState2Props(authcState) {
-    return {
-        currentUser: authcState.currentUser,
-        isAuthenticated: authcState.isAuthenticated,
-    }
-}
-
-//TODO refactor this method to a common place for reuse
 function mkPaginationAndSoreQueryParam2(page, size, sort=null) {
     return {
         page: page-1,
@@ -46,36 +29,28 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
 }
 
 @connect(state => ({
-    fetching: state.books.fetching,
-    books: state.books.books,
-    error: state.books.error,
-
-    ...mapAuthcState2Props(state.authc),
-    ...mapPaginationState2Props(state.books)
+    bookState: state.bookState,
+    authcState: state.authc,
 }), {
     fetchBooks
 })
 class List extends Component {
 
-    //TODO this componet should be refactored to remove all presentation logic
-
-    static propTypes = {
-        fetching: PropTypes.bool,
-        books: PropTypes.arrayOf(PropTypes.shape({
-                id: PropTypes.number.isRequired,
-                title: PropTypes.string.isRequired,
-                url: PropTypes.string.isRequired,
-                status: PropTypes.string.isRequired,
-                onboardDate: PropTypes.string.isRequired,
-                owner: PropTypes.shape({
-                    id: PropTypes.number.isRequired,
-                    name: PropTypes.string.isRequired,
-                    email: PropTypes.string.isRequired
-                })
-            })
-        ),
-        error: PropTypes.object,
-    }
+    // static propTypes = {
+    //     books: PropTypes.arrayOf(PropTypes.shape({
+    //             id: PropTypes.number.isRequired,
+    //             title: PropTypes.string.isRequired,
+    //             url: PropTypes.string.isRequired,
+    //             status: PropTypes.string.isRequired,
+    //             onboardDate: PropTypes.string.isRequired,
+    //             owner: PropTypes.shape({
+    //                 id: PropTypes.number.isRequired,
+    //                 name: PropTypes.string.isRequired,
+    //                 email: PropTypes.string.isRequired
+    //             })
+    //         })
+    //     ),
+    // }
 
     static contextTypes = {
         router: PropTypes.object.isRequired
@@ -172,10 +147,11 @@ class List extends Component {
     }
 
     renderDataList() {
-        const { books, isAuthenticated, currentUser, totalRecNum, currentPage, pageSize } = this.props;
-        
+        const { totalRecNum, currentPage, pageSize } = this.props.bookState;
+        const { isAuthenticated, currentUser } = this.props.authcState;
+
         const viewProps = {
-            books: books,
+            books: this.props.bookState.books,
             isAuthenticated: isAuthenticated,
             currentUser: currentUser,
             onViewBookDetail: ::this.handleViewBookDetail,
@@ -206,7 +182,7 @@ class List extends Component {
     }
 
     renderDataTable() {
-        const {error} = this.props;
+        const {error} = this.props.bookState;
         if(error === null) {
             return this.renderDataList();
         } else {
@@ -227,7 +203,7 @@ class List extends Component {
     }
 
     render() {
-        if(this.props.fetching) return ( <Common.Loading /> );
+        if(this.props.bookState.fetching) return ( <Common.Loading /> );
         return (
             <div>
                 {this.renderToolbar()}

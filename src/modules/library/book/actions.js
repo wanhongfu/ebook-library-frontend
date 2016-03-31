@@ -18,11 +18,11 @@ export function fetchBooks(param) {
 
     return (dispatch) => {
         dispatch(fetchingBooks());
-        api.books.list(param).then(response => {
-            dispatch(fetchBooksSuccess(response));
-        }).catch(error => {
-            dispatch(fetchBooksFailure(error));
-        });
+        api.books.list(param)
+            .then(res => setTimeout(() => dispatch(fetchBooksSuccess(res)), 1000))
+            .catch(error => {
+                dispatch(fetchBooksFailure(error));
+            });
     };
 }
 

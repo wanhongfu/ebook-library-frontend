@@ -5,8 +5,7 @@ import { DetailView } from '../components';
 import { fetchSingleBook } from '../actions';
 
 @connect(state => ({
-    book: state.books.book,
-    error: state.books.error
+    bookState: state.bookState
 }))
 class View extends Component {
 
@@ -24,7 +23,7 @@ class View extends Component {
 
     render() {
 
-        const { book } = this.props;
+        const { book } = this.props.bookState;
         if(book) {
             return ( <DetailView readonly={true} book={book}/> );
         }
