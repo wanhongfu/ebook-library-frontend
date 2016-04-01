@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { DetailView } from '../components';
+import DetailView from '../components/DetailView';
 import { fetchSingleBook } from '../actions';
 
 @connect(state => ({
@@ -22,15 +22,12 @@ class View extends Component {
     }
 
     render() {
-
         const { book } = this.props.bookState;
         if(book) {
             return ( <DetailView readonly={true} book={book}/> );
         }
-
         return (<div />);
     }
-
 }
 
 export default View;

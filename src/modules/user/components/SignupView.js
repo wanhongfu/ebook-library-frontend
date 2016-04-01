@@ -70,9 +70,9 @@ class SignupView extends Component {
                 onRequestClose={onCancel}
             >
                 <div>
-                    <TextField errorText={email.touched && email.error ? email.error : ''} hintText="请输入电子邮件" floatingLabelText="电子邮件" {...email} /><br />
-                    <TextField errorText={name.touched && name.error ? name.error : ''} hintText="请输入昵称" floatingLabelText="昵称" {...name} /><br />
-                    <TextField errorText={password.touched && password.error ? password.error : ''}  hintText="请输入登陆密码" type="password" floatingLabelText="密码" {...password} /><br />
+                    <TextField fullWidth={true} errorText={email.touched && email.error ? email.error : ''} hintText="请输入电子邮件" floatingLabelText="电子邮件" {...email} /><br />
+                    <TextField fullWidth={true} errorText={name.touched && name.error ? name.error : ''} hintText="请输入昵称" floatingLabelText="昵称" {...name} /><br />
+                    <TextField fullWidth={true} errorText={password.touched && password.error ? password.error : ''}  hintText="请输入登陆密码" type="password" floatingLabelText="密码" {...password} /><br />
                 </div>
             </Dialog>
         );

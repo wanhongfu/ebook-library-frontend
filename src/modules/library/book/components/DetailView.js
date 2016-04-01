@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { Toolbar, ToolbarGroup, IconButton, ToolbarSeparator, TextField, ToolbarTitle } from 'material-ui';
 import { NavigationArrowBack } from 'material-ui/lib/svg-icons';
 
-class BookDetailView extends Component {
+class DetailView extends Component {
 
     static propTypes = {
         book: PropTypes.object.isRequired,
@@ -30,4 +30,4 @@ class BookDetailView extends Component {
     }
 }
 
-export default BookDetailView;
+export default DetailView;

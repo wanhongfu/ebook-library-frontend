@@ -61,18 +61,20 @@ class BookListView extends Component {
     render() {
 
         const rowStyle = {width: `30%`};
-        const headerStyle = {fontSize: 16, width: `30%`};
-        const headerTitle = ['书名', '豆瓣连接', '状态', '上架日期', ' '];
+        const headerStyle = {fontSize: 16, width: `30%`, align: 'left'};
+        const headerTitle = ['ID', '书名', '豆瓣连接', '状态', '上架日期', '上传者', ' '];
 
         const tableHeaders = headerTitle.map((t, index) => (<TableHeaderColumn key={index} style={headerStyle}>{t}</TableHeaderColumn>));
 
         const tableBodyRows = this.props.books.map(book => {
             return (
-                <TableRow key={book.id}>
+                <TableRow key={book.id} >
+                    <TableRowColumn style={rowStyle} >{book.id}</TableRowColumn>
                     <TableRowColumn style={rowStyle} >{book.title}</TableRowColumn>
                     <TableRowColumn style={rowStyle}>{book.url}</TableRowColumn>
                     <TableRowColumn style={rowStyle}>{book.status}</TableRowColumn>
                     <TableRowColumn style={rowStyle}>{book.onboardDate}</TableRowColumn>
+                    <TableRowColumn style={rowStyle}>{book.owner.name}</TableRowColumn>
                     <TableRowColumn style={rowStyle}>
                         { this.renderBookActionMenus(book) }
                     </TableRowColumn>
@@ -82,17 +84,17 @@ class BookListView extends Component {
 
         return (
             <Table>
-                <TableHeader>
+                <TableHeader displaySelectAll={false} >
                     <TableRow>
                         {tableHeaders}
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody displayRowCheckbox={false}>
                     {tableBodyRows}
                 </TableBody>
                 <TableFooter adjustForCheckbox={true}>
                     <TableRow>
-                        <TableRowColumn colSpan="5" style={{textAlign: 'right'}}>
+                        <TableRowColumn colSpan="7" style={{textAlign: 'right'}}>
                             <Common.Paginator pageSize={this.props.pageSize}
                                               currentPage={this.props.currentPage}
                                               totalRecNum={this.props.totalRecNum}

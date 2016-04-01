@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {reset} from 'redux-form';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
 import { Toolbar, ToolbarGroup, IconButton, Snackbar } from 'material-ui';
@@ -9,7 +10,8 @@ import Common from '../../../../common';
 import ListView from '../components/ListView';
 import GridView from '../components/GridView';
 import DetailPopupView from '../components/DetailPopupView';
-import { fetchBooks } from '../actions';
+import DetailEditorView from '../components/DetailEditorView';
+import { fetchBooks, saveBook, resetSaveBookState } from '../actions';
 
 
 //TODO refactor this method to a common place for reuse
@@ -32,7 +34,7 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
     bookState: state.bookState,
     authcState: state.authc,
 }), {
-    fetchBooks
+    fetchBooks, saveBook, resetSaveBookState, reset
 })
 class List extends Component {
 
@@ -62,13 +64,23 @@ class List extends Component {
         this.state = {
             viewType: 'grid',
             showDetailPopup: false,
-            currentBook: this.mkEmptyBookObj(),
-            popupEditable: false
+            showEditorPopup: false,
+            currentBook: null
         }
     }
 
     componentDidMount() {
         this.props.fetchBooks(mkPaginationAndSoreQueryParam2(1, 5, 'title'));
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if(nextProps.bookState.createdSuccess) {
+            this.setState({
+                showEditorPopup: false
+            });
+        }
+
     }
 
     handleViewBookDetail(bookId) {
@@ -79,35 +91,34 @@ class List extends Component {
     handleViewBookDetailPopup(book) {
         this.setState({
             showDetailPopup: true,
-            currentBook: book,
-            popupEditable: false
+            currentBook: book
         });
     }
 
     handleAddClick = () => {
         this.setState({
-            showDetailPopup: true,
-            currentBook: this.mkEmptyBookObj(),
-            popupEditable: true
+            showEditorPopup: true
         });
     }
 
-    handleDetailPopupOkClick(book) {
-
-        //TODO save book  
-        if(this.state.popupEditable) {
-
-        }
-
+    handleDetailPopupOkClick = (book) => {
         this.setState({
             showDetailPopup: false
         });
     }
 
-    handleDetailPopupCancelClick = () => {
-        this.setState({
-            showDetailPopup: false
-        });
+    handleEditorPopupOkClick = () => {
+        this.refs.newBookFormRef.submit();
+    }
+
+    handleEditorPopupCancelClick = () => {
+        this.props.resetSaveBookState();
+        this.props.reset('new-book-form')
+        this.setState({ showEditorPopup: false })
+    }
+
+    handleEditorSubmit = (newBookForm) => {
+        this.props.saveBook(newBookForm);
     }
 
     handPageChanged = (page) => {
@@ -133,7 +144,12 @@ class List extends Component {
             title: null,
             url: null,
             status: null,
-            onboardDate: null
+            onboardDate: null,
+            owner: {
+                id: null,
+                name: null,
+                email: null
+            }
         };
     }
 
@@ -147,6 +163,11 @@ class List extends Component {
     }
 
     renderDataList() {
+        const {error} = this.props.bookState;
+        if(error !== null) {
+            return ( <Snackbar open={true} message={error.message} /> );
+        }
+
         const { totalRecNum, currentPage, pageSize } = this.props.bookState;
         const { isAuthenticated, currentUser } = this.props.authcState;
 
@@ -181,25 +202,40 @@ class List extends Component {
         );
     }
 
-    renderDataTable() {
-        const {error} = this.props.bookState;
-        if(error === null) {
-            return this.renderDataList();
-        } else {
-            return ( <Snackbar open={true} message={error.message} /> );
-        }
-    }
-
     renderDetailPopup() {
-        const {popupEditable, showDetailPopup, currentBook} = this.state;
+        const { showDetailPopup, currentBook } = this.state;
         return (
-            <DetailPopupView show={showDetailPopup}
-                                book={currentBook}
-                                readonly={!popupEditable}
-                                onOk={::this.handleDetailPopupOkClick}
-                                onCancel={this.handleDetailPopupCancelClick}
+            <DetailPopupView
+                open={showDetailPopup}
+                book={currentBook}
+                onOk={this.handleDetailPopupOkClick}
             />
         );
+    }
+
+    renderDetailEditorPopup(){
+        return (
+            <DetailEditorView
+                open={this.state.showEditorPopup}
+                ref="newBookFormRef"
+                onSubmit={this.handleEditorSubmit}
+                onOk={this.handleEditorPopupOkClick}
+                onCancel={this.handleEditorPopupCancelClick}
+                onReset={()=>{this.props.reset('new-book-form')}}
+            />);
+    }
+
+    renderMsg() {
+        const { createdSuccess, createError } = this.props.bookState;
+        if(createdSuccess) {
+            return (
+                <Snackbar open={true} message={"创建成功"}
+                          onRequestClose={()=>{this.props.resetSaveBookState()}}
+                />
+            );
+        } else if(createError && createError !== null) {
+            return (<Snackbar open={true} message={createError.response.statusText} />);
+        }
     }
 
     render() {
@@ -207,10 +243,13 @@ class List extends Component {
         return (
             <div>
                 {this.renderToolbar()}
-                {this.renderDataTable()}
+                {this.renderDataList()}
                 {this.renderDetailPopup()}
-
-                <Common.FloatingButton onClick={this.handleAddClick} icon={<ContentAdd />} />
+                {this.renderDetailEditorPopup()}
+                {
+                    this.props.authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddClick} icon={<ContentAdd />} /> : ''
+                }
+                {this.renderMsg()}
             </div>
         );
     }

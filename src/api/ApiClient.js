@@ -74,7 +74,7 @@ export default class ApiClient {
 
         return fetch(`${this.prefix}/${urlWithQuery}`, init)
             .then(checkHttpStatus)
-            .then(res => { return parseJSON(res);})
+            .then(res => { return parseJSON(res) })
             .catch(error => {throw error});
     }
 

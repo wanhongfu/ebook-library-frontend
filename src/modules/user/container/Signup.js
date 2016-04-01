@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import {reset} from 'redux-form';     // reset action creator exported by redux-form
-import {connect} from 'react-redux';  // needed to bind reset action creator to dispatch
+import {reset} from 'redux-form';
+import {connect} from 'react-redux';
 
 import {Snackbar} from 'material-ui';
 

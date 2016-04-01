@@ -5,7 +5,9 @@ const initialState = {
     fetching: false,
     books: [],
     book: null,
+    createdSuccess: false,
     error: null,
+    createError: null,
     currentPage: 0,
     totalRecNum: 0
 };
@@ -38,12 +40,16 @@ const books = createReducer(initialState, {
     },
 
     [FetchBookConstants.CREATE_BOOK_SUCCESS]: (state) => {
-
+        return { ...state, createdSuccess: true };
     },
 
     [FetchBookConstants.CREATE_BOOK_FAILURE]: (state, payload) => {
+        return { ...state, createdSuccess: false, createError: payload.error };
+    },
 
-    }
+    [FetchBookConstants.CREATE_BOOK_STATE_RESET]: (state) => {
+        return { ...state, createdSuccess: false, createError: null };
+    },
 });
 
 function mkBookState(payload) {
