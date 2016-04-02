@@ -1,9 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import _ from 'lodash';
-
-import {TableRow, TableRowColumn, FlatButton, TableFooter} from 'material-ui';
-import { Colors } from 'material-ui/lib/styles';
 import { NavigationChevronLeft, NavigationChevronRight, NavigationMoreHoriz } from 'material-ui/lib/svg-icons';
 
 import PaginationIndicator from './PaginationIndicator';
@@ -28,26 +24,32 @@ class Paginator extends Component {
     }
 
     onPageChange = (page) => {
-        if (page >= 1 && page <= this.getNumOfPages())
+        if (page >= 1 && page <= this._getNumOfPages())
             this.props.onPageChange(page);
     }
 
-    getNumOfPages() {
-        const nbPages = Math.ceil(this.props.totalRecNum / this.props.pageSize);
+    _getNumOfPages() {
+        const { totalRecNum, pageSize } = this.props;
+        const nbPages = Math.ceil(totalRecNum / pageSize);
         return nbPages <= 0 ? 1 : nbPages;
     }
 
-    getMinRange() {
-        const {pageRange, currentPage} = this.props;
+    _getMinRange() {
+        const { pageRange, currentPage } = this.props;
+        const nbPages = this._getNumOfPages();
+        if(nbPages <= pageRange) return 1;
+        if(nbPages-currentPage < pageRange) {
+            return nbPages - pageRange;
+        }
         return (Math.ceil(currentPage / pageRange) - 1) * pageRange + 1;
     }
 
-    getMaxRange() {
-        const max = this.getMinRange() + this.props.pageRange - 1;
-        return max < this.getNumOfPages() ? max : this.getNumOfPages();
+    _getMaxRange() {
+        const max = this._getMinRange() + this.props.pageRange - 1;
+        return max <= this._getNumOfPages() ? max : this._getNumOfPages();
     }
 
-    renderNeighbour({disabled, page, icon}) {
+    _renderNeighbour({disabled, page, icon}) {
         return (
             <PaginationIndicator
                 disabled={disabled}
@@ -60,8 +62,8 @@ class Paginator extends Component {
     }
 
 
-    renderBreak(page) {
-        if (page >= this.getNumOfPages() || page <= 0)
+    _renderBreak(page) {
+        if (page >= this._getNumOfPages() || page <= 0)
             return null;
 
         return (
@@ -74,36 +76,10 @@ class Paginator extends Component {
         );
     }
 
-    renderPrevious(){
-        return this.renderNeighbour({
-            disabled: this.props.currentPage === 1,
-            page: this.props.currentPage - 1,
-            icon: <NavigationChevronLeft />
-        });
-    }
-
-    renderPreviousBreak(){
-        const result = this.renderBreak(this.getMinRange() - 1);
-        if(result) {
-            const resultArray = new Array();
-            resultArray.push( <PaginationIndicator key={1} label={1} onClick={this.onPageChange} pageNum={1}/>);
-            resultArray.push( result );
-            return resultArray;
-        }
-    }
-
-    renderPages(){
-        const result = new Array();;
-        for(var i=this.getMinRange(); i<this.getMaxRange()+1; i++){
-            result.push(this.renderPage(i))
-        }
-        return result;
-    }
-
-    renderPage(page){
+    _renderPage(page){
         return (
             <PaginationIndicator
-                active={this.props.currentPage === page}
+                active={this.props.currentPage == page}
                 key={page}
                 label={String(page)}
                 onClick={this.onPageChange}
@@ -112,29 +88,90 @@ class Paginator extends Component {
         );
     }
 
-    renderNextBreak(){
-        const result = this.renderBreak(this.getMaxRange() + 1);
-        if(result) {
-            const resultArray = new Array();
-            const np = this.getNumOfPages();
-            resultArray.push( result );
-            resultArray.push( <PaginationIndicator key={np} label={String(np)} onClick={this.onPageChange} pageNum={np}/>);
-            return resultArray;
+    renderPrevious(){
+        const { currentPage } = this.props;
+        return this._renderNeighbour({
+            disabled: currentPage == 1,
+            page: currentPage - 1,
+            icon: <NavigationChevronLeft />
+        });
+    }
+
+    renderPreviousBreak(){
+        const resultArray = new Array(),
+            { currentPage, pageRange } = this.props,
+            minRange = this._getMinRange();
+        let breakPage = minRange - 1;
+
+        resultArray.push(this._renderPage(1));
+
+        const shouldRenderBreak = this._getNumOfPages() > pageRange
+                            && currentPage == minRange
+                            && currentPage - 1 != 1;
+        if(shouldRenderBreak) {
+            breakPage -= 1;
         }
+
+        const prevBreak = this._renderBreak(breakPage);
+        if(prevBreak && prevBreak !== null) {
+            resultArray.push(prevBreak);
+        }
+
+        if(shouldRenderBreak) {
+            resultArray.push(this._renderPage(currentPage-1));
+        }
+
+        return resultArray;
+    }
+
+    renderPages(){
+        const result = new Array();
+        const totalPageNum = this._getNumOfPages();
+        for(var i=this._getMinRange(); i<this._getMaxRange()+1; i++){
+            if(i === 1 || i == totalPageNum) continue;
+            result.push(this._renderPage(i))
+        }
+        return result;
+    }
+
+    renderNextBreak(){
+        const resultArray = new Array(),
+              np = this._getNumOfPages(),
+              maxRange = this._getMaxRange(),
+              { currentPage, pageRange } = this.props;
+
+        const shouldRenderBreak = np > pageRange
+                            && currentPage == maxRange
+                            && currentPage + 1 != np;
+        let breakPage = maxRange+1;
+        if(shouldRenderBreak) {
+            resultArray.push(this._renderPage(currentPage+1));
+            breakPage += 1;
+        }
+        const nextBreak = this._renderBreak(breakPage);
+        if(nextBreak && nextBreak !== null) {
+            resultArray.push(nextBreak);
+        }
+        resultArray.push(this._renderPage(np));
+        return resultArray;
     }
 
     renderNext(){
-        return this.renderNeighbour({
-            disabled: this.props.currentPage === this.getNumOfPages(),
-            page: this.props.currentPage + 1,
+        const { currentPage } = this.props;
+        return this._renderNeighbour({
+            disabled: currentPage == this._getNumOfPages(),
+            page: currentPage + 1,
             icon: <NavigationChevronRight />
         });
     }
 
     renderPaginationInfo() {
-        return (<PaginationInfo totalPageNum={this.getNumOfPages()}
-                                currnetPage={this.props.currentPage}
-                                totalRecNum={this.props.totalRecNum} />);
+        return (
+            <PaginationInfo totalPageNum={this._getNumOfPages()}
+                            currnetPage={this.props.currentPage}
+                            totalRecNum={this.props.totalRecNum}
+            />
+        );
     }
 
     render(){

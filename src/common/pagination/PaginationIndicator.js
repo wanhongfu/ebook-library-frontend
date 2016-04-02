@@ -37,7 +37,7 @@ export default class PaginationIndicator extends React.Component {
         const otherProps = icon ? {icon: icon} : {label: String(label)};
 
         return (
-            <FlatButton disabled={disabled} onClick={this._onClick} style={styles.fb} {...otherProps} />
+            <FlatButton disabled={active || disabled} onClick={this._onClick} style={styles.fb} {...otherProps} />
         );
     }
 
