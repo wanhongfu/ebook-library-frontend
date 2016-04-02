@@ -230,7 +230,10 @@ class List extends Component {
         if(createdSuccess) {
             return (
                 <Snackbar open={true} message={"创建成功"}
-                          onRequestClose={()=>{this.props.resetSaveBookState()}}
+                          onRequestClose={()=>{
+                                    this.props.resetSaveBookState();
+                                    this.props.reset('new-book-form');
+                          }}
                 />
             );
         } else if(createError && createError !== null) {

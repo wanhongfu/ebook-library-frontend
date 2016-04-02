@@ -27,6 +27,10 @@ class DetailEditorView extends Component {
         onReset: PropTypes.func
     };
 
+    constructor(props) {
+        super(props);
+    }
+
     static defaultProps = {
         open: false
     }
@@ -62,7 +66,8 @@ class DetailEditorView extends Component {
                 <div>
                     <TextField fullWidth={true} errorText={title.touched && title.error ? title.error : ''}
                                hintText="请输入书名" floatingLabelText="书名" {...title} />
-                    <TextField fullWidth={true} hintText="请输入豆瓣编号" floatingLabelText="豆瓣编号" {...doubanId} />
+                    <TextField fullWidth={true} errorText={doubanId.touched && doubanId.error ? doubanId.error : ''}
+                               hintText="请输入豆瓣编号" floatingLabelText="豆瓣编号" {...doubanId} />
                     <TextField fullWidth={true} hintText="请输入豆瓣连接" floatingLabelText="豆瓣连接" {...url} />
                 </div>
             </Dialog>
