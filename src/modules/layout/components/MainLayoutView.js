@@ -4,6 +4,7 @@ import LeftMenuView from './LeftMenuView';
 import TopMenu from '../container/TopMenu';
 
 import { Colors, getMuiTheme, Spacing } from 'material-ui/lib/styles';
+import DefaultTheme from '../../../config/themes/DefaultTheme';
 
 class MainLayoutView extends Component {
 
@@ -17,6 +18,10 @@ class MainLayoutView extends Component {
 
     static childContextTypes = {
         muiTheme: PropTypes.object
+    }
+
+    static childContext = {
+        muiTheme: getMuiTheme(DefaultTheme)
     }
 
     componentWillMount() {
@@ -38,14 +43,6 @@ class MainLayoutView extends Component {
         this.setState({
             leftMenuOpen: open
         });
-    }
-
-    handleLoginOkAction() {
-
-    }
-
-    handleLoginCancelAction() {
-
     }
 
     getStyles() {

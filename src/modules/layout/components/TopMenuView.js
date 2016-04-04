@@ -5,10 +5,8 @@ import { SocialPerson, ActionInput, SocialPersonOutline, NavigationMenu,
     SocialPersonAdd, ActionAccountBox, ActionHome, ActionExitToApp,
     MapsLocalLibrary } from 'material-ui/lib/svg-icons';
 
-import {Colors, getMuiTheme, Spacing} from 'material-ui/lib/styles';
+import {Colors} from 'material-ui/lib/styles';
 import { browserHistory } from 'react-router';
-
-
 
 import './layout.css';
 
@@ -28,8 +26,6 @@ class TopMenuView extends Component {
     constructor(props) {
         super(props);
     }
-
-
 
     render() {
 
