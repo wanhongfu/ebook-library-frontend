@@ -10,7 +10,8 @@ class GridView extends Component {
         currentUser: PropTypes.string,
         books: PropTypes.array,
         onViewBookDetail: PropTypes.func,
-        onViewBookDetailPopup: PropTypes.func
+        onViewBookDetailPopup: PropTypes.func,
+        onEditBook: PropTypes.func
     }
 
     render() {

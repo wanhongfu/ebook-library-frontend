@@ -31,28 +31,13 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
 }
 
 @connect(state => ({
-    bookState: state.bookState,
-    authcState: state.authc,
+    booksState          : state.books,
+    currnetBookState    : state.currentBook,
+    authcState          : state.authc,
 }), {
     fetchBooks, saveBook, resetSaveBookState, reset
 })
 class List extends Component {
-
-    // static propTypes = {
-    //     books: PropTypes.arrayOf(PropTypes.shape({
-    //             id: PropTypes.number.isRequired,
-    //             title: PropTypes.string.isRequired,
-    //             url: PropTypes.string.isRequired,
-    //             status: PropTypes.string.isRequired,
-    //             onboardDate: PropTypes.string.isRequired,
-    //             owner: PropTypes.shape({
-    //                 id: PropTypes.number.isRequired,
-    //                 name: PropTypes.string.isRequired,
-    //                 email: PropTypes.string.isRequired
-    //             })
-    //         })
-    //     ),
-    // }
 
     static contextTypes = {
         router: PropTypes.object.isRequired
@@ -60,13 +45,14 @@ class List extends Component {
 
     constructor(props) {
         super(props);
+    }
 
-        this.state = {
-            viewType: 'grid',
-            showDetailPopup: false,
-            showEditorPopup: false,
-            currentBook: null
-        }
+    state = {
+        viewType        : 'grid',
+        showDetailPopup : false,
+        showEditorPopup : false,
+        currentBook     : null,
+        editMode        : false
     }
 
     componentDidMount() {
@@ -74,30 +60,38 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
-        if(nextProps.bookState.createdSuccess) {
+        if(nextProps.currnetBookState.createdSuccess) {
             this.setState({
                 showEditorPopup: false
             });
         }
-
     }
 
-    handleViewBookDetail(bookId) {
-        //this.props.history.push(`/books/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
+    handleViewBookDetail = (bookId) => {
+        //this.props.history.push(`/booksReducer/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
         this.context.router.push(`/books/${bookId}`);//for react-router v2.0.0
     }
 
-    handleViewBookDetailPopup(book) {
+    handleViewBookDetailPopup = (book) => {
         this.setState({
-            showDetailPopup: true,
-            currentBook: book
+            showDetailPopup : true,
+            currentBook     : book
         });
     }
 
     handleAddClick = () => {
         this.setState({
-            showEditorPopup: true
+            showEditorPopup : true,
+            currentBook     : null,
+            editMode        : false
+        });
+    }
+
+    handleEditAction = (book) => {
+        this.setState({
+            showEditorPopup : true,
+            currentBook     : book,
+            editMode        : true
         });
     }
 
@@ -113,12 +107,20 @@ class List extends Component {
 
     handleEditorPopupCancelClick = () => {
         this.props.resetSaveBookState();
-        this.props.reset('new-book-form')
+        this.props.reset('new-currentBookReducer-form')
         this.setState({ showEditorPopup: false })
     }
 
     handleEditorSubmit = (newBookForm) => {
-        this.props.saveBook(newBookForm);
+        if(this.state.editMode) {
+
+            this.setState({
+                editMode: false,
+                currentBook: null
+            });
+        } else {
+            this.props.saveBook(newBookForm);
+        }
     }
 
     handPageChanged = (page) => {
@@ -140,16 +142,16 @@ class List extends Component {
 
     mkEmptyBookObj() {
         return {
-            id: null,
-            title: null,
-            url: null,
-            status: null,
-            onboardDate: null,
-            owner: {
-                id: null,
-                name: null,
-                email: null
-            }
+            id          : null,
+            title       : null,
+            url         : null,
+            status      : null,
+            onboardDate : null,
+            owner       : {
+                            id      : null,
+                            name    : null,
+                            email   : null
+                          }
         };
     }
 
@@ -163,27 +165,30 @@ class List extends Component {
     }
 
     renderDataList() {
-        const {error} = this.props.bookState;
+        const { error } = this.props.booksState;
         if(error !== null) {
             return ( <Snackbar open={true} message={error.message} /> );
         }
 
-        const { totalRecNum, currentPage, pageSize } = this.props.bookState;
-        const { isAuthenticated, currentUser } = this.props.authcState;
+        const { booksState  : { totalRecNum, currentPage, pageSize, datalist },
+                authcState  : { isAuthenticated, currentUser }
+              } = this.props;
 
         const viewProps = {
-            books: this.props.bookState.books,
-            isAuthenticated: isAuthenticated,
-            currentUser: currentUser,
-            onViewBookDetail: ::this.handleViewBookDetail,
-            onViewBookDetailPopup: ::this.handleViewBookDetailPopup,
+            books                   : datalist,
+            isAuthenticated,
+            currentUser,
+            onViewBookDetail        : this.handleViewBookDetail,
+            onViewBookDetailPopup   : this.handleViewBookDetailPopup,
+            onEditBook              : this.handleEditAction,
         };
+
         return ('list' === this.state.viewType) ?
                ( <GridView {...viewProps} /> ) :
-               ( <ListView onPageChanged={this.handPageChanged}
-                           pageSize={pageSize}
-                           currentPage={currentPage}
-                           totalRecNum={totalRecNum}
+               ( <ListView onPageChanged = {this.handPageChanged}
+                           pageSize      = {pageSize}
+                           currentPage   = {currentPage}
+                           totalRecNum   = {totalRecNum}
                            {...viewProps}
                 />);
 
@@ -216,24 +221,27 @@ class List extends Component {
     renderDetailEditorPopup(){
         return (
             <DetailEditorView
-                open={this.state.showEditorPopup}
-                ref="newBookFormRef"
-                onSubmit={this.handleEditorSubmit}
-                onOk={this.handleEditorPopupOkClick}
-                onCancel={this.handleEditorPopupCancelClick}
-                onReset={()=>{this.props.reset('new-book-form')}}
+                currentBook = {this.state.currentBook}
+                open        = {this.state.showEditorPopup}
+                ref         = "newBookFormRef"
+                onSubmit    = {this.handleEditorSubmit}
+                onOk        = {this.handleEditorPopupOkClick}
+                onCancel    = {this.handleEditorPopupCancelClick}
+                onReset     = {()=>{this.props.reset('new-currentBookReducer-form')}}
             />);
     }
 
     renderMsg() {
-        const { createdSuccess, createError } = this.props.bookState;
+        const { currnetBookState: {createdSuccess, createError}, resetSaveBookState, reset } = this.props;
         if(createdSuccess) {
+            const onRequestClose = () => {
+                resetSaveBookState();
+                reset('new-currentBookReducer-form');
+            }
             return (
-                <Snackbar open={true} message={"创建成功"}
-                          onRequestClose={()=>{
-                                    this.props.resetSaveBookState();
-                                    this.props.reset('new-book-form');
-                          }}
+                <Snackbar open           = {true}
+                          message        = {"创建成功"}
+                          onRequestClose = {onRequestClose()}
                 />
             );
         } else if(createError && createError !== null) {
@@ -242,7 +250,8 @@ class List extends Component {
     }
 
     render() {
-        if(this.props.bookState.fetching) return ( <Common.Loading /> );
+        const {booksState, authcState} = this.props;
+        if(booksState.fetching) return ( <Common.Loading /> );
         return (
             <div>
                 {this.renderToolbar()}
@@ -250,7 +259,7 @@ class List extends Component {
                 {this.renderDetailPopup()}
                 {this.renderDetailEditorPopup()}
                 {
-                    this.props.authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddClick} icon={<ContentAdd />} /> : ''
+                    authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddClick} icon={<ContentAdd />} /> : ''
                 }
                 {this.renderMsg()}
             </div>

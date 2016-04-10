@@ -1,72 +1,70 @@
-import { FetchBookConstants } from './actions';
 import { createReducer } from '../../../utils';
 
-const initialState = {
-    fetching: false,
-    books: [],
-    book: null,
-    createdSuccess: false,
-    error: null,
-    createError: null,
-    currentPage: 0,
-    totalRecNum: 0
+import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST, FETCH_BOOKS_FAILURE,
+         FETCH_BOOK_SUCCESS, FETCH_BOOK_FAILURE,
+         CREATE_BOOK_SUCCESS, CREATE_BOOK_FAILURE, CREATE_BOOK_STATE_RESET
+} from './actions';
+
+//==================== Reducer for fetching booksReducer ====================
+const fetchBooksInitState = {
+    fetching    : false,
+    datalist    : [],
+    error       : null,
+    currentPage : 0,
+    totalRecNum : 0,
+    pageSize    : 0
 };
 
-const books = createReducer(initialState, {
+const booksReducer = createReducer(fetchBooksInitState, {
 
-    [FetchBookConstants.FETCHING_BOOK_LIST]: (state) => {
-        return { ...state, fetching: true };
+    [FETCH_BOOKS_REQUEST]: (state) => {
+        return {...state, fetching: true};
     },
 
-    [FetchBookConstants.FETCH_BOOK_LIST_SUCCESS]: (state, payload) => {
+    [FETCH_BOOKS_SUCCESS]: (state, payload) => {
         return {
             ...state,
-            fetching: false,
-            ...mkBookState(payload),
-            ...mkPaginationState(payload)
+            fetching    : false,
+            datalist    : payload.datalist,
+            currentPage : payload.currentPage,
+            totalRecNum : payload.totalRecNum,
+            pageSize    : payload.pageSize,
         };
     },
 
-    [FetchBookConstants.FETCH_BOOK_LIST_FAILURE]: (state, payload) => {
-        return { ...state, ...mkBookState(payload), fetching: false };
-    },
-
-    [FetchBookConstants.FETCH_BOOK_SUCCESS]: (state, payload) => {
-        return { ...state, ...mkBookState(payload) };
-    },
-
-    [FetchBookConstants.FETCH_BOOK_FAILURE]: (state, payload) => {
-        return { ...state, ...mkBookState(payload) };
-    },
-
-    [FetchBookConstants.CREATE_BOOK_SUCCESS]: (state) => {
-        return { ...state, createdSuccess: true };
-    },
-
-    [FetchBookConstants.CREATE_BOOK_FAILURE]: (state, payload) => {
-        return { ...state, createdSuccess: false, createError: payload.error };
-    },
-
-    [FetchBookConstants.CREATE_BOOK_STATE_RESET]: (state) => {
-        return { ...state, createdSuccess: false, createError: null };
-    },
+    [FETCH_BOOKS_FAILURE]: (state, payload) => {
+        return {...state, error: payload.error, fetching: false};
+    }
 });
 
-function mkBookState(payload) {
-    return {
-        books: payload.books ? payload.books : null,
-        book: payload.book ? payload.book : null,
-        error: payload.error ? payload.error : null
+//==================== Reducer for single currentBookReducer CRUD ====================
+const singleBookInitState = {
+    book    : null,
+    error   : null,
+    createdSuccess  : false,
+    createError     : null,
+}
+
+const currentBookReducer = createReducer(singleBookInitState, {
+
+    [FETCH_BOOK_SUCCESS]: (state, payload) => {
+        return {...state, book: payload.book};
+    },
+    [FETCH_BOOK_FAILURE]: (state, payload) => {
+        return {...state, error: payload.error};
+    },
+
+    [CREATE_BOOK_SUCCESS]: (state) => {
+        return { ...state, createdSuccess: true };
+    },
+    [CREATE_BOOK_FAILURE]: (state, payload) => {
+        return { ...state, createdSuccess: false, createError: payload.error };
+    },
+    [CREATE_BOOK_STATE_RESET]: (state) => {
+        return { ...state, createdSuccess: false, createError: null };
     }
-}
+});
 
-//TODO refactor this method to a common place for reuse
-function mkPaginationState(payload) {
-    return {
-        currentPage: payload.currentPage,
-        totalRecNum: payload.totalRecNum,
-        pageSize: payload.pageSize
-    };
-}
 
-export { books };
+//==================== export reducers ====================
+export { booksReducer, currentBookReducer };

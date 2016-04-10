@@ -5,7 +5,7 @@ import DetailView from '../components/DetailView';
 import { fetchSingleBook } from '../actions';
 
 @connect(state => ({
-    bookState: state.bookState
+    currnetBookState    : state.currentBook,
 }))
 class View extends Component {
 
@@ -22,7 +22,7 @@ class View extends Component {
     }
 
     render() {
-        const { book } = this.props.bookState;
+        const { book } = this.props.currnetBookState;
         if(book) {
             return ( <DetailView readonly={true} book={book}/> );
         }
