@@ -16,9 +16,10 @@ The backend is based on Springboot app [p2p-book-library-backend](https://github
 
 1. Integrate React Route (done)
 2. Integrate Redux (done)
-3. Data list with pagination & sortable support OR integrate [react-list](https://github.com/orgsync/react-list)
-4. Authentication (in progress)
+3. Data list with pagination & sortable support OR integrate [react-list](https://github.com/orgsync/react-list)  (in progress)
+4. Authentication (done)
 5. Integrate [redux-form](https://github.com/erikras/redux-form) & [redux-form-validation](https://github.com/posabsolute/redux-form-validator)
 6. i18n
 7. Full CRUD demo (in progress)
 8. Unit test
+9. redux-form integration (done)
