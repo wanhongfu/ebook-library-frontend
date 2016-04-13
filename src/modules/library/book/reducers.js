@@ -41,8 +41,7 @@ const booksReducer = createReducer(fetchBooksInitState, {
 const singleBookInitState = {
     book    : null,
     error   : null,
-    createdSuccess  : false,
-    createError     : null,
+    savedSuccess  : false
 }
 
 const currentBookReducer = createReducer(singleBookInitState, {
@@ -55,13 +54,13 @@ const currentBookReducer = createReducer(singleBookInitState, {
     },
 
     [CREATE_BOOK_SUCCESS]: (state) => {
-        return { ...state, createdSuccess: true };
+        return { ...state, savedSuccess: true };
     },
     [CREATE_BOOK_FAILURE]: (state, payload) => {
-        return { ...state, createdSuccess: false, createError: payload.error };
+        return { ...state, savedSuccess: false, error: payload.error };
     },
     [CREATE_BOOK_STATE_RESET]: (state) => {
-        return { ...state, createdSuccess: false, createError: null };
+        return { ...state, savedSuccess: false, error: null };
     }
 });
 

@@ -20,7 +20,7 @@ const validate = values => {
 class DetailEditorView extends Component {
 
     static propTypes = {
-        currentBook : PropTypes.object,
+        editMode    : PropTypes.bool,
         open        : PropTypes.bool,
         fields      : PropTypes.object.isRequired,
         onCancel    : PropTypes.func,
@@ -38,8 +38,7 @@ class DetailEditorView extends Component {
 
     render() {
 
-        const {fields: {title, url, doubanId}, onOk, onCancel, onReset, open, currentBook} = this.props;
-        const editMode = currentBook && currentBook !== null;
+        const { fields: { title, url, doubanId }, onOk, onCancel, onReset, open, editMode } = this.props;
 
         const actions = [
             <FlatButton
@@ -68,19 +67,20 @@ class DetailEditorView extends Component {
                 onRequestClose={onCancel}
             >
                 <div>
+
                     <TextField fullWidth={true}
                                errorText={title.touched && title.error ? title.error : ''}
-                               hintText="请输入书名" floatingLabelText="书名" {...title}
-                               defaultValue={currentBook ? currentBook.title : ''}
+                               floatingLabelText="书名"
+                               {...title}
                     />
                     <TextField fullWidth={true}
                                errorText={doubanId.touched && doubanId.error ? doubanId.error : ''}
-                               hintText="请输入豆瓣编号" floatingLabelText="豆瓣编号" {...doubanId}
-                               defaultValue={currentBook ? currentBook.doubanId : ''}
+                               floatingLabelText="豆瓣编号"
+                               {...doubanId}
                     />
                     <TextField fullWidth={true}
-                               hintText="请输入豆瓣连接" floatingLabelText="豆瓣连接" {...url}
-                               defaultValue={currentBook ? currentBook.url : ''}
+                               floatingLabelText="豆瓣连接"
+                               {...url}
                     />
                 </div>
             </Dialog>
@@ -88,8 +88,9 @@ class DetailEditorView extends Component {
     }
 }
 
+
 export default reduxForm({
-    form: 'new-currentBookReducer-form',
+    form: 'edit-book-form',
     fields,
     validate
 })(DetailEditorView);

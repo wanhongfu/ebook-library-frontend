@@ -39,7 +39,7 @@ class BookListView extends Component {
 
     renderBookActionMenuItem(title, book, requireAuth, clickHander, rightIcon = null) {
         const disabled = requireAuth && !this.props.isAuthenticated;
-        return (<MenuItem primaryText={title} onClick={clickHander} disabled={disabled} rightIcon={rightIcon}/>);
+        return (<MenuItem primaryText={title} onClick={ disabled ? null : clickHander } disabled={ disabled } rightIcon={rightIcon}/>);
     }
 
     renderBookActionMenus(book) {

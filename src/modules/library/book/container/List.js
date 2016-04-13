@@ -43,16 +43,11 @@ class List extends Component {
         router: PropTypes.object.isRequired
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         viewType        : 'grid',
         showDetailPopup : false,
         showEditorPopup : false,
-        currentBook     : null,
-        editMode        : false
+        currentBook     : null
     }
 
     componentDidMount() {
@@ -60,75 +55,79 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.currnetBookState.createdSuccess) {
+        if(nextProps.currnetBookState.savedSuccess) {
             this.setState({
-                showEditorPopup: false
+                showEditorPopup : false,
+                currentBook     : null
             });
         }
     }
 
-    handleViewBookDetail = (bookId) => {
-        //this.props.history.push(`/booksReducer/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
+    handleViewDetailAction = (bookId) => {
+        //this.props.history.push(`/books/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
         this.context.router.push(`/books/${bookId}`);//for react-router v2.0.0
     }
 
-    handleViewBookDetailPopup = (book) => {
+    handleViewDetailPopupAction = (book) => {
         this.setState({
             showDetailPopup : true,
             currentBook     : book
         });
     }
 
-    handleAddClick = () => {
+    handleAddAction = () => {
         this.setState({
             showEditorPopup : true,
-            currentBook     : null,
-            editMode        : false
+            currentBook     : null
         });
     }
 
     handleEditAction = (book) => {
         this.setState({
             showEditorPopup : true,
-            currentBook     : book,
-            editMode        : true
+            currentBook     : book
         });
     }
 
-    handleDetailPopupOkClick = (book) => {
+    handleDetailPopupOkAction = (book) => {
         this.setState({
-            showDetailPopup: false
+            showDetailPopup : false,
+            currentBook     : null
         });
     }
 
-    handleEditorPopupOkClick = () => {
+    handleEditorPopupOkAction = () => {
         this.refs.newBookFormRef.submit();
     }
 
-    handleEditorPopupCancelClick = () => {
+    handleEditorPopupCancelAction = () => {
         this.props.resetSaveBookState();
-        this.props.reset('new-currentBookReducer-form')
-        this.setState({ showEditorPopup: false })
+        this.props.reset('edit-book-form');
+        this.setState({
+            showEditorPopup : false,
+            currentBook     : null
+        });
     }
 
-    handleEditorSubmit = (newBookForm) => {
-        if(this.state.editMode) {
-
-            this.setState({
-                editMode: false,
-                currentBook: null
-            });
-        } else {
-            this.props.saveBook(newBookForm);
+    handleEditorSubmit = (bookForm) => {
+        const { currentBook } = this.state;
+        if(currentBook && currentBook.id) {
+            bookForm.id = currentBook.id;
         }
+        this.props.saveBook(bookForm);
     }
 
     handPageChanged = (page) => {
         this.props.fetchBooks(mkPaginationAndSoreQueryParam2(page, 5, 'title'));
     }
 
+    resetCurrentBookStateAndEditorForm = () => {
+        this.props.resetSaveBookState();
+        this.props.reset('edit-book-form');
+    }
+
     changeViewType = () => {
-        const {viewType} = this.state;
+        const { viewType } = this.state;
         if('grid' === viewType) {
             this.setState({
                 viewType: 'list'
@@ -145,6 +144,7 @@ class List extends Component {
             id          : null,
             title       : null,
             url         : null,
+            doubanId    : null,
             status      : null,
             onboardDate : null,
             owner       : {
@@ -178,8 +178,8 @@ class List extends Component {
             books                   : datalist,
             isAuthenticated,
             currentUser,
-            onViewBookDetail        : this.handleViewBookDetail,
-            onViewBookDetailPopup   : this.handleViewBookDetailPopup,
+            onViewBookDetail        : this.handleViewDetailAction,
+            onViewBookDetailPopup   : this.handleViewDetailPopupAction,
             onEditBook              : this.handleEditAction,
         };
 
@@ -211,41 +211,44 @@ class List extends Component {
         const { showDetailPopup, currentBook } = this.state;
         return (
             <DetailPopupView
-                open={showDetailPopup}
-                book={currentBook}
-                onOk={this.handleDetailPopupOkClick}
+                open = {showDetailPopup}
+                book = {currentBook}
+                onOk = {this.handleDetailPopupOkAction}
             />
         );
     }
 
     renderDetailEditorPopup(){
+
+        const { currentBook, showEditorPopup } = this.state;
+        const initFormValues = currentBook != null ? {...currentBook} : {...this.mkEmptyBookObj()};
+
         return (
             <DetailEditorView
-                currentBook = {this.state.currentBook}
-                open        = {this.state.showEditorPopup}
-                ref         = "newBookFormRef"
-                onSubmit    = {this.handleEditorSubmit}
-                onOk        = {this.handleEditorPopupOkClick}
-                onCancel    = {this.handleEditorPopupCancelClick}
-                onReset     = {()=>{this.props.reset('new-currentBookReducer-form')}}
+                editMode        = {currentBook != null}
+                open            = {showEditorPopup}
+                ref             = "newBookFormRef"
+                onSubmit        = {this.handleEditorSubmit}
+                onOk            = {this.handleEditorPopupOkAction}
+                onCancel        = {this.handleEditorPopupCancelAction}
+                onReset         = {()=>{this.props.reset('edit-book-form')}}
+                initialValues   = {{...initFormValues}}
             />);
     }
 
     renderMsg() {
-        const { currnetBookState: {createdSuccess, createError}, resetSaveBookState, reset } = this.props;
-        if(createdSuccess) {
-            const onRequestClose = () => {
-                resetSaveBookState();
-                reset('new-currentBookReducer-form');
-            }
+        const { currnetBookState: { savedSuccess, error } } = this.props;
+        if(savedSuccess) {
             return (
                 <Snackbar open           = {true}
-                          message        = {"创建成功"}
-                          onRequestClose = {onRequestClose()}
+                          message        = {"保存成功!"}
+                          onRequestClose = {this.resetCurrentBookStateAndEditorForm}
                 />
             );
-        } else if(createError && createError !== null) {
-            return (<Snackbar open={true} message={createError.response.statusText} />);
+        }
+
+        if(error && error !== null) {
+            return (<Snackbar open={true} message={error.message} />);
         }
     }
 
@@ -259,7 +262,7 @@ class List extends Component {
                 {this.renderDetailPopup()}
                 {this.renderDetailEditorPopup()}
                 {
-                    authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddClick} icon={<ContentAdd />} /> : ''
+                    authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddAction} icon={<ContentAdd />} /> : ''
                 }
                 {this.renderMsg()}
             </div>

@@ -18,11 +18,12 @@ export default class ApiClient {
         });
     }
 
-    put(requestUrl, payload = {}) {
+    put(requestUrl, payload = {}, params = {}) {
         return this.request({
             url: requestUrl,
             method: 'put',
-            body: payload
+            body: payload,
+            params
         });
     }
 
