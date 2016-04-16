@@ -7,7 +7,8 @@ class DetailView extends Component {
 
     static propTypes = {
         book: PropTypes.object.isRequired,
-        readonly: PropTypes.bool.isRequired
+        readonly: PropTypes.bool.isRequired,
+        onBackClick: PropTypes.func
     }
 
     render() {
@@ -16,9 +17,10 @@ class DetailView extends Component {
         return (
             <div>
 
-                <Toolbar>
+                <Toolbar style={{height: `48px`}}>
                     <ToolbarGroup float="left">
-                        <IconButton><NavigationArrowBack /></IconButton>
+                        <IconButton onClick={this.props.onBackClick}><NavigationArrowBack /></IconButton>
+                        <ToolbarTitle text="查看图书详情" />
                     </ToolbarGroup>
                 </Toolbar>
 

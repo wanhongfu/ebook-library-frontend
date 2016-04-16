@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {reset} from 'redux-form';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
-import { Toolbar, ToolbarGroup, IconButton, Snackbar } from 'material-ui';
+import { Toolbar, ToolbarGroup, IconButton, Snackbar, ToolbarTitle } from 'material-ui';
 
 import Common from '../../../../common';
 
@@ -31,8 +31,8 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
 }
 
 @connect(state => ({
-    booksState          : state.books,
-    currnetBookState    : state.currentBook,
+    listBooksState      : state.listBooks,
+    editBookState       : state.editBook,
     authcState          : state.authc,
 }), {
     fetchBooks, saveBook, resetSaveBookState, reset
@@ -55,7 +55,7 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.currnetBookState.savedSuccess) {
+        if(nextProps.editBookState.savedSuccess) {
             this.setState({
                 showEditorPopup : false,
                 currentBook     : null
@@ -121,7 +121,7 @@ class List extends Component {
         this.props.fetchBooks(mkPaginationAndSoreQueryParam2(page, 5, 'title'));
     }
 
-    resetCurrentBookStateAndEditorForm = () => {
+    resetEditBookStateAndEditorForm = () => {
         this.props.resetSaveBookState();
         this.props.reset('edit-book-form');
     }
@@ -165,13 +165,13 @@ class List extends Component {
     }
 
     renderDataList() {
-        const { error } = this.props.booksState;
+        const { error } = this.props.listBooksState;
         if(error !== null) {
             return ( <Snackbar open={true} message={error.message} /> );
         }
 
-        const { booksState  : { totalRecNum, currentPage, pageSize, datalist },
-                authcState  : { isAuthenticated, currentUser }
+        const { listBooksState  :   { totalRecNum, currentPage, pageSize, datalist },
+                authcState      :   { isAuthenticated, currentUser }
               } = this.props;
 
         const viewProps = {
@@ -195,12 +195,17 @@ class List extends Component {
     }
 
     renderToolbar() {
+        //TODO refactor here to remove UI logic
+        
         const style = {
             height: `48px`,
         }
         return (
             <Toolbar style={style}>
-                <ToolbarGroup>
+                <ToolbarGroup firstChild={true} style={{paddingLeft: 20}}>
+                    <ToolbarTitle text="图书列表" />
+                </ToolbarGroup>
+                <ToolbarGroup >
                     {this.getCurrentViewTypeIcon()}
                 </ToolbarGroup>
             </Toolbar>
@@ -237,12 +242,12 @@ class List extends Component {
     }
 
     renderMsg() {
-        const { currnetBookState: { savedSuccess, error } } = this.props;
+        const { editBookState: { savedSuccess, error } } = this.props;
         if(savedSuccess) {
             return (
                 <Snackbar open           = {true}
                           message        = {"保存成功!"}
-                          onRequestClose = {this.resetCurrentBookStateAndEditorForm}
+                          onRequestClose = {this.resetEditBookStateAndEditorForm}
                 />
             );
         }
@@ -253,8 +258,8 @@ class List extends Component {
     }
 
     render() {
-        const {booksState, authcState} = this.props;
-        if(booksState.fetching) return ( <Common.Loading /> );
+        const { listBooksState, authcState } = this.props;
+        if(listBooksState.fetching) return ( <Common.Loading /> );
         return (
             <div>
                 {this.renderToolbar()}

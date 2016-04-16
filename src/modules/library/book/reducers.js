@@ -1,7 +1,7 @@
 import { createReducer } from '../../../utils';
 
 import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST, FETCH_BOOKS_FAILURE,
-         FETCH_BOOK_SUCCESS, FETCH_BOOK_FAILURE,
+         FETCH_BOOK_SUCCESS, FETCH_BOOK_FAILURE, FETCH_BOOK_STATE_RESET,
          CREATE_BOOK_SUCCESS, CREATE_BOOK_FAILURE, CREATE_BOOK_STATE_RESET
 } from './actions';
 
@@ -15,7 +15,7 @@ const fetchBooksInitState = {
     pageSize    : 0
 };
 
-const booksReducer = createReducer(fetchBooksInitState, {
+const listBooksReducer = createReducer(fetchBooksInitState, {
 
     [FETCH_BOOKS_REQUEST]: (state) => {
         return {...state, fetching: true};
@@ -37,14 +37,13 @@ const booksReducer = createReducer(fetchBooksInitState, {
     }
 });
 
-//==================== Reducer for single currentBookReducer CRUD ====================
-const singleBookInitState = {
+//==================== Reducer for viewing book ====================
+const viewBookInitState = {
     book    : null,
     error   : null,
-    savedSuccess  : false
 }
 
-const currentBookReducer = createReducer(singleBookInitState, {
+const viewBookReducer = createReducer(viewBookInitState, {
 
     [FETCH_BOOK_SUCCESS]: (state, payload) => {
         return {...state, book: payload.book};
@@ -52,6 +51,18 @@ const currentBookReducer = createReducer(singleBookInitState, {
     [FETCH_BOOK_FAILURE]: (state, payload) => {
         return {...state, error: payload.error};
     },
+    [FETCH_BOOK_STATE_RESET] : (state) => {
+        return {...state, error: null, book: null };
+    }
+});
+
+//==================== Reducer for single currentBookReducer CRUD ====================
+const editleBookInitState = {
+    error   : null,
+    savedSuccess  : false
+}
+
+const editBookReducer = createReducer(editleBookInitState, {
 
     [CREATE_BOOK_SUCCESS]: (state) => {
         return { ...state, savedSuccess: true };
@@ -66,4 +77,4 @@ const currentBookReducer = createReducer(singleBookInitState, {
 
 
 //==================== export reducers ====================
-export { booksReducer, currentBookReducer };
+export { listBooksReducer, viewBookReducer, editBookReducer };

@@ -2,13 +2,14 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer} from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 
-import { booksReducer, currentBookReducer } from '../modules/library/book/reducers';
+import { listBooksReducer, editBookReducer, viewBookReducer } from '../modules/library/book/reducers';
 import { authc } from '../modules/authc/reducers';
 import { user } from '../modules/user/reducers';
 
 const rootReducer = combineReducers({
-    books          : booksReducer,
-    currentBook    : currentBookReducer,
+    listBooks      : listBooksReducer,
+    editBook       : editBookReducer,
+    viewBook       : viewBookReducer,
     authc,
     user,
     form            : formReducer,
