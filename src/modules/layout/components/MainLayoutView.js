@@ -11,8 +11,8 @@ class MainLayoutView extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            muiTheme: getMuiTheme(),
-            leftMenuOpen: true
+            muiTheme     : getMuiTheme(),
+            leftMenuOpen : true
         }
     }
 
@@ -52,30 +52,28 @@ class MainLayoutView extends Component {
                 //backgroundColor: Colors.grey100
             },
             topMenuBarStyle: {
-                position: 'fixed',
-                zIndex: this.state.muiTheme.zIndex.appBar + 1,
-                top: 0,
-                backgroundColor: Colors.cyan500,
-                //minHeight: 64,
-                width: `100%`,
-                height: 64,
-                paddingTop: 5,
-                paddingLeft: 24,
+                position    : 'fixed',
+                zIndex      : this.state.muiTheme.zIndex.appBar + 1,
+                top         : 0,
+                width       : `100%`,
+                height      : 64,
+
+                paddingTop      : 5,
+                paddingLeft     : 24,
+                backgroundColor : Colors.cyan500,
             },
             topMenuTitleStyle: {
-                paddingLeft: 20,
-                //position: "auto",
-                color: Colors.grey50,
-                fontSize: 24,
+                paddingLeft : 20,
+                color       : Colors.grey50,
+                fontSize    : 24,
             },
             content: {
-                paddingTop: Spacing.desktopKeylineIncrement,
-                paddingRight: `80px`,
-                paddingLeft: `280px`,
-                //minHeight: 400,
-                margin: Spacing.desktopGutter,
-                display: "block",
-                //padding: `10px 40px 40px 40px`,
+                paddingTop      : Spacing.desktopKeylineIncrement,
+                paddingRight    : `80px`,
+                paddingLeft     : `280px`,
+
+                margin      : Spacing.desktopGutter,
+                display     : "block",
             },
         }
         return styles;
@@ -84,22 +82,21 @@ class MainLayoutView extends Component {
     render() {
 
         const styles = this.getStyles();
-        //styles.content.paddingLeft = 0;
-
         const leftMenuStyle = { zIndex: styles.topMenuBarStyle.zIndex - 1 };
         return (
             <div id="app" style={styles.app}>
-                <TopMenu topMenuBarStyle={styles.topMenuBarStyle}
-                         topMenuTitleStyle={styles.topMenuTitleStyle}
-                         onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
+                <TopMenu topMenuBarStyle    = {styles.topMenuBarStyle}
+                         topMenuTitleStyle  = {styles.topMenuTitleStyle}
+                         onLeftMenuVisibleAction = {::this.handleLeftMenuVisibleAction}
                 />
 
                 <div ref='rootDiv' style={styles.content}>
                     {this.props.children}
                 </div>
 
-                <LeftMenuView style={leftMenuStyle} open={this.state.leftMenuOpen}
-                              onLeftMenuVisibleAction={::this.handleLeftMenuVisibleAction}
+                <LeftMenuView style = {leftMenuStyle}
+                              open  = {this.state.leftMenuOpen}
+                              onLeftMenuVisibleAction = {::this.handleLeftMenuVisibleAction}
                 />
             </div>
         );

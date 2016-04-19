@@ -6,9 +6,9 @@ import { NavigationArrowBack } from 'material-ui/lib/svg-icons';
 class DetailView extends Component {
 
     static propTypes = {
-        book: PropTypes.object.isRequired,
-        readonly: PropTypes.bool.isRequired,
-        onBackClick: PropTypes.func
+        book        : PropTypes.object.isRequired,
+        readonly    : PropTypes.bool.isRequired,
+        onBackClick : PropTypes.func
     }
 
     render() {

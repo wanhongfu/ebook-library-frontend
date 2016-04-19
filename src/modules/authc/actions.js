@@ -1,13 +1,10 @@
 import { parseJSON, checkHttpStatus, createConstants } from '../../utils';
 import api from '../../api';
 
-export const AuthcConstants = createConstants(
-    'LOGIN_SUCCESS',
-    'LOGIN_FAILURE',
-
-    'LOGOUT_SUCCESS',
-    'ME_FROM_TOKEN'
-);
+export const LOGIN_SUCCESS = "authc/login/success";
+export const LOGIN_FAILURE = "authc/login/failure";
+export const LOGOUT_SUCCESS = "authc/logout/success";
+export const ME_FROM_TOKEN = "authc/token/login"
 
 export function loadUserFromToken() {
     return (dispatch) => {
@@ -18,14 +15,13 @@ export function loadUserFromToken() {
 
         api.authc.loadAccountByToken(_token).then(response => {
             dispatch({
-                type: AuthcConstants.ME_FROM_TOKEN,
-                payload: {
-                    token: _token,
-                    user: response.email
+                type    : ME_FROM_TOKEN,
+                payload : {
+                    token   : _token,
+                    user    : response.email
                 }
             });
-        }).catch(error => {
-        });
+        }).catch(error => {});
     }
 }
 
@@ -48,20 +44,20 @@ function loginSuccess(username, response) {
     sessionStorage.setItem('token', token);
 
     return {
-        type: AuthcConstants.LOGIN_SUCCESS,
-        payload: {
-            token: token,
-            user: username
+        type    : LOGIN_SUCCESS,
+        payload : {
+            token   : token,
+            user    : username
         }
     };
 }
 
 function loginFailure(username, error) {
     return {
-        type: AuthcConstants.LOGIN_FAILURE,
-        payload: {
-            user: username,
-            error: error
+        type    : LOGIN_FAILURE,
+        payload : {
+            user    : username,
+            error   : error
         }
     };
 }
@@ -74,7 +70,7 @@ export function logoutUser() {
             sessionStorage.removeItem('token');
         }
         dispatch({
-            type: AuthcConstants.LOGOUT_SUCCESS
+            type: LOGOUT_SUCCESS
         });
     }
 }

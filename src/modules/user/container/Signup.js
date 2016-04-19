@@ -8,20 +8,16 @@ import SignupView from '../components/SignupView';
 import {signupUser, resetSignupState} from '../actions';
 
 @connect(state => ({
-    signupSuccess: state.user.signupSuccess,
-    signupMsg: state.user.signupMsg
+    signupSuccess  : state.user.signupSuccess,
+    signupMsg      : state.user.signupMsg
 }), {
     signupUser, resetSignupState, reset
 })
 class Signup extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            signupMsg: null,
-            signupSuccess: false
-        }
+    static state = {
+        signupMsg     : null,
+        signupSuccess : false
     }
 
     static contextTypes = {
@@ -31,8 +27,8 @@ class Signup extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.signupMsg !== undefined && nextProps.signupMsg !== null) {
             this.setState({
-                signupMsg: nextProps.signupMsg,
-                signupSuccess: nextProps.signupSuccess
+                signupMsg     : nextProps.signupMsg,
+                signupSuccess : nextProps.signupSuccess
             });
         }
         if(nextProps.signupSuccess) {
@@ -68,12 +64,12 @@ class Signup extends Component {
     render() {
         return (
             <div>
-                <SignupView open={true}
-                            ref="signupFormRef"
-                            onSubmit={this.handleSubmit}
-                            onCancel={this.handleCancelAction}
-                            onOk={this.submitForm}
-                            onReset={this.resetForm}
+                <SignupView open    = {true}
+                            ref     = "signupFormRef"
+                            onSubmit    = {this.handleSubmit}
+                            onCancel    = {this.handleCancelAction}
+                            onOk        = {this.submitForm}
+                            onReset     = {this.resetForm}
                 />
                 {this.renderErrorMsg()}
             </div>

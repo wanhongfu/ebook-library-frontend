@@ -5,17 +5,17 @@ import { Colors } from 'material-ui/lib/styles';
 export default class PaginationIndicator extends React.Component {
 
     static propTypes = {
-        active: PropTypes.bool,
-        disabled: PropTypes.bool,
-        label: PropTypes.string,
-        onClick: PropTypes.func,
-        pageNum: PropTypes.number,
-        icon: PropTypes.object
+        active      : PropTypes.bool,
+        disabled    : PropTypes.bool,
+        label       : PropTypes.string,
+        onClick     : PropTypes.func,
+        pageNum     : PropTypes.number,
+        icon        : PropTypes.object
     }
 
     static defaultProps = {
-        active: false,
-        disabled: false
+        active      : false,
+        disabled    : false
     }
 
     _onClick = () => {
@@ -37,7 +37,10 @@ export default class PaginationIndicator extends React.Component {
         const otherProps = icon ? {icon: icon} : {label: String(label)};
 
         return (
-            <FlatButton disabled={active || disabled} onClick={this._onClick} style={styles.fb} {...otherProps} />
+            <FlatButton disabled={active || disabled}
+                        onClick={this._onClick} style={styles.fb}
+                        {...otherProps}
+            />
         );
     }
 

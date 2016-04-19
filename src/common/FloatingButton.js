@@ -5,10 +5,10 @@ import { Paper, FloatingActionButton } from 'material-ui';
 const FloatingButton = (props) => {
 
     const style = {
-        margin: `30px 0px`,
-        right: `24px`,
-        bottom: `50px`,
-        position: "fixed"
+        margin   : `30px 0px`,
+        right    : `24px`,
+        bottom   : `50px`,
+        position : "fixed"
     };
 
     return (
@@ -21,8 +21,8 @@ const FloatingButton = (props) => {
 }
 
 FloatingButton.propTypes = {
-    onClick: PropTypes.func,
-    icon: PropTypes.object
+    onClick : PropTypes.func,
+    icon    : PropTypes.object
 }
 
 export default FloatingButton;

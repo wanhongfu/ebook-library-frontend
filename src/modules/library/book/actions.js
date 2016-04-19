@@ -1,9 +1,9 @@
 import api from '../../../api';
 
 //==================== Actions for fetching currentBookReducer list ====================
-export const FETCH_BOOKS_REQUEST    = 'library/books/fetch/request';
-export const FETCH_BOOKS_SUCCESS    = 'library/books/fetch/success';
-export const FETCH_BOOKS_FAILURE    = 'library/books/fetch/failure';
+export const FETCH_BOOKS_REQUEST = 'library/books/fetch/request';
+export const FETCH_BOOKS_SUCCESS = 'library/books/fetch/success';
+export const FETCH_BOOKS_FAILURE = 'library/books/fetch/failure';
 
 export function fetchBooks({page, size, sort}) {
     return (dispatch) => {
@@ -33,8 +33,8 @@ export function fetchBooks({page, size, sort}) {
 }
 
 //==================== Actions for fetching single currentBookReducer ====================
-export const FETCH_BOOK_SUCCESS = 'library/book/fetch/success';
-export const FETCH_BOOK_FAILURE = 'library/book/fetch/failure';
+export const FETCH_BOOK_SUCCESS     = 'library/book/fetch/success';
+export const FETCH_BOOK_FAILURE     = 'library/book/fetch/failure';
 export const FETCH_BOOK_STATE_RESET = 'library/book/fetch/reset';
 
 export function fetchSingleBook(id) {
@@ -55,7 +55,7 @@ export function resetViewBookState() {
 
 //==================== Actions for creating currentBookReducer ====================
 export const CREATE_BOOK_SUCCESS        = 'library/book/create/success';
-export const CREATE_BOOK_FAILURE        = 'library/book/create/success';
+export const CREATE_BOOK_FAILURE        = 'library/book/create/failure';
 export const CREATE_BOOK_STATE_RESET    = 'library/book/state/reset';
 
 export function saveBook(book) {
@@ -67,6 +67,7 @@ export function saveBook(book) {
         if(_token.length <= 0) return;
 
         api.books.save(book, _token).then(response => {
+            console.log('save book successful');
             dispatch({type: CREATE_BOOK_SUCCESS});
         }).catch(error => {
             dispatch({type: CREATE_BOOK_FAILURE, payload: { error }});

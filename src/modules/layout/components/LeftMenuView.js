@@ -11,22 +11,22 @@ import { browserHistory } from 'react-router';
 class LeftMenuView extends Component {
 
     static propTypes = {
-        style: PropTypes.object,
-        open: PropTypes.bool.isRequired,
-        onLeftMenuVisibleAction: PropTypes.func,
+        style   : PropTypes.object,
+        open    : PropTypes.bool.isRequired,
+        onLeftMenuVisibleAction: PropTypes.func
     }
 
     getStyles() {
         return {
             logo: {
-                cursor: 'pointer',
-                fontSize: 24,
-                color: Typography.textFullWhite,
-                lineHeight: `${Spacing.desktopKeylineIncrement}px`,
+                cursor      : 'pointer',
+                fontSize    : 24,
+                color       : Typography.textFullWhite,
+                lineHeight  : `${Spacing.desktopKeylineIncrement}px`,
 
-                backgroundColor: Colors.cyan500,
-                paddingLeft: Spacing.desktopGutter,
-                marginBottom: 8
+                backgroundColor : Colors.cyan500,
+                paddingLeft     : Spacing.desktopGutter,
+                marginBottom    : 8
             },
         };
     }
@@ -52,17 +52,17 @@ class LeftMenuView extends Component {
                     <Subheader>图书馆</Subheader>
 
                     <ListItem
-                        leftIcon={<MapsLocalLibrary />}
-                        value="books"
-                        primaryText="所有图书"
-                        onClick={() => this.dispatchNewRoute('/books')}
+                        leftIcon    = { <MapsLocalLibrary /> }
+                        value       = "books"
+                        primaryText = "所有图书"
+                        onClick     = {() => this.dispatchNewRoute('/books')}
                     />
 
                     <ListItem
-                        leftIcon={<MapsLocalLibrary />}
-                        value="books"
-                        primaryText="我借到的图书"
-                        onClick={() => this.dispatchNewRoute('/books')}
+                        leftIcon    = {<MapsLocalLibrary />}
+                        value       = "books"
+                        primaryText = "我借到的图书"
+                        onClick     = {() => this.dispatchNewRoute('/books')}
                     />
                 </List>
 
@@ -72,24 +72,24 @@ class LeftMenuView extends Component {
                     <Subheader>系统设置</Subheader>
 
                     <ListItem
-                        leftIcon={<ActionAccountBox />}
-                        value="users"
-                        primaryText="我的信息"
-                        onClick={() => this.dispatchNewRoute('/users')}
+                        leftIcon    = {<ActionAccountBox />}
+                        value       = "users"
+                        primaryText = "我的信息"
+                        onClick     = {() => this.dispatchNewRoute('/users')}
                     />
 
                     <ListItem
-                        leftIcon={<ActionAccountBox />}
-                        value="users"
-                        primaryText="借阅请求"
-                        onClick={() => this.dispatchNewRoute('/users')}
+                        leftIcon    = {<ActionAccountBox />}
+                        value       = "users"
+                        primaryText = "借阅请求"
+                        onClick     = {() => this.dispatchNewRoute('/users')}
                     />
 
                     <ListItem
-                        leftIcon={<ActionAccountBox />}
-                        value="users"
-                        primaryText="还书请求"
-                        onClick={() => this.dispatchNewRoute('/users')}
+                        leftIcon    = {<ActionAccountBox />}
+                        value       = "users"
+                        primaryText = "还书请求"
+                        onClick     = {() => this.dispatchNewRoute('/users')}
                     />
                 </List>
 

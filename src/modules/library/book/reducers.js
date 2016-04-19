@@ -56,16 +56,16 @@ const viewBookReducer = createReducer(viewBookInitState, {
     }
 });
 
-//==================== Reducer for single currentBookReducer CRUD ====================
+//==================== Reducer for single book CRUD ====================
 const editleBookInitState = {
-    error   : null,
+    error         : null,
     savedSuccess  : false
 }
 
 const editBookReducer = createReducer(editleBookInitState, {
 
     [CREATE_BOOK_SUCCESS]: (state) => {
-        return { ...state, savedSuccess: true };
+        return { ...state, savedSuccess: true, error: null };
     },
     [CREATE_BOOK_FAILURE]: (state, payload) => {
         return { ...state, savedSuccess: false, error: payload.error };

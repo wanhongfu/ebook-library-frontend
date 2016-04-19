@@ -13,14 +13,14 @@ import './layout.css';
 class TopMenuView extends Component {
 
     static propTypes = {
-        isLoginIn: PropTypes.bool.isRequired,
-        title: PropTypes.string.isRequired,
-        topMenuBarStyle: PropTypes.object,
-        topMenuTitleStyle: PropTypes.object,
-        onLeftMenuVisibleAction: PropTypes.func,
-        onLoginRequest: PropTypes.func,
-        onLogoutRequest: PropTypes.func,
-        onSignupRequest: PropTypes.func
+        isLoginIn       : PropTypes.bool.isRequired,
+        title           : PropTypes.string.isRequired,
+        topMenuBarStyle : PropTypes.object,
+        topMenuTitleStyle       : PropTypes.object,
+        onLeftMenuVisibleAction : PropTypes.func,
+        onLoginRequest  : PropTypes.func,
+        onLogoutRequest : PropTypes.func,
+        onSignupRequest : PropTypes.func
     }
 
     constructor(props) {

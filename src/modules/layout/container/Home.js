@@ -5,8 +5,8 @@ import { loginUser } from '../../authc/actions';
 import { HomeView } from '../components/';
 
 @connect(state => ({
-    isAuthenticated: state.authc.isAuthenticated,
-    currentUser: state.authc.currentUser,
+    isAuthenticated : state.authc.isAuthenticated,
+    currentUser     : state.authc.currentUser,
 }))
 class Home extends Component {
 

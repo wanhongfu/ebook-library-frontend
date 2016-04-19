@@ -31,9 +31,9 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
 }
 
 @connect(state => ({
-    listBooksState      : state.listBooks,
-    editBookState       : state.editBook,
-    authcState          : state.authc,
+    listBooksState  : state.listBooks,
+    editBookState   : state.editBook,
+    authcState      : state.authc,
 }), {
     fetchBooks, saveBook, resetSaveBookState, reset
 })
@@ -170,8 +170,8 @@ class List extends Component {
             return ( <Snackbar open={true} message={error.message} /> );
         }
 
-        const { listBooksState  :   { totalRecNum, currentPage, pageSize, datalist },
-                authcState      :   { isAuthenticated, currentUser }
+        const { listBooksState  : { totalRecNum, currentPage, pageSize, datalist },
+                authcState      : { isAuthenticated, currentUser }
               } = this.props;
 
         const viewProps = {
@@ -243,6 +243,9 @@ class List extends Component {
 
     renderMsg() {
         const { editBookState: { savedSuccess, error } } = this.props;
+
+        console.log(`savedSuccess=${savedSuccess}, error=${error}`);
+
         if(savedSuccess) {
             return (
                 <Snackbar open           = {true}

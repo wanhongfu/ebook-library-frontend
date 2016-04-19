@@ -8,19 +8,19 @@ import PaginationInfo from './PaginationInfo';
 class Paginator extends Component {
 
     static propTypes = {
-        simpleNavi: PropTypes.bool,
+        simpleNavi  : PropTypes.bool,
 
-        currentPage: PropTypes.number.isRequired,
-        pageRange: PropTypes.number,
-        totalRecNum: PropTypes.number.isRequired,
-        pageSize: PropTypes.number,
+        currentPage : PropTypes.number.isRequired,
+        pageRange   : PropTypes.number,
+        totalRecNum : PropTypes.number.isRequired,
+        pageSize    : PropTypes.number,
         onPageChange: PropTypes.func
     }
 
     static defaultProps = {
-        pageSize: 5,
-        pageRange: 5,
-        simpleNavi: false
+        pageSize    : 5,
+        pageRange   : 5,
+        simpleNavi  : false
     }
 
     onPageChange = (page) => {
@@ -52,11 +52,11 @@ class Paginator extends Component {
     _renderNeighbour({disabled, page, icon}) {
         return (
             <PaginationIndicator
-                disabled={disabled}
-                onClick={this.onPageChange}
-                pageNum={page}
-                icon = {icon}
-                key = {page}
+                disabled    = {disabled}
+                onClick     = {this.onPageChange}
+                pageNum     = {page}
+                icon        = {icon}
+                key         = {page}
             />
         );
     }
@@ -68,10 +68,10 @@ class Paginator extends Component {
 
         return (
             <PaginationIndicator
-                onClick={this.onPageChange}
-                pageNum={page}
-                key = {page}
-                icon={<NavigationMoreHoriz />}
+                onClick = {this.onPageChange}
+                pageNum = {page}
+                key     = {page}
+                icon    = {<NavigationMoreHoriz />}
             />
         );
     }
@@ -79,11 +79,11 @@ class Paginator extends Component {
     _renderPage(page){
         return (
             <PaginationIndicator
-                active={this.props.currentPage == page}
-                key={page}
-                label={String(page)}
-                onClick={this.onPageChange}
-                pageNum={page}
+                active  = {this.props.currentPage == page}
+                key     = {page}
+                label   = {String(page)}
+                onClick = {this.onPageChange}
+                pageNum = {page}
             />
         );
     }
@@ -91,22 +91,23 @@ class Paginator extends Component {
     renderPrevious(){
         const { currentPage } = this.props;
         return this._renderNeighbour({
-            disabled: currentPage == 1,
-            page: currentPage - 1,
-            icon: <NavigationChevronLeft />
+            disabled : currentPage == 1,
+            page     : currentPage - 1,
+            icon     : <NavigationChevronLeft />
         });
     }
 
     renderPreviousBreak(){
         const resultArray = new Array(),
-            { currentPage, pageRange } = this.props,
-            minRange = this._getMinRange();
+              { currentPage, pageRange } = this.props,
+              minRange = this._getMinRange();
         let breakPage = minRange - 1;
 
         resultArray.push(this._renderPage(1));
 
         const shouldRenderBreak = this._getNumOfPages() > pageRange
                             && currentPage == minRange
+                            && currentPage != 1
                             && currentPage - 1 != 1;
         if(shouldRenderBreak) {
             breakPage -= 1;
@@ -159,17 +160,17 @@ class Paginator extends Component {
     renderNext(){
         const { currentPage } = this.props;
         return this._renderNeighbour({
-            disabled: currentPage == this._getNumOfPages(),
-            page: currentPage + 1,
-            icon: <NavigationChevronRight />
+            disabled : currentPage == this._getNumOfPages(),
+            page     : currentPage + 1,
+            icon     : <NavigationChevronRight />
         });
     }
 
     renderPaginationInfo() {
         return (
-            <PaginationInfo totalPageNum={this._getNumOfPages()}
-                            currnetPage={this.props.currentPage}
-                            totalRecNum={this.props.totalRecNum}
+            <PaginationInfo totalPageNum = {this._getNumOfPages()}
+                            currnetPage  = {this.props.currentPage}
+                            totalRecNum  = {this.props.totalRecNum}
             />
         );
     }

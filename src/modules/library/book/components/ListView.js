@@ -13,17 +13,17 @@ import Common from '../../../../common';
 class BookListView extends Component {
 
     static propTypes = {
-        isAuthenticated: PropTypes.bool.isRequired,
-        currentUser: PropTypes.string,
-        books: PropTypes.array,
-        onViewBookDetail: PropTypes.func,
-        onViewBookDetailPopup: PropTypes.func,
-        onEditBook: PropTypes.func,
+        isAuthenticated         : PropTypes.bool.isRequired,
+        currentUser             : PropTypes.string,
+        books                   : PropTypes.array,
+        onViewBookDetail        : PropTypes.func,
+        onViewBookDetailPopup   : PropTypes.func,
+        onEditBook              : PropTypes.func,
 
-        onPageChanged: PropTypes.func,
-        currentPage: PropTypes.number,
-        totalRecNum: PropTypes.number,
-        pageSize: PropTypes.number,
+        onPageChanged   : PropTypes.func,
+        currentPage     : PropTypes.number,
+        totalRecNum     : PropTypes.number,
+        pageSize        : PropTypes.number,
     }
 
     constructor(props) {
@@ -72,11 +72,11 @@ class BookListView extends Component {
                 <TableRow key={book.id} >
                     <TableRowColumn style={rowStyle} >{book.id}</TableRowColumn>
                     <TableRowColumn style={rowStyle} >{book.title}</TableRowColumn>
-                    <TableRowColumn style={rowStyle}>{book.url}</TableRowColumn>
-                    <TableRowColumn style={rowStyle}>{book.status}</TableRowColumn>
-                    <TableRowColumn style={rowStyle}>{book.onboardDate}</TableRowColumn>
-                    <TableRowColumn style={rowStyle}>{book.owner.name}</TableRowColumn>
-                    <TableRowColumn style={rowStyle}>
+                    <TableRowColumn style={rowStyle} >{book.url}</TableRowColumn>
+                    <TableRowColumn style={rowStyle} >{book.status}</TableRowColumn>
+                    <TableRowColumn style={rowStyle} >{book.onboardDate}</TableRowColumn>
+                    <TableRowColumn style={rowStyle} >{book.owner.name}</TableRowColumn>
+                    <TableRowColumn style={rowStyle} >
                         { this.renderBookActionMenus(book) }
                     </TableRowColumn>
                 </TableRow>
@@ -96,10 +96,10 @@ class BookListView extends Component {
                 <TableFooter adjustForCheckbox={true}>
                     <TableRow>
                         <TableRowColumn colSpan="7" style={{textAlign: 'right'}}>
-                            <Common.Paginator pageSize={this.props.pageSize}
-                                              currentPage={this.props.currentPage}
-                                              totalRecNum={this.props.totalRecNum}
-                                              onPageChange={this.handlePageClick}
+                            <Common.Paginator pageSize      =   {this.props.pageSize}
+                                              currentPage   =   {this.props.currentPage}
+                                              totalRecNum   =   {this.props.totalRecNum}
+                                              onPageChange  =   {this.handlePageClick}
                             />
                         </TableRowColumn>
                     </TableRow>

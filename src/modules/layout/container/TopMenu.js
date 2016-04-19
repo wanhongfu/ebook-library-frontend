@@ -6,10 +6,10 @@ import { logoutUser } from '../../authc/actions';
 
 
 @connect(state => ({
-    isAuthenticated: state.authc.isAuthenticated,
-    token: state.authc.token,
-    currentUser: state.authc.currentUser,
-    error: state.authc.error
+    isAuthenticated : state.authc.isAuthenticated,
+    token           : state.authc.token,
+    currentUser     : state.authc.currentUser,
+    error           : state.authc.error
 }), {
     logoutUser
 })
@@ -21,13 +21,13 @@ class TopMenu extends Component {
 
     static propTypes = {
 
-        isAuthenticated: PropTypes.bool,
-        token: PropTypes.string,
-        currentUser: PropTypes.string,
+        isAuthenticated : PropTypes.bool,
+        token           : PropTypes.string,
+        currentUser     : PropTypes.string,
 
-        topMenuBarStyle: PropTypes.object,
-        topMenuTitleStyle: PropTypes.object,
-        onLeftMenuVisibleAction: PropTypes.func
+        topMenuBarStyle         : PropTypes.object,
+        topMenuTitleStyle       : PropTypes.object,
+        onLeftMenuVisibleAction : PropTypes.func
     }
 
     static contextTypes = {
@@ -51,14 +51,14 @@ class TopMenu extends Component {
 
         return (
             <div>
-                <TopMenuView isLoginIn={this.props.isAuthenticated}
-                            title="P2PLib"
-                            topMenuBarStyle={this.props.topMenuBarStyle}
-                            topMenuTitleStyle={this.props.topMenuTitleStyle}
-                            onLeftMenuVisibleAction={this.props.onLeftMenuVisibleAction}
-                            onLoginRequest={::this.handleLoginAction}
-                            onLogoutRequest={::this.handleLogoutAction}
-                            onSignupRequest={::this.handleSignupAction} 
+                <TopMenuView isLoginIn              = {this.props.isAuthenticated}
+                            title                   = "P2PLib"
+                            topMenuBarStyle         = {this.props.topMenuBarStyle}
+                            topMenuTitleStyle       = {this.props.topMenuTitleStyle}
+                            onLeftMenuVisibleAction = {this.props.onLeftMenuVisibleAction}
+                            onLoginRequest          = {::this.handleLoginAction}
+                            onLogoutRequest         = {::this.handleLogoutAction}
+                            onSignupRequest         = {::this.handleSignupAction}
                 />
             </div>
 

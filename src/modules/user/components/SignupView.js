@@ -22,11 +22,11 @@ const validate = values => {
 class SignupView extends Component {
 
     static propTypes = {
-        open: PropTypes.bool,
-        fields: PropTypes.object.isRequired,
-        onCancel: PropTypes.func,
-        onOk: PropTypes.func,
-        onReset: PropTypes.func
+        open        : PropTypes.bool,
+        fields      : PropTypes.object.isRequired,
+        onCancel    : PropTypes.func,
+        onOk        : PropTypes.func,
+        onReset     : PropTypes.func
     };
 
     static defaultProps = {
@@ -64,15 +64,34 @@ class SignupView extends Component {
 
         return (
             <Dialog
-                title="P2PLib - 用户注册"
-                actions={actions}
-                open={open}
-                onRequestClose={onCancel}
+                title           =  "P2PLib - 用户注册"
+                actions         =  {actions}
+                open            =  {open}
+                onRequestClose  =  {onCancel}
             >
                 <div>
-                    <TextField fullWidth={true} errorText={email.touched && email.error ? email.error : ''} hintText="请输入电子邮件" floatingLabelText="电子邮件" {...email} /><br />
-                    <TextField fullWidth={true} errorText={name.touched && name.error ? name.error : ''} hintText="请输入昵称" floatingLabelText="昵称" {...name} /><br />
-                    <TextField fullWidth={true} errorText={password.touched && password.error ? password.error : ''}  hintText="请输入登陆密码" type="password" floatingLabelText="密码" {...password} /><br />
+                    <TextField fullWidth={true}
+                               errorText={email.touched && email.error ? email.error : ''}
+                               hintText="请输入电子邮件"
+                               floatingLabelText="电子邮件"
+                               {...email}
+                    />
+                    <br/>
+                    <TextField fullWidth={true}
+                               errorText={name.touched && name.error ? name.error : ''}
+                               hintText="请输入昵称"
+                               floatingLabelText="昵称"
+                               {...name}
+                    />
+                    <br />
+                    <TextField fullWidth={true}
+                               errorText={password.touched && password.error ? password.error : ''}
+                               hintText="请输入登陆密码"
+                               type="password"
+                               floatingLabelText="密码"
+                               {...password}
+                    />
+                    <br />
                 </div>
             </Dialog>
         );

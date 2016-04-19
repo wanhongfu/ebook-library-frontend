@@ -1,12 +1,9 @@
 import { createConstants } from '../../utils';
 import api from '../../api';
 
-export const UserConstants = createConstants(
-    'USER_SIGNUP',
-    'USER_SIGNUP_SUCCESS',
-    'USER_SIGNUP_FAILURE',
-    'USER_SIGNUP_RESET'
-);
+export const USER_SIGNUP_SUCCESS = "user/signup/success";
+export const USER_SIGNUP_FAILURE = "user/signup/failure";
+export const USER_SIGNUP_RESET   = "user/signup/reset";
 
 export function signupUser(signupForm) {
     return (dispatch) => {
@@ -15,11 +12,11 @@ export function signupUser(signupForm) {
 
         api.authc.create(signupForm).then((response) => {
             dispatch({
-                type: UserConstants.USER_SIGNUP_SUCCESS
+                type: USER_SIGNUP_SUCCESS
             });
         }).catch(error => {
             dispatch({
-                type: UserConstants.USER_SIGNUP_FAILURE,
+                type: USER_SIGNUP_FAILURE,
                 payload: {
                     error: error
                 }
@@ -36,6 +33,6 @@ export function resetSignupState() {
 
 function mkResetAction() {
     return {
-        type: UserConstants.USER_SIGNUP_RESET
+        type: USER_SIGNUP_RESET
     };
 }

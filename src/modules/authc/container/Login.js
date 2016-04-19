@@ -1,17 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-import Snackbar from 'material-ui/lib/snackbar';
-
 import LoginPopupView from '../components/LoginPopupView';
 
 import { loginUser } from '../actions';
 
 @connect(state => ({
-    isAuthenticated: state.authc.isAuthenticated,
-    token: state.authc.token,
-    currentUser: state.authc.currentUser,
-    error: state.authc.error
+    isAuthenticated : state.authc.isAuthenticated,
+    token           : state.authc.token,
+    currentUser     : state.authc.currentUser,
+    error           : state.authc.error
 }), {
     loginUser
 })

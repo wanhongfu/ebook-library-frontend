@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { MainLayoutView } from '../components/';
+import { MainLayoutView } from '../components';
 
 class MainLayout extends Component {
 

@@ -6,8 +6,8 @@ import { SocialPersonAdd, ActionInput } from 'material-ui/lib/svg-icons';
 class HomeView extends Component {
 
     static propTypes = {
-        isAuthenticated: PropTypes.bool,
-        currentUser: PropTypes.string
+        isAuthenticated : PropTypes.bool,
+        currentUser     : PropTypes.string
     }
 
     static contextTypes = {
@@ -31,11 +31,17 @@ class HomeView extends Component {
         const content = isAuthenticated ?
                             ( `欢迎回来, ${currentUser}`) :
                             ( <div>
-                                <FlatButton label="请登陆" onTouchTap={::this.handleLoginAction}
-                                          linkButton={true} icon={<ActionInput />} />
+                                <FlatButton label="请登陆"
+                                            onTouchTap={::this.handleLoginAction}
+                                            linkButton={true}
+                                            icon={<ActionInput />}
+                                />
 
-                                <FlatButton label="注册" onTouchTap={::this.handleSignupAction}
-                                                linkButton={true} icon={<SocialPersonAdd />} />
+                                <FlatButton label="注册"
+                                            onTouchTap={::this.handleSignupAction}
+                                            linkButton={true}
+                                            icon={<SocialPersonAdd />}
+                                />
                               </div>
                             );
         return (

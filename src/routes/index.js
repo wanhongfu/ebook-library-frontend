@@ -41,7 +41,9 @@ function walk(routes, cb) {
 
 export default(store) => {
     return walk(Route.createRouteFromReactElement(appRouters), route => {
+
         route.onEnter = (nextState, replace) => {
+
             const loggedIn = !!store.getState().authc.isAuthenticated;
             if (route.requireAuth && !loggedIn) {
                 replace('/login');

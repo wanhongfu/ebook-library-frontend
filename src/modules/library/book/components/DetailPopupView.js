@@ -14,9 +14,9 @@ const BookDetailPopup = (props) => {
             {
                 (book && book !== null) ?
                     <Paper zDepth={0}>
-                        <TextField floatingLabelText="上传者" defaultValue={book.owner.name} {...c} />
-                        <TextField floatingLabelText="图书ID" defaultValue={book.id} {...c} />
-                        <TextField floatingLabelText="书名" defaultValue={book.title} {...c} />
+                        <TextField floatingLabelText="上传者"  defaultValue={book.owner.name} {...c} />
+                        <TextField floatingLabelText="图书ID"  defaultValue={book.id} {...c} />
+                        <TextField floatingLabelText="书名"    defaultValue={book.title} {...c} />
                         <TextField floatingLabelText="豆瓣连接" defaultValue={book.url} {...c} />
                         <TextField floatingLabelText="上传日期" defaultValue={book.onboardDate} {...c} />
                     </Paper> : <div />
@@ -27,19 +27,19 @@ const BookDetailPopup = (props) => {
 
 BookDetailPopup.propTypes = {
     book: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        onboardDate: PropTypes.string.isRequired,
-        owner: PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            email: PropTypes.string.isRequired
+        id          : PropTypes.number.isRequired,
+        title       : PropTypes.string.isRequired,
+        url         : PropTypes.string.isRequired,
+        status      : PropTypes.string.isRequired,
+        onboardDate : PropTypes.string.isRequired,
+        owner       : PropTypes.shape({
+            id    : PropTypes.number.isRequired,
+            name  : PropTypes.string.isRequired,
+            email : PropTypes.string.isRequired
         })
     }),
-    onOk: PropTypes.func.isRequired,
-    open: PropTypes.bool
+    onOk    : PropTypes.func.isRequired,
+    open    : PropTypes.bool
 }
 
 export default BookDetailPopup;
