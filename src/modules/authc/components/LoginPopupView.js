@@ -1,25 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { Dialog, FlatButton, TextField, Snackbar } from 'material-ui';
 
+const propTypes = {
+    open        : PropTypes.bool.isRequired,
+    onCancel    : PropTypes.func,
+    onOk        : PropTypes.func,
+    serverError : PropTypes.string
+}
+
 class LoginPopupView extends Component {
 
-    static propTypes = {
-        open        : PropTypes.bool.isRequired,
-        onCancel    : PropTypes.func,
-        onOk        : PropTypes.func,
-        serverError : PropTypes.string
-    };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            inputUsername           : null,
-            inputUsernameErrorMsg   : null,
-            inputPassword           : null,
-            inputPasswordErrorMsg   : null,
-            serverError             : null
-        }
+    state = {
+        inputUsername           : null,
+        inputUsernameErrorMsg   : null,
+        inputPassword           : null,
+        inputPasswordErrorMsg   : null,
+        serverError             : null
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,10 +77,6 @@ class LoginPopupView extends Component {
         ];
 
         const {inputUsernameErrorMsg, inputPasswordErrorMsg, serverError} = this.state;
-        // let snackbarContent = null;
-        // if(serverError !== undefined && serverError !== null) {
-        //     snackbarContent = (<Snackbar open={true} message={serverError} />);
-        // }
 
         return (
             <div>
@@ -117,5 +109,7 @@ class LoginPopupView extends Component {
         );
     }
 }
+
+LoginPopupView.propTypes = propTypes;
 
 export default LoginPopupView;
