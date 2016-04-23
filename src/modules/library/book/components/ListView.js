@@ -68,9 +68,9 @@ class BookListView extends Component {
     renderBodyRows() {
         if(this.props.fetching) return <Common.Loading />;
 
-        const rowStyle = {width: `30%`};
+        const rowStyle = {width: `30%`, textAlign: 'left'};
         const rowContent = this.props.books.map(book => (
-            <TableRow key={book.id} >
+            <TableRow key={book.id}>
                 <TableRowColumn style={rowStyle} >{book.id}</TableRowColumn>
                 <TableRowColumn style={rowStyle} >{book.title}</TableRowColumn>
                 <TableRowColumn style={rowStyle} >{book.url}</TableRowColumn>

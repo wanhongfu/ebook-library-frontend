@@ -6,7 +6,8 @@ import Sticky from '../Sticky';
 class InnerToolbar extends Component {
 
     static propTypes = {
-        children: React.PropTypes.node,
+        children : React.PropTypes.node,
+        menu     : React.PropTypes.node,
 
         showBackButton              : React.PropTypes.bool,
         backButtonTooltipPosition   : React.PropTypes.string,
@@ -56,28 +57,31 @@ class InnerToolbar extends Component {
         );
     }
 
-    renderTitle(title) {
-        return;
-    }
-
-    renderBackButton() {
-        const {backButtonTooltip, backButtonTooltipPosition, onBackButtonClick, title} = this.props;
-
+    renderTitle() {
+        const {backButtonTooltip, backButtonTooltipPosition, onBackButtonClick, title, showBackButton} = this.props;
+        if(!title && !showBackButton) return null;
         return (
             <ToolbarGroup style={{paddingRight: 24}}>
-                <IconButton touch={true}
-                            style={{marginTop: 4}}
-                            tooltipPosition={backButtonTooltipPosition}
-                            tooltip={backButtonTooltip}
-                            iconStyle={{color: 'rgba(0,0,0,.4)'}}
-                            onClick={onBackButtonClick}
-                >
-                    <NavigationArrowBack />
-                </IconButton>
 
-                <ToolbarTitle
-                    text={title}
-                    style={{paddingRight: 0}} />
+                {showBackButton ?
+                    <IconButton
+                        touch={true}
+                        style={{marginTop: 4}}
+                        tooltipPosition={backButtonTooltipPosition}
+                        tooltip={backButtonTooltip}
+                        iconStyle={{color: 'rgba(0,0,0,.4)'}}
+                        onClick={onBackButtonClick}
+                    >
+                        <NavigationArrowBack />
+                    </IconButton> : null
+                }
+
+                {title ?
+                    <ToolbarTitle
+                        text={title}
+                        style={{paddingRight: 0}}
+                    /> : null
+                }
 
             </ToolbarGroup>
         );
@@ -90,8 +94,7 @@ class InnerToolbar extends Component {
         return (
             <Sticky offsetTop={50} zIndex={12}>
                 <Toolbar style={styles.toolbar}>
-                    {showBackButton ? this.renderBackButton() : null}
-                    {title ? this.renderTitle(title) : null}
+                    {this.renderTitle()}
                     {menu ? this.renderMenu(menu) : null}
                     {children ? this.renderChildren(children) : null}
                 </Toolbar>

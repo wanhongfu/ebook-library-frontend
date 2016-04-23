@@ -157,9 +157,9 @@ class List extends Component {
 
     getCurrentViewTypeIcon = () => {
         if(_.eq('list', this.state.viewType)) {
-            return (<IconButton onClick={this.changeViewType}><ActionList /></IconButton>);
+            return (<IconButton onClick={this.changeViewType} tooltip="切换为列表视图"><ActionList /></IconButton>);
         } else {
-            return (<IconButton onClick={this.changeViewType}><ActionViewModule /></IconButton>);
+            return (<IconButton onClick={this.changeViewType} tooltip="切换为网格视图"><ActionViewModule /></IconButton>);
         }
     }
 
