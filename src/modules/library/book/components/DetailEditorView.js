@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { Dialog, FlatButton, TextField } from 'material-ui';
+import { Dialog, RaisedButton, FlatButton, TextField } from 'material-ui';
 
 export const fields = ['title', 'url', 'doubanId'];
 
@@ -38,16 +38,18 @@ class DetailEditorView extends Component {
             <FlatButton
                 label="重置"
                 onTouchTap={onReset}
+                style={{ margin: 12}}
             />,
             <FlatButton
                 label="取消"
                 onTouchTap={onCancel}
+                style={{ margin: 12}}
             />,
-            <FlatButton
+            <RaisedButton
                 label="确定"
                 primary={true}
-                keyboardFocused={true}
                 onTouchTap={onOk}
+                style={{ margin: 12}}
             />
         ];
 

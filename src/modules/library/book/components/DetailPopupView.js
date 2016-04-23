@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import {Dialog, FlatButton, TextField, Paper} from 'material-ui';
+import {Dialog, RaisedButton, TextField, Paper} from 'material-ui';
 
 const BookDetailPopup = (props) => {
 
@@ -8,7 +8,7 @@ const BookDetailPopup = (props) => {
     const c = { fullWidth: true, disabled: true }
 
     return (
-        <Dialog actions={<FlatButton label="确定" primary={true} keyboardFocused={true} onTouchTap={onOk} />}
+        <Dialog actions={<RaisedButton label="确定" primary={true} onTouchTap={onOk} />}
                 modal={false} open={open && book !== null} title="查看图书详情" onRequestClose={onOk}
         >
             {

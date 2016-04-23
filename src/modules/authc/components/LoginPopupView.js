@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Dialog, FlatButton, TextField, Snackbar } from 'material-ui';
+import { Dialog, RaisedButton, TextField, Snackbar } from 'material-ui';
 
 const propTypes = {
     open        : PropTypes.bool.isRequired,
@@ -64,14 +64,13 @@ class LoginPopupView extends Component {
     render() {
 
         const actions = [
-            <FlatButton
+            <RaisedButton style={{ margin: 12}}
                 label="取消"
                 onTouchTap={this.props.onCancel}
             />,
-            <FlatButton
+            <RaisedButton style={{ margin: 12}}
                 label="确定"
                 primary={true}
-                keyboardFocused={true}
                 onTouchTap={::this.handleOkAction}
             />
         ];

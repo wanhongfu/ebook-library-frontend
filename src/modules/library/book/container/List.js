@@ -4,7 +4,7 @@ import {reset} from 'redux-form';
 import _ from 'lodash';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
-import { IconButton, Snackbar } from 'material-ui';
+import { IconButton, Snackbar, RaisedButton } from 'material-ui';
 
 import Common from '../../../../common';
 
@@ -56,6 +56,12 @@ class List extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.editBookState.savedSuccess) {
+
+            if(this.state.showEditorPopup){
+                const { currentPage } = this.props.listBooksState;
+                this.props.fetchBooks(mkPaginationAndSoreQueryParam2(currentPage, 5, 'title'));
+            }
+
             this.setState({
                 showEditorPopup : false,
                 currentBook     : null
@@ -187,22 +193,27 @@ class List extends Component {
         return 'list' === this.state.viewType ?
                ( <GridView {...viewProps} /> ) :
                (
-                   <Common.FineContentDiv>
-                       <ListView 
-                               onPageChanged = {this.handPageChanged}
-                               pageSize      = {pageSize}
-                               fetching      = {fetching}
-                               currentPage   = {currentPage}
-                               totalRecNum   = {totalRecNum}
-                               {...viewProps}
-                        />
-                    </Common.FineContentDiv>
+                   <ListView
+                           onPageChanged = {this.handPageChanged}
+                           pageSize      = {pageSize}
+                           fetching      = {fetching}
+                           currentPage   = {currentPage}
+                           totalRecNum   = {totalRecNum}
+                           {...viewProps}
+                    />
                );
 
     }
 
     renderToolbar() {
         return <Common.InnerToolbar title="图书列表">
+                    {
+                        this.props.authcState.isAuthenticated ?
+                            <IconButton onClick={this.handleAddAction} tooltip="新图书">
+                                <ContentAdd />
+                            </IconButton>
+                        : null
+                    }
                     {this.getCurrentViewTypeIcon()}
                </Common.InnerToolbar>;
     }
@@ -261,7 +272,7 @@ class List extends Component {
                 {this.renderDataList()}
 
                 {
-                    authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddAction} icon={<ContentAdd />} /> : ''
+                    authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddAction} icon={<ContentAdd />} /> : null
                 }
 
                 {this.renderMsg()}

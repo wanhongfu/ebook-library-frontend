@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import { Link } from 'react-router';
-
 import { NavigationMoreVert, ActionDelete, ImageEdit } from 'material-ui/lib/svg-icons';
 import {
     Table, TableHeaderColumn, TableRow, TableHeader, TableRowColumn,
@@ -53,8 +51,8 @@ class BookListView extends Component {
         return (
             <IconMenu
                 iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
-                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
                 {this.renderBookActionMenuItem('详细信息', book, false, onViewBookDetail.bind(this, book.id))}
                 {this.renderBookActionMenuItem('详细信息(Popup)', book, false, onViewBookDetailPopup.bind(this, book))}
@@ -125,11 +123,13 @@ class BookListView extends Component {
     render() {
 
         return (
-            <Table>
-                {this.renderTableHeader()}
-                {this.renderBodyRows()}
-                {this.renderTableFooter()}
-            </Table>
+            <Common.FineContentDiv>
+                <Table>
+                    {this.renderTableHeader()}
+                    {this.renderBodyRows()}
+                    {this.renderTableFooter()}
+                </Table>
+            </Common.FineContentDiv>
         );
     }
 }
