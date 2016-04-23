@@ -15,11 +15,6 @@ import {signupUser, resetSignupState} from '../actions';
 })
 class Signup extends Component {
 
-    static state = {
-        signupMsg     : null,
-        signupSuccess : false
-    }
-
     static contextTypes = {
         router: PropTypes.object.isRequired
     }
@@ -55,7 +50,7 @@ class Signup extends Component {
     }
 
     renderErrorMsg() {
-        const { signupMsg } = this.state;
+        const { signupMsg } = this.props;
         if(signupMsg && signupMsg !== null) {
             return (<Snackbar open={true} message={signupMsg} />);
         }

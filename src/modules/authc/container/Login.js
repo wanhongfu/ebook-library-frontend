@@ -14,10 +14,6 @@ import { loginUser } from '../actions';
 })
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     static contextTypes = {
         router: PropTypes.object.isRequired
     }
@@ -37,18 +33,18 @@ class Login extends Component {
     }
 
     render() {
-        const {error} = this.props;
-        let errMsg = null;
-        if(error !== undefined && error !== null) {
-            errMsg = "不正确用户名或密码, 请重试";
-        }
+
+        const errMsg = this.props.error ? "不正确用户名或密码, 请重试" : null;
+
         return (
-            <LoginPopupView open={true}
-                            serverError={errMsg}
-                            onOk={::this.handleLoginOkAction}
-                            onCancel={::this.handleLoginCancelAction} 
+            <LoginPopupView
+                open={true}
+                serverError={errMsg}
+                onOk={::this.handleLoginOkAction}
+                onCancel={::this.handleLoginCancelAction}
             />
         );
     }
 }
+
 export default Login;

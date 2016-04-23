@@ -1,10 +1,10 @@
 import { parseJSON, checkHttpStatus, createConstants } from '../../utils';
 import api from '../../api';
 
-export const LOGIN_SUCCESS = "authc/login/success";
-export const LOGIN_FAILURE = "authc/login/failure";
+export const LOGIN_SUCCESS  = "authc/login/success";
+export const LOGIN_FAILURE  = "authc/login/failure";
 export const LOGOUT_SUCCESS = "authc/logout/success";
-export const ME_FROM_TOKEN = "authc/token/login"
+export const ME_FROM_TOKEN  = "authc/token/login"
 
 export function loadUserFromToken() {
     return (dispatch) => {

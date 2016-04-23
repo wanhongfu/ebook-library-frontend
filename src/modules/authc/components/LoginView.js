@@ -1,19 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { FlatButton, TextField } from 'material-ui';
 
+const propTypes = {
+    onCancel : PropTypes.func,
+    onOk     : PropTypes.func
+};
+
 class LoginView extends Component {
 
-    static propTypes = {
-        onCancel : PropTypes.func,
-        onOk     : PropTypes.func
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputUsername : null,
-            inputPassword : null
-        }
+    state = {
+        inputUsername : null,
+        inputPassword : null
     }
 
     handleOkAction() {
@@ -28,17 +25,19 @@ class LoginView extends Component {
     }
 
     render() {
-        return (
 
+        return (
             <div>
-                <TextField hintText="用户名"
-                           floatingLabelText="用户名"
-                           onChange={this.handleChange('inputUsername')}
+                <TextField
+                    hintText="用户名"
+                    floatingLabelText="用户名"
+                    onChange={this.handleChange('inputUsername')}
                 />
                 <br/>
-                <TextField hintText="密码"
-                           floatingLabelText="密码"
-                           onChange={this.handleChange('inputPassword')}
+                <TextField
+                    hintText="密码"
+                    floatingLabelText="密码"
+                    onChange={this.handleChange('inputPassword')}
                 />
                 <br/>
                 <FlatButton label="取消" onTouchTap={this.props.onCancel}  />
@@ -47,7 +46,8 @@ class LoginView extends Component {
 
         );
     }
-
 }
+
+LoginView.propTypes = propTypes;
 
 export default LoginView;

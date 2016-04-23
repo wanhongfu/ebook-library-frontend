@@ -15,17 +15,20 @@ export default class PaginationIndicator extends React.Component {
 
     static defaultProps = {
         active      : false,
-        disabled    : false
+        disabled    : false,
+        label       : '',
+        onClick     : null,
+        icon        : null
     }
 
-    _onClick = () => {
+    handleClick = () => {
         const {pageNum, onClick} = this.props;
         if(onClick) onClick(pageNum);
     }
 
     render() {
 
-        const {disabled, label, active, icon} = this.props;
+        const { disabled, label, active, icon } = this.props;
 
         const styles = {
             fb: {
@@ -37,8 +40,8 @@ export default class PaginationIndicator extends React.Component {
         const otherProps = icon ? {icon: icon} : {label: String(label)};
 
         return (
-            <FlatButton disabled={active || disabled}
-                        onClick={this._onClick} style={styles.fb}
+            <FlatButton disabled={ active || disabled }
+                        onClick={this.handleClick} style={styles.fb}
                         {...otherProps}
             />
         );

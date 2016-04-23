@@ -54,20 +54,19 @@ export function resetViewBookState() {
 }
 
 //==================== Actions for creating currentBookReducer ====================
-export const CREATE_BOOK_SUCCESS        = 'library/book/create/success';
-export const CREATE_BOOK_FAILURE        = 'library/book/create/failure';
-export const CREATE_BOOK_STATE_RESET    = 'library/book/state/reset';
+export const CREATE_BOOK_SUCCESS     = 'library/book/create/success';
+export const CREATE_BOOK_FAILURE     = 'library/book/create/failure';
+export const CREATE_BOOK_STATE_RESET = 'library/book/state/reset';
 
 export function saveBook(book) {
     return (dispatch) => {
 
         dispatch(mkSaveBookResetAction());
-
+        
         const _token = sessionStorage.getItem('token') || '';
         if(_token.length <= 0) return;
 
         api.books.save(book, _token).then(response => {
-            console.log('save book successful');
             dispatch({type: CREATE_BOOK_SUCCESS});
         }).catch(error => {
             dispatch({type: CREATE_BOOK_FAILURE, payload: { error }});

@@ -39,7 +39,7 @@ class MainLayoutView extends Component {
 
     handleLeftMenuVisibleAction() {
         const open = !this.state.leftMenuOpen;
-        this.refs.rootDiv.style.paddingLeft = open ? `280px` : `40px`;
+        this.refs.rootDiv.style.paddingLeft = open ? `257px` : `0px`;
         this.setState({
             leftMenuOpen: open
         });
@@ -68,11 +68,11 @@ class MainLayoutView extends Component {
                 fontSize    : 24,
             },
             content: {
-                paddingTop      : Spacing.desktopKeylineIncrement,
-                paddingRight    : `80px`,
-                paddingLeft     : `280px`,
+                paddingTop      : 64,
+                paddingRight    : `0px`,
+                paddingLeft     : `257px`,
 
-                margin      : Spacing.desktopGutter,
+                margin      : 0,
                 display     : "block",
             },
         }

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 
 import { NavigationChevronLeft, NavigationChevronRight, NavigationMoreHoriz } from 'material-ui/lib/svg-icons';
 
@@ -49,23 +50,22 @@ class Paginator extends Component {
         return max <= this._getNumOfPages() ? max : this._getNumOfPages();
     }
 
-    _renderNeighbour({disabled, page, icon}) {
+    _renderNeighbour({disabled, page, icon, key=null}) {
+        if(key === null) key = page;
         return (
             <PaginationIndicator
                 disabled    = {disabled}
                 onClick     = {this.onPageChange}
                 pageNum     = {page}
                 icon        = {icon}
-                key         = {page}
+                key         = {key}
             />
         );
     }
-
-
+    
     _renderBreak(page) {
-        if (page >= this._getNumOfPages() || page <= 0)
+        if (_.isNaN(page) || page >= this._getNumOfPages() || page <= 0)
             return null;
-
         return (
             <PaginationIndicator
                 onClick = {this.onPageChange}
@@ -77,6 +77,7 @@ class Paginator extends Component {
     }
 
     _renderPage(page){
+        if(_.isNaN(page)) return;
         return (
             <PaginationIndicator
                 active  = {this.props.currentPage == page}
@@ -93,7 +94,8 @@ class Paginator extends Component {
         return this._renderNeighbour({
             disabled : currentPage == 1,
             page     : currentPage - 1,
-            icon     : <NavigationChevronLeft />
+            icon     : <NavigationChevronLeft />,
+            key      : "_pg-pre-0101"
         });
     }
 
@@ -162,21 +164,24 @@ class Paginator extends Component {
         return this._renderNeighbour({
             disabled : currentPage == this._getNumOfPages(),
             page     : currentPage + 1,
-            icon     : <NavigationChevronRight />
+            icon     : <NavigationChevronRight />,
+            key      : "_pg-next-0202"
         });
     }
 
     renderPaginationInfo() {
         return (
-            <PaginationInfo totalPageNum = {this._getNumOfPages()}
-                            currnetPage  = {this.props.currentPage}
-                            totalRecNum  = {this.props.totalRecNum}
+            <PaginationInfo
+                totalPageNum = {this._getNumOfPages()}
+                currnetPage  = {this.props.currentPage}
+                totalRecNum  = {this.props.totalRecNum}
             />
         );
     }
 
     render(){
 
+        if(this.props.totalRecNum === 0) return null;
         if(this.props.simpleNavi) {
             return(
                 <div>
@@ -185,7 +190,6 @@ class Paginator extends Component {
                 </div>
             );
         }
-
         return(
             <div>
                 {this.renderPrevious()}

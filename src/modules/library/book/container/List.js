@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {reset} from 'redux-form';
+import _ from 'lodash';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
-import { Toolbar, ToolbarGroup, IconButton, Snackbar, ToolbarTitle } from 'material-ui';
+import { IconButton, Snackbar } from 'material-ui';
 
 import Common from '../../../../common';
 
@@ -12,7 +13,6 @@ import GridView from '../components/GridView';
 import DetailPopupView from '../components/DetailPopupView';
 import DetailEditorView from '../components/DetailEditorView';
 import { fetchBooks, saveBook, resetSaveBookState } from '../actions';
-
 
 //TODO refactor this method to a common place for reuse
 function mkPaginationAndSoreQueryParam2(page, size, sort=null) {
@@ -128,7 +128,7 @@ class List extends Component {
 
     changeViewType = () => {
         const { viewType } = this.state;
-        if('grid' === viewType) {
+        if(_.eq('grid', viewType)) {
             this.setState({
                 viewType: 'list'
             });
@@ -148,16 +148,15 @@ class List extends Component {
             status      : null,
             onboardDate : null,
             owner       : {
-                            id      : null,
-                            name    : null,
-                            email   : null
-                          }
+                    id      : null,
+                    name    : null,
+                    email   : null
+            }
         };
     }
 
     getCurrentViewTypeIcon = () => {
-        const {viewType} = this.state;
-        if('list' === viewType) {
+        if(_.eq('list', this.state.viewType)) {
             return (<IconButton onClick={this.changeViewType}><ActionList /></IconButton>);
         } else {
             return (<IconButton onClick={this.changeViewType}><ActionViewModule /></IconButton>);
@@ -165,14 +164,16 @@ class List extends Component {
     }
 
     renderDataList() {
+
         const { error } = this.props.listBooksState;
-        if(error !== null) {
+        if(error != null) {
             return ( <Snackbar open={true} message={error.message} /> );
         }
 
-        const { listBooksState  : { totalRecNum, currentPage, pageSize, datalist },
-                authcState      : { isAuthenticated, currentUser }
-              } = this.props;
+        const {
+            listBooksState  : { totalRecNum, currentPage, pageSize, datalist, fetching },
+            authcState      : { isAuthenticated, currentUser }
+        } = this.props;
 
         const viewProps = {
             books                   : datalist,
@@ -183,33 +184,27 @@ class List extends Component {
             onEditBook              : this.handleEditAction,
         };
 
-        return ('list' === this.state.viewType) ?
+        return 'list' === this.state.viewType ?
                ( <GridView {...viewProps} /> ) :
-               ( <ListView onPageChanged = {this.handPageChanged}
-                           pageSize      = {pageSize}
-                           currentPage   = {currentPage}
-                           totalRecNum   = {totalRecNum}
-                           {...viewProps}
-                />);
+               (
+                   <Common.FineContentDiv>
+                       <ListView 
+                               onPageChanged = {this.handPageChanged}
+                               pageSize      = {pageSize}
+                               fetching      = {fetching}
+                               currentPage   = {currentPage}
+                               totalRecNum   = {totalRecNum}
+                               {...viewProps}
+                        />
+                    </Common.FineContentDiv>
+               );
 
     }
 
     renderToolbar() {
-        //TODO refactor here to remove UI logic
-        
-        const style = {
-            height: `48px`,
-        }
-        return (
-            <Toolbar style={style}>
-                <ToolbarGroup firstChild={true} style={{paddingLeft: 20}}>
-                    <ToolbarTitle text="图书列表" />
-                </ToolbarGroup>
-                <ToolbarGroup >
+        return <Common.InnerToolbar title="图书列表">
                     {this.getCurrentViewTypeIcon()}
-                </ToolbarGroup>
-            </Toolbar>
-        );
+               </Common.InnerToolbar>;
     }
 
     renderDetailPopup() {
@@ -226,57 +221,54 @@ class List extends Component {
     renderDetailEditorPopup(){
 
         const { currentBook, showEditorPopup } = this.state;
-        const initFormValues = currentBook != null ? {...currentBook} : {...this.mkEmptyBookObj()};
+        const initFormValues =  !_.isNil(currentBook) ? {...currentBook} : {...this.mkEmptyBookObj()};
 
-        return (
-            <DetailEditorView
-                editMode        = {currentBook != null}
-                open            = {showEditorPopup}
-                ref             = "newBookFormRef"
-                onSubmit        = {this.handleEditorSubmit}
-                onOk            = {this.handleEditorPopupOkAction}
-                onCancel        = {this.handleEditorPopupCancelAction}
-                onReset         = {()=>{this.props.reset('edit-book-form')}}
-                initialValues   = {{...initFormValues}}
-            />);
+        return <DetailEditorView
+                    editMode        = {!_.isNil(currentBook)}
+                    open            = {showEditorPopup}
+                    ref             = "newBookFormRef"
+                    onSubmit        = {this.handleEditorSubmit}
+                    onOk            = {this.handleEditorPopupOkAction}
+                    onCancel        = {this.handleEditorPopupCancelAction}
+                    onReset         = {()=>{this.props.reset('edit-book-form')}}
+                    initialValues   = {{...initFormValues}}
+               />;
     }
 
     renderMsg() {
         const { editBookState: { savedSuccess, error } } = this.props;
-
-        console.log(`savedSuccess=${savedSuccess}, error=${error}`);
-
         if(savedSuccess) {
-            return (
-                <Snackbar open           = {true}
-                          message        = {"保存成功!"}
-                          onRequestClose = {this.resetEditBookStateAndEditorForm}
-                />
-            );
+            return <Snackbar
+                        open            = {true}
+                        message         = {"保存成功!"}
+                        onRequestClose  = {this.resetEditBookStateAndEditorForm}
+                   />;
         }
 
-        if(error && error !== null) {
-            return (<Snackbar open={true} message={error.message} />);
+        if(!_.isNil(error)) {
+            return <Snackbar open={true} message={error.message} />;
         }
     }
 
     render() {
-        const { listBooksState, authcState } = this.props;
-        if(listBooksState.fetching) return ( <Common.Loading /> );
+        const { authcState } = this.props;
+
         return (
             <div>
-                {this.renderToolbar()}
-                {this.renderDataList()}
                 {this.renderDetailPopup()}
                 {this.renderDetailEditorPopup()}
+                {this.renderToolbar()}
+                {this.renderDataList()}
+
                 {
                     authcState.isAuthenticated ? <Common.FloatingButton onClick={this.handleAddAction} icon={<ContentAdd />} /> : ''
                 }
+
                 {this.renderMsg()}
             </div>
         );
+
     }
 }
 
 export default List;
-

@@ -87,17 +87,19 @@ class LoginPopupView extends Component {
                     onRequestClose={this.props.onCancel}
                 >
                     <div>
-                        <TextField errorText         = {inputUsernameErrorMsg}
-                                   hintText          = "请输入登陆名"
-                                   floatingLabelText = "登陆名"
-                                   onChange          = {this.handleChange('inputUsername')}
+                        <TextField
+                            errorText         = {inputUsernameErrorMsg}
+                            hintText          = "请输入登陆名"
+                            floatingLabelText = "登陆名"
+                            onChange          = {this.handleChange('inputUsername')}
                         />
                         <br/>
-                        <TextField errorText         = {inputPasswordErrorMsg}
-                                   hintText          = "请输入登陆密码"
-                                   type              = "password"
-                                   floatingLabelText = "密码"
-                                   onChange          = {this.handleChange('inputPassword')}
+                        <TextField
+                            errorText         = {inputPasswordErrorMsg}
+                            hintText          = "请输入登陆密码"
+                            type              = "password"
+                            floatingLabelText = "密码"
+                            onChange          = {this.handleChange('inputPassword')}
                         />
                         <br/>
                     </div>

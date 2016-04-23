@@ -4,7 +4,8 @@ var webpack = require('webpack');
 var port = process.env.NODE_PORT || 3000;
 
 module.exports = {
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: '#eval-source-map',
 
     entry: [
         './src/'

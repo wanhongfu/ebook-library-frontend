@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {reduxForm} from 'redux-form';
-import {reset} from 'redux-form';
-import {connect} from 'react-redux';
+import { reduxForm } from 'redux-form';
 import { Dialog, FlatButton, TextField } from 'material-ui';
 
 export const fields = ['title', 'url', 'doubanId'];
@@ -27,10 +25,6 @@ class DetailEditorView extends Component {
         onOk        : PropTypes.func,
         onReset     : PropTypes.func
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     static defaultProps = {
         open: false
@@ -68,19 +62,22 @@ class DetailEditorView extends Component {
             >
                 <div>
 
-                    <TextField fullWidth={true}
-                               errorText={title.touched && title.error ? title.error : ''}
-                               floatingLabelText="书名"
-                               {...title}
+                    <TextField
+                           fullWidth={true}
+                           errorText={title.touched && title.error ? title.error : ''}
+                           floatingLabelText="书名"
+                           {...title}
                     />
-                    <TextField fullWidth={true}
-                               errorText={doubanId.touched && doubanId.error ? doubanId.error : ''}
-                               floatingLabelText="豆瓣编号"
-                               {...doubanId}
+                    <TextField
+                           fullWidth={true}
+                           errorText={doubanId.touched && doubanId.error ? doubanId.error : ''}
+                           floatingLabelText="豆瓣编号"
+                           {...doubanId}
                     />
-                    <TextField fullWidth={true}
-                               floatingLabelText="豆瓣连接"
-                               {...url}
+                    <TextField
+                           fullWidth={true}
+                           floatingLabelText="豆瓣连接"
+                           {...url}
                     />
                 </div>
             </Dialog>
