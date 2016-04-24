@@ -30,6 +30,10 @@ class DetailEditorView extends Component {
         open: false
     }
 
+    componentDidMount() {
+
+    }
+
     render() {
 
         const { fields: { title, url, doubanId }, onOk, onCancel, onReset, open, editMode } = this.props;

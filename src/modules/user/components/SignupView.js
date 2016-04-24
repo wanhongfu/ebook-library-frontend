@@ -33,8 +33,8 @@ class SignupView extends Component {
         open: false
     }
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
+        this.refs.emailInputboxRef.focus();
     }
 
     handleSubmit = () => {
@@ -71,6 +71,7 @@ class SignupView extends Component {
             >
                 <div>
                     <TextField fullWidth={true}
+                               ref = 'emailInputboxRef'
                                errorText={email.touched && email.error ? email.error : ''}
                                hintText="请输入电子邮件"
                                floatingLabelText="电子邮件"

@@ -51,7 +51,7 @@ class BookListView extends Component {
         return (
             <IconMenu
                 iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
-                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
                 {this.renderBookActionMenuItem('详细信息', book, false, onViewBookDetail.bind(this, book.id))}

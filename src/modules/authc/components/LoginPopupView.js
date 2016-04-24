@@ -18,6 +18,10 @@ class LoginPopupView extends Component {
         serverError             : null
     }
 
+    componentDidMount() {
+        this.refs.usernameInputboxRef.focus();
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.serverError !== undefined && nextProps.serverError !== null) {
             this.setState({ serverError: nextProps.serverError });
@@ -87,6 +91,7 @@ class LoginPopupView extends Component {
                 >
                     <div>
                         <TextField
+                            ref               = 'usernameInputboxRef'
                             errorText         = {inputUsernameErrorMsg}
                             hintText          = "请输入登陆名"
                             floatingLabelText = "登陆名"

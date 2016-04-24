@@ -15,16 +15,7 @@ import { logoutUser } from '../../authc/actions';
 })
 class TopMenu extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     static propTypes = {
-
-        isAuthenticated : PropTypes.bool,
-        token           : PropTypes.string,
-        currentUser     : PropTypes.string,
-
         topMenuBarStyle         : PropTypes.object,
         topMenuTitleStyle       : PropTypes.object,
         onLeftMenuVisibleAction : PropTypes.func

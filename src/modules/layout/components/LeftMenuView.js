@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import { LeftNav, List, ListItem, Divider, Subheader } from 'material-ui';
-import {ActionAccountBox, MapsLocalLibrary} from 'material-ui/lib/svg-icons';
+import {ActionAccountBox, MapsLocalLibrary, ActionOpenInBrowser, ActionOpenInNew, FileCloudDone } from 'material-ui/lib/svg-icons';
 import { Colors, Spacing, Typography } from 'material-ui/lib/styles';
 
 import './layout.css';
@@ -59,7 +59,7 @@ class LeftMenuView extends Component {
                     />
 
                     <ListItem
-                        leftIcon    = {<MapsLocalLibrary />}
+                        leftIcon    = {<FileCloudDone />}
                         value       = "books"
                         primaryText = "我借到的图书"
                         onClick     = {() => this.dispatchNewRoute('/books')}
@@ -79,14 +79,14 @@ class LeftMenuView extends Component {
                     />
 
                     <ListItem
-                        leftIcon    = {<ActionAccountBox />}
+                        leftIcon    = {<ActionOpenInBrowser />}
                         value       = "users"
                         primaryText = "借阅请求"
                         onClick     = {() => this.dispatchNewRoute('/users')}
                     />
 
                     <ListItem
-                        leftIcon    = {<ActionAccountBox />}
+                        leftIcon    = {<ActionOpenInNew />}
                         value       = "users"
                         primaryText = "还书请求"
                         onClick     = {() => this.dispatchNewRoute('/users')}

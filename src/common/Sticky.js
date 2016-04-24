@@ -32,14 +32,18 @@ class Sticky extends Component {
         window.removeEventListener('resize', this.handleResize);
     }
 
-    handleResize() {
-        this.checkWidth();
-        this.checkPositions();
-    }
-
-    onScroll() {
-        this.checkWidth();
-        this.checkPositions();
+    checkWidth() {
+        let width = null;
+        if (this.refs.duplicate) {
+            width = this.refs.duplicate.getBoundingClientRect().width;
+        } else {
+            width = this.refs.original.getBoundingClientRect().width;
+        }
+        if (this.state.width !== width) {
+            this.setState({
+                width: width
+            });
+        }
     }
 
     checkPositions() {
@@ -52,18 +56,14 @@ class Sticky extends Component {
         }
     }
 
-    checkWidth() {
-        var width = null;
-        if (this.refs.duplicate) {
-            width = this.refs.duplicate.getBoundingClientRect().width;
-        } else {
-            width = this.refs.original.getBoundingClientRect().width;
-        }
-        if (this.state.width !== width) {
-            this.setState({
-                width: width
-            });
-        }
+    handleResize() {
+        this.checkWidth();
+        this.checkPositions();
+    }
+
+    onScroll() {
+        this.checkWidth();
+        this.checkPositions();
     }
 
     render() {

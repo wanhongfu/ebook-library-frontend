@@ -1,10 +1,8 @@
 .app-title {
-    cursor: pointer;
-    font-family: "Roboto", sans-serif;
     font-size: 24px;
     color: rgba(255, 255, 255, 1);
     line-height: 64px;
     background-color: #00bcd4;
-    padding-left: 24px;
+    padding-left: 14px;
     margin-bottom: 8px;
 }

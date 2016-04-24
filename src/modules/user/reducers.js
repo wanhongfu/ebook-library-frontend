@@ -16,8 +16,8 @@ const user = createReducer(initialState, {
         return {...state, signupSuccess: false, signupMsg: `用户注册失败, 原因: ${payload.error}`}
     },
 
-    [USER_SIGNUP_RESET]: () => {
-        return {...initialState}
+    [USER_SIGNUP_RESET]: (state) => {
+        return {...state, signupMsg: null, signupSuccess: false}
     }
     
 });

@@ -46,12 +46,13 @@ class Signup extends Component {
 
     handleCancelAction = () => {
         this.props.resetSignupState();
+        this.props.reset('signup-form');
         this.context.router.push(`/home`);
     }
 
     renderErrorMsg() {
         const { signupMsg } = this.props;
-        if(signupMsg && signupMsg !== null) {
+        if(signupMsg) {
             return (<Snackbar open={true} message={signupMsg} />);
         }
     }

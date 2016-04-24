@@ -58,7 +58,7 @@ class Paginator extends Component {
                 onClick     = {this.onPageChange}
                 pageNum     = {page}
                 icon        = {icon}
-                key         = {key}
+                key         = {`_ne_${key}`}
             />
         );
     }
@@ -70,7 +70,7 @@ class Paginator extends Component {
             <PaginationIndicator
                 onClick = {this.onPageChange}
                 pageNum = {page}
-                key     = {page}
+                key     = {`_br_${page}`}
                 icon    = {<NavigationMoreHoriz />}
             />
         );
@@ -81,7 +81,7 @@ class Paginator extends Component {
         return (
             <PaginationIndicator
                 active  = {this.props.currentPage == page}
-                key     = {page}
+                key     = {`_pg_${page}`}
                 label   = {String(page)}
                 onClick = {this.onPageChange}
                 pageNum = {page}
@@ -94,8 +94,7 @@ class Paginator extends Component {
         return this._renderNeighbour({
             disabled : currentPage == 1,
             page     : currentPage - 1,
-            icon     : <NavigationChevronLeft />,
-            key      : "_pg-pre-0101"
+            icon     : <NavigationChevronLeft />
         });
     }
 
@@ -164,8 +163,7 @@ class Paginator extends Component {
         return this._renderNeighbour({
             disabled : currentPage == this._getNumOfPages(),
             page     : currentPage + 1,
-            icon     : <NavigationChevronRight />,
-            key      : "_pg-next-0202"
+            icon     : <NavigationChevronRight />
         });
     }
 
