@@ -12,7 +12,8 @@ import ListView from '../components/ListView';
 import GridView from '../components/GridView';
 import DetailPopupView from '../components/DetailPopupView';
 import DetailEditorView from '../components/DetailEditorView';
-import { fetchBooks, saveBook, resetSaveBookState } from '../actions';
+import DeleteConfirmView from '../components/DeleteConfirmView';
+import { fetchBooks, saveBook, resetSaveBookState, deleteBook } from '../actions';
 
 //TODO refactor this method to a common place for reuse
 function mkPaginationAndSoreQueryParam2(page, size, sort=null) {
@@ -35,7 +36,7 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
     editBookState   : state.editBook,
     authcState      : state.authc,
 }), {
-    fetchBooks, saveBook, resetSaveBookState, reset
+    fetchBooks, saveBook, deleteBook, resetSaveBookState, reset
 })
 class List extends Component {
 
@@ -47,6 +48,7 @@ class List extends Component {
         viewType        : 'grid',
         showDetailPopup : false,
         showEditorPopup : false,
+        showDelConfirm  : false,
         currentBook     : null
     }
 
@@ -55,15 +57,18 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.editBookState.savedSuccess) {
+        const { savedSuccess, deletedSuccess } = nextProps.editBookState;
+        const { showEditorPopup, showDelConfirm } = this.state;
 
-            if(this.state.showEditorPopup){
-                const { currentPage } = this.props.listBooksState;
+        if(savedSuccess || deletedSuccess) {
+            if(showEditorPopup || showDelConfirm){
+                const { currentPage } = this.props.listBooksState
                 this.props.fetchBooks(mkPaginationAndSoreQueryParam2(currentPage, 5, 'title'));
             }
 
             this.setState({
                 showEditorPopup : false,
+                showDelConfirm  : false,
                 currentBook     : null
             });
         }
@@ -93,6 +98,27 @@ class List extends Component {
             showEditorPopup : true,
             currentBook     : book
         });
+    }
+
+    handleDeleteAction = (book) => {
+        this.setState({
+            showDelConfirm  : true,
+            currentBook     : book
+        });
+    }
+
+    handleCancelDeletionAction = () => {
+        this.setState({
+            showDelConfirm  : false,
+            currentBook     : null
+        });
+    }
+
+    handleSubmitDeletionAction = () => {
+        const { currentBook } = this.state;
+        if(currentBook) {
+            this.props.deleteBook(currentBook);
+        }
     }
 
     handleDetailPopupOkAction = (book) => {
@@ -188,6 +214,7 @@ class List extends Component {
             onViewBookDetail        : this.handleViewDetailAction,
             onViewBookDetailPopup   : this.handleViewDetailPopupAction,
             onEditBook              : this.handleEditAction,
+            onDeleteBook            : this.handleDeleteAction
         };
 
         return 'list' === this.state.viewType ?
@@ -245,15 +272,31 @@ class List extends Component {
                     initialValues   = {{...initFormValues}}
                />;
     }
+    
+    renderDeleteConfirm() {
+        const { currentBook, showDelConfirm } = this.state;
+        return <DeleteConfirmView 
+                    open={showDelConfirm}
+                    book={currentBook}
+                    onSubmit={this.handleSubmitDeletionAction}
+                    onCancel={this.handleCancelDeletionAction}
+                /> 
+    }
 
     renderMsg() {
-        const { editBookState: { savedSuccess, error } } = this.props;
+        let ackMsg = null;
+        const { editBookState: { savedSuccess, deletedSuccess, error } } = this.props;
         if(savedSuccess) {
+            ackMsg = "保存成功!";
+        } else if(deletedSuccess) {
+            ackMsg = "删除成功!";
+        }
+        if(ackMsg) {
             return <Snackbar
-                        open            = {true}
-                        message         = {"保存成功!"}
-                        onRequestClose  = {this.resetEditBookStateAndEditorForm}
-                   />;
+                open            = {true}
+                message         = {ackMsg}
+                onRequestClose  = {this.resetEditBookStateAndEditorForm}
+            />;
         }
 
         if(!_.isNil(error)) {
@@ -268,6 +311,7 @@ class List extends Component {
             <div>
                 {this.renderDetailPopup()}
                 {this.renderDetailEditorPopup()}
+                {this.renderDeleteConfirm()}
                 {this.renderToolbar()}
                 {this.renderDataList()}
 

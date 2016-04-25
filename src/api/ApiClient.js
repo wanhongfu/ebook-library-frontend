@@ -44,10 +44,11 @@ export default class ApiClient {
         });
     }
 
-    delete(requestUrl) {
+    delete(requestUrl, params = {}) {
         return this.request({
             url: requestUrl,
-            method: 'delete'
+            method: 'delete',
+            params
         });
     }
 

@@ -18,6 +18,7 @@ class BookListView extends Component {
         onViewBookDetail        : PropTypes.func,
         onViewBookDetailPopup   : PropTypes.func,
         onEditBook              : PropTypes.func,
+        onDeleteBook            : PropTypes.func,
 
         onPageChanged   : PropTypes.func,
         currentPage     : PropTypes.number,
@@ -47,7 +48,7 @@ class BookListView extends Component {
     }
 
     renderBookActionMenus(book) {
-        const {onViewBookDetail, onViewBookDetailPopup, onEditBook} = this.props;
+        const {onViewBookDetail, onViewBookDetailPopup, onEditBook, onDeleteBook} = this.props;
         return (
             <IconMenu
                 iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
@@ -58,7 +59,7 @@ class BookListView extends Component {
                 {this.renderBookActionMenuItem('详细信息(Popup)', book, false, onViewBookDetailPopup.bind(this, book))}
                 {this.renderBookActionMenuItem('借阅', book, true, ()=>{})}
                 {this.renderBookActionMenuItem('修改', book, true, onEditBook.bind(this, book), <ImageEdit />)}
-                {this.renderBookActionMenuItem('删除', book, true, ()=>{}, <ActionDelete />)}
+                {this.renderBookActionMenuItem('删除', book, true, onDeleteBook.bind(this, book), <ActionDelete />)}
             </IconMenu>
         );
     }

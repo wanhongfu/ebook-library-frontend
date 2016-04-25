@@ -53,10 +53,10 @@ export function resetViewBookState() {
     }
 }
 
-//==================== Actions for creating currentBookReducer ====================
-export const CREATE_BOOK_SUCCESS     = 'library/book/create/success';
-export const CREATE_BOOK_FAILURE     = 'library/book/create/failure';
-export const CREATE_BOOK_STATE_RESET = 'library/book/state/reset';
+//==================== Actions for book CRUD ====================
+export const SAVE_BOOK_SUCCESS       = 'library/book/save/success';
+export const SAVE_BOOK_FAILURE       = 'library/book/save/failure';
+export const UPDATE_BOOK_STATE_RESET = 'library/book/state/reset';
 
 export function saveBook(book) {
     return (dispatch) => {
@@ -67,9 +67,26 @@ export function saveBook(book) {
         if(_token.length <= 0) return;
 
         api.books.save(book, _token).then(response => {
-            dispatch({type: CREATE_BOOK_SUCCESS});
+            dispatch({type: SAVE_BOOK_SUCCESS});
         }).catch(error => {
-            dispatch({type: CREATE_BOOK_FAILURE, payload: { error }});
+            dispatch({type: SAVE_BOOK_FAILURE, payload: { error }});
+        });
+    }
+}
+
+export const DELETE_BOOK_SUCCESS    = 'library/book/delete/success';
+export const DELETE_BOOK_FAILURE    = 'library/book/delete/failure';
+
+export function deleteBook(book) {
+    return (dispatch) => {
+        dispatch(mkSaveBookResetAction());
+        const _token = sessionStorage.getItem('token') || '';
+        if(_token.length <= 0) return;
+
+        api.books.delete(book.id, _token).then(response => {
+            dispatch({type: DELETE_BOOK_SUCCESS});
+        }).catch(error => {
+            dispatch({type: DELETE_BOOK_FAILURE, payload: { error }});
         });
     }
 }
@@ -82,6 +99,6 @@ export function resetSaveBookState() {
 
 function mkSaveBookResetAction() {
     return {
-        type: CREATE_BOOK_STATE_RESET
+        type: UPDATE_BOOK_STATE_RESET
     };
 }

@@ -17,4 +17,8 @@ export default class BookAPI extends Base {
             return this.apiClient.post(`api/books`, {...book}, {token: token});
         }
     }
+
+    delete(id, token) {
+        return this.apiClient.delete(`api/books/${id}`, {token: token});
+    }
 }

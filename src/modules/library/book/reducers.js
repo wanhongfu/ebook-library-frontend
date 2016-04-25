@@ -2,7 +2,8 @@ import { createReducer } from '../../../utils';
 
 import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST, FETCH_BOOKS_FAILURE,
          FETCH_BOOK_SUCCESS, FETCH_BOOK_FAILURE, FETCH_BOOK_STATE_RESET,
-         CREATE_BOOK_SUCCESS, CREATE_BOOK_FAILURE, CREATE_BOOK_STATE_RESET
+         SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, UPDATE_BOOK_STATE_RESET,
+         DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE
 } from './actions';
 
 //==================== Reducer for fetching booksReducer ====================
@@ -58,20 +59,27 @@ const viewBookReducer = createReducer(viewBookInitState, {
 
 //==================== Reducer for single book CRUD ====================
 const editleBookInitState = {
-    error         : null,
-    savedSuccess  : false
+    error          : null,
+    savedSuccess   : false,
+    deletedSuccess : false
 }
 
 const editBookReducer = createReducer(editleBookInitState, {
 
-    [CREATE_BOOK_SUCCESS]: (state) => {
+    [SAVE_BOOK_SUCCESS]: (state) => {
         return { ...state, savedSuccess: true, error: null };
     },
-    [CREATE_BOOK_FAILURE]: (state, payload) => {
+    [SAVE_BOOK_FAILURE]: (state, payload) => {
         return { ...state, savedSuccess: false, error: payload.error };
     },
-    [CREATE_BOOK_STATE_RESET]: (state) => {
-        return { ...state, savedSuccess: false, error: null };
+    [DELETE_BOOK_SUCCESS]: (state) => {
+        return { ...state, deletedSuccess: true, error: null };
+    },
+    [DELETE_BOOK_FAILURE]: (state, payload) => {
+        return { ...state, deletedSuccess: false, error: payload.error };
+    },
+    [UPDATE_BOOK_STATE_RESET]: (state) => {
+        return { ...state, savedSuccess: false, deletedSuccess: false, error: null };
     }
 });
 
