@@ -48,9 +48,12 @@ class HomeView extends Component {
                     );
 
         return (
-            <Common.FineContentDiv>
-                <h1>{content}</h1>
-            </Common.FineContentDiv>
+            <div>
+                <Common.InnerToolbar title="Welcome" />
+                <Common.FineContentDiv>
+                    <h1>{content}</h1>
+                </Common.FineContentDiv>
+            </div>
         );
     }
 }

@@ -8,6 +8,8 @@ import Users from '../modules/user';
 import Login from '../modules/authc/container/Login';
 import Signup from '../modules/user/container/Signup';
 
+import PageNotFound from '../common/PageNotFound';
+
 import { fillStore } from '../utils';
 
 const appRouters = (
@@ -25,6 +27,7 @@ const appRouters = (
             <Route path="/users" component={Users} />
         </Route>
 
+        <Route path="*" component={PageNotFound} />
     </Route>
 
 );

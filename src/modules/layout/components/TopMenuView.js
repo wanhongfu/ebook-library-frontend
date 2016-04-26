@@ -52,6 +52,7 @@ class TopMenuView extends Component {
                         
 
                         <ToolbarGroup float="right">
+                            <IconButton tooltip="Home" onClick={()=>{browserHistory.push("/home");}}><ActionHome color={Colors.grey50}/></IconButton>
                             {userMenuItems}
                         </ToolbarGroup>
 

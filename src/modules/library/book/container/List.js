@@ -12,7 +12,6 @@ import ListView from '../components/ListView';
 import GridView from '../components/GridView';
 import DetailPopupView from '../components/DetailPopupView';
 import DetailEditorView from '../components/DetailEditorView';
-import DeleteConfirmView from '../components/DeleteConfirmView';
 import { fetchBooks, saveBook, resetSaveBookState, deleteBook } from '../actions';
 
 //TODO refactor this method to a common place for reuse
@@ -275,12 +274,15 @@ class List extends Component {
     
     renderDeleteConfirm() {
         const { currentBook, showDelConfirm } = this.state;
-        return <DeleteConfirmView 
+        const bookTitle = currentBook ? currentBook.title : '';
+
+        return (<Common.ConfirmDialog
                     open={showDelConfirm}
-                    book={currentBook}
+                    title="删除图书"
+                    message={`您真的要删除该图书吗?<br/><br/><li>${bookTitle}</li>`}
                     onSubmit={this.handleSubmitDeletionAction}
                     onCancel={this.handleCancelDeletionAction}
-                /> 
+                />);
     }
 
     renderMsg() {

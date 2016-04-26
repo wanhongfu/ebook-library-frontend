@@ -16,6 +16,10 @@ class LeftMenuView extends Component {
         onLeftMenuVisibleAction: PropTypes.func
     }
 
+    static contextTypes = {
+        router: PropTypes.object.isRequired
+    }
+
     getStyles() {
         return {
             logo: {
@@ -32,7 +36,7 @@ class LeftMenuView extends Component {
     }
 
     dispatchNewRoute(route) {
-        browserHistory.push(route);
+        this.context.router.push(route);
     }
 
     render() {
@@ -62,7 +66,7 @@ class LeftMenuView extends Component {
                         leftIcon    = {<FileCloudDone />}
                         value       = "books"
                         primaryText = "我借到的图书"
-                        onClick     = {() => this.dispatchNewRoute('/books')}
+                        onClick     = {() => this.dispatchNewRoute('/my-borrows')}
                     />
                 </List>
 
@@ -75,21 +79,21 @@ class LeftMenuView extends Component {
                         leftIcon    = {<ActionAccountBox />}
                         value       = "users"
                         primaryText = "我的信息"
-                        onClick     = {() => this.dispatchNewRoute('/users')}
+                        onClick     = {() => this.dispatchNewRoute('/profile')}
                     />
 
                     <ListItem
                         leftIcon    = {<ActionOpenInBrowser />}
                         value       = "users"
                         primaryText = "借阅请求"
-                        onClick     = {() => this.dispatchNewRoute('/users')}
+                        onClick     = {() => this.dispatchNewRoute('/borrow-req')}
                     />
 
                     <ListItem
                         leftIcon    = {<ActionOpenInNew />}
                         value       = "users"
                         primaryText = "还书请求"
-                        onClick     = {() => this.dispatchNewRoute('/users')}
+                        onClick     = {() => this.dispatchNewRoute('/return-req')}
                     />
                 </List>
 

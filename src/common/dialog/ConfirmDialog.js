@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react';
 
 import { Dialog, RaisedButton, FlatButton } from 'material-ui';
 
-const DeleteConfirmView = (props) => {
-
-    const bookTitle = props.book ? props.book.title : '';
+const ConfirmDialog = (props) => {
 
     const actions = [
         <FlatButton
@@ -22,22 +20,22 @@ const DeleteConfirmView = (props) => {
 
     return (
         <Dialog
-            title   = '删除图书'
+            title   = {props.title}
             actions = {actions}
             open    = {props.open}
             onRequestClose  = {props.onCancel}
         >
-            您真的要删除该图书吗?<br/><br/>
-            <li>{bookTitle}</li>
+            {props.message}
         </Dialog>
     );
 }
 
-DeleteConfirmView.propTypes = {
+ConfirmDialog.propTypes = {
     onCancel    : PropTypes.func,
     onSubmit    : PropTypes.func,
     open        : PropTypes.bool,
-    book        : PropTypes.object
+    title       : PropTypes.string,
+    message     : PropTypes.string
 };
 
-export default DeleteConfirmView;
+export default ConfirmDialog;
