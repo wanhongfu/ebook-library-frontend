@@ -32,7 +32,7 @@ class Sticky extends Component {
         window.removeEventListener('resize', this.handleResize);
     }
 
-    checkWidth() {
+    checkWidth = () => {
         let width = null;
         if (this.refs.duplicate) {
             width = this.refs.duplicate.getBoundingClientRect().width;
@@ -46,7 +46,7 @@ class Sticky extends Component {
         }
     }
 
-    checkPositions() {
+    checkPositions = () => {
         var pos = util.findPosRelativeToViewport(ReactDOM.findDOMNode(this));
 
         if (pos[1]<=this.props.offsetTop){
@@ -56,12 +56,12 @@ class Sticky extends Component {
         }
     }
 
-    handleResize() {
+    handleResize = () => {
         this.checkWidth();
         this.checkPositions();
     }
 
-    onScroll() {
+    onScroll = () => {
         this.checkWidth();
         this.checkPositions();
     }
