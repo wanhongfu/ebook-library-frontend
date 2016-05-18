@@ -279,7 +279,7 @@ class List extends Component {
         return (<Common.ConfirmDialog
                     open={showDelConfirm}
                     title="删除图书"
-                    message={`您真的要删除该图书吗?<br/><br/><li>${bookTitle}</li>`}
+                    message={`您真的要删除图书 "${bookTitle}" 吗?`}
                     onSubmit={this.handleSubmitDeletionAction}
                     onCancel={this.handleCancelDeletionAction}
                 />);

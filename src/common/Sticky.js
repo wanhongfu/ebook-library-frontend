@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import util from 'dom-find';
+import ReactDom from 'react-dom';
+import { findPosRelativeToViewport } from '../utils';
 
 class Sticky extends Component {
 
@@ -47,7 +48,7 @@ class Sticky extends Component {
     }
 
     checkPositions = () => {
-        var pos = util.findPosRelativeToViewport(ReactDOM.findDOMNode(this));
+        var pos = findPosRelativeToViewport(ReactDom.findDOMNode(this));
 
         if (pos[1]<=this.props.offsetTop){
             this.setState({fix: true});
