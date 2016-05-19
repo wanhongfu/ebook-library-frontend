@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { NavigationMoreVert, ActionDelete, ImageEdit } from 'material-ui/lib/svg-icons';
+import { NavigationMoreVert, ActionDelete, ImageEdit, FileFileUpload } from 'material-ui/lib/svg-icons';
 import {
     Table, TableHeaderColumn, TableRow, TableHeader, TableRowColumn,
     TableBody, TableFooter, IconButton, IconMenu, MenuItem
@@ -19,6 +19,7 @@ class BookListView extends Component {
         onViewBookDetailPopup   : PropTypes.func,
         onEditBook              : PropTypes.func,
         onDeleteBook            : PropTypes.func,
+        onUploadBookIcon        : PropTypes.func,
 
         onPageChanged   : PropTypes.func,
         currentPage     : PropTypes.number,
@@ -48,7 +49,7 @@ class BookListView extends Component {
     }
 
     renderBookActionMenus(book) {
-        const {onViewBookDetail, onViewBookDetailPopup, onEditBook, onDeleteBook} = this.props;
+        const {onViewBookDetail, onViewBookDetailPopup, onEditBook, onDeleteBook, onUploadBookIcon} = this.props;
         return (
             <IconMenu
                 iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
@@ -57,9 +58,10 @@ class BookListView extends Component {
             >
                 {this.renderBookActionMenuItem('详细信息', book, false, onViewBookDetail.bind(this, book.id))}
                 {this.renderBookActionMenuItem('详细信息(Popup)', book, false, onViewBookDetailPopup.bind(this, book))}
-                {this.renderBookActionMenuItem('借阅', book, true, ()=>{})}
+                {/*this.renderBookActionMenuItem('借阅', book, true, ()=>{})*/}
                 {this.renderBookActionMenuItem('修改', book, true, onEditBook.bind(this, book), <ImageEdit />)}
                 {this.renderBookActionMenuItem('删除', book, true, onDeleteBook.bind(this, book), <ActionDelete />)}
+                {this.renderBookActionMenuItem('上传封面', book, true, onUploadBookIcon.bind(this, book), <FileFileUpload />)}
             </IconMenu>
         );
     }

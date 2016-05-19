@@ -12,7 +12,8 @@ import ListView from '../components/ListView';
 import GridView from '../components/GridView';
 import DetailPopupView from '../components/DetailPopupView';
 import DetailEditorView from '../components/DetailEditorView';
-import { fetchBooks, saveBook, resetSaveBookState, deleteBook } from '../actions';
+import BookImgUploadPopupView from '../components/BookImgUploadPopupView';
+import { fetchBooks, saveBook, resetSaveBookState, deleteBook, uploadBookImg } from '../actions';
 
 //TODO refactor this method to a common place for reuse
 function mkPaginationAndSoreQueryParam2(page, size, sort=null) {
@@ -35,7 +36,7 @@ function mkPaginationAndSoreQueryParam(page, sort=null) {
     editBookState   : state.editBook,
     authcState      : state.authc,
 }), {
-    fetchBooks, saveBook, deleteBook, resetSaveBookState, reset
+    fetchBooks, saveBook, deleteBook, resetSaveBookState, uploadBookImg, reset
 })
 class List extends Component {
 
@@ -48,7 +49,8 @@ class List extends Component {
         showDetailPopup : false,
         showEditorPopup : false,
         showDelConfirm  : false,
-        currentBook     : null
+        showUploadBookImgPopup : false,
+        currentBook         : null
     }
 
     componentDidMount() {
@@ -56,10 +58,10 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { savedSuccess, deletedSuccess } = nextProps.editBookState;
-        const { showEditorPopup, showDelConfirm } = this.state;
+        const { savedSuccess, deletedSuccess, uploadBookImgSuccess } = nextProps.editBookState;
+        const { showEditorPopup, showDelConfirm, showUploadBookImgPopup } = this.state;
 
-        if(savedSuccess || deletedSuccess) {
+        if(savedSuccess || deletedSuccess || uploadBookImgSuccess) {
             if(showEditorPopup || showDelConfirm){
                 const { currentPage } = this.props.listBooksState
                 this.props.fetchBooks(mkPaginationAndSoreQueryParam2(currentPage, 5, 'title'));
@@ -68,10 +70,15 @@ class List extends Component {
             this.setState({
                 showEditorPopup : false,
                 showDelConfirm  : false,
+                showUploadBookImgPopup : false,
                 currentBook     : null
             });
         }
     }
+
+    //=============================
+    // View book event handler
+    //=============================
 
     handleViewDetailAction = (bookId) => {
         //this.props.history.push(`/books/${bookId}`);//for react-router v1.0.x, deprecated in v2.0.0
@@ -85,6 +92,61 @@ class List extends Component {
         });
     }
 
+    handleDetailPopupOkAction = (book) => {
+        this.setState({
+            showDetailPopup : false,
+            currentBook     : null
+        });
+    }
+
+    //=============================
+    // Upload book Icon event handler
+    //=============================
+
+    handlePopupBookImgAction = (book) => {
+        this.setState({
+            showUploadBookImgPopup : true,
+            currentBook         : book
+        });
+    }
+
+    handleCancelUploadBookImgAction = () => {
+        this.props.reset('edit-book-upload-icon');
+        this.setState({
+            showUploadBookImgPopup : false,
+            currentBook         : null
+        });
+    }
+
+    handleSubmitUploadBookImgAction = (uploadForm) => {
+
+        let form_data = new FormData();
+        Object.keys(uploadForm).forEach((key) => {
+            if (uploadForm[key] instanceof FileList) {
+                form_data.append('icon', uploadForm[key][0], uploadForm[key][0].name);
+            } else {
+                form_data.append('icon', uploadForm[key]);
+            }
+        });
+
+
+        // let formData = new FormData();
+        // if (uploadForm.icon && uploadForm.icon instanceof FileList) {
+        //     //Array.from(uploadForm.icon).map(file => formData.append('icon', file));
+        //     formData.append('icon', uploadForm.icon[0])
+        // }
+        const { currentBook } = this.state;
+        this.props.uploadBookImg(currentBook.id, form_data);
+    }
+
+    handleUploadBookImgOkAction = () => {
+        this.refs.uploadBookImgFormRef.submit();
+    }
+
+    //=============================
+    // Edit/Create book event handler
+    //=============================
+
     handleAddAction = () => {
         this.setState({
             showEditorPopup : true,
@@ -96,34 +158,6 @@ class List extends Component {
         this.setState({
             showEditorPopup : true,
             currentBook     : book
-        });
-    }
-
-    handleDeleteAction = (book) => {
-        this.setState({
-            showDelConfirm  : true,
-            currentBook     : book
-        });
-    }
-
-    handleCancelDeletionAction = () => {
-        this.setState({
-            showDelConfirm  : false,
-            currentBook     : null
-        });
-    }
-
-    handleSubmitDeletionAction = () => {
-        const { currentBook } = this.state;
-        if(currentBook) {
-            this.props.deleteBook(currentBook);
-        }
-    }
-
-    handleDetailPopupOkAction = (book) => {
-        this.setState({
-            showDetailPopup : false,
-            currentBook     : null
         });
     }
 
@@ -148,13 +182,38 @@ class List extends Component {
         this.props.saveBook(bookForm);
     }
 
-    handPageChanged = (page) => {
-        this.props.fetchBooks(mkPaginationAndSoreQueryParam2(page, 5, 'title'));
-    }
-
     resetEditBookStateAndEditorForm = () => {
         this.props.resetSaveBookState();
         this.props.reset('edit-book-form');
+    }
+
+    //=============================
+    // Delete book event handler
+    //=============================
+
+    handleDeleteAction = (book) => {
+        this.setState({
+            showDelConfirm  : true,
+            currentBook     : book
+        });
+    }
+
+    handleCancelDeletionAction = () => {
+        this.setState({
+            showDelConfirm  : false,
+            currentBook     : null
+        });
+    }
+
+    handleSubmitDeletionAction = () => {
+        const { currentBook } = this.state;
+        if(currentBook) {
+            this.props.deleteBook(currentBook);
+        }
+    }
+
+    handPageChanged = (page) => {
+        this.props.fetchBooks(mkPaginationAndSoreQueryParam2(page, 5, 'title'));
     }
 
     changeViewType = () => {
@@ -213,7 +272,13 @@ class List extends Component {
             onViewBookDetail        : this.handleViewDetailAction,
             onViewBookDetailPopup   : this.handleViewDetailPopupAction,
             onEditBook              : this.handleEditAction,
-            onDeleteBook            : this.handleDeleteAction
+            onDeleteBook            : this.handleDeleteAction,
+            onUploadBookIcon        : this.handlePopupBookImgAction,
+
+            onPageChanged   :   this.handPageChanged,
+            pageSize        :   pageSize,
+            currentPage     :   currentPage,
+            totalRecNum     :   totalRecNum
         };
 
         return 'list' === this.state.viewType ?
@@ -285,6 +350,17 @@ class List extends Component {
                 />);
     }
 
+    renderUploadBookImgPopup() {
+        const { currentBook, showUploadBookImgPopup } = this.state;
+        return <BookImgUploadPopupView
+                    ref       = 'uploadBookImgFormRef'
+                    open      = {showUploadBookImgPopup}
+                    onCancel  = {this.handleCancelUploadBookImgAction}
+                    onSubmit  = {this.handleSubmitUploadBookImgAction}
+                    onOk      = {this.handleUploadBookImgOkAction}
+                />;
+    }
+
     renderMsg() {
         let ackMsg = null;
         const { editBookState: { savedSuccess, deletedSuccess, error } } = this.props;
@@ -314,6 +390,7 @@ class List extends Component {
                 {this.renderDetailPopup()}
                 {this.renderDetailEditorPopup()}
                 {this.renderDeleteConfirm()}
+                {this.renderUploadBookImgPopup()}
                 {this.renderToolbar()}
                 {this.renderDataList()}
 

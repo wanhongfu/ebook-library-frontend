@@ -44,6 +44,16 @@ export default class ApiClient {
         });
     }
 
+    postForUploadFile(requestUrl, payload = {}, params = {}) {
+        return this.request({
+            url: requestUrl,
+            method: 'post',
+            body: payload,
+            contentType: 'multipart/form-data',
+            params
+        });
+    }
+
     delete(requestUrl, params = {}) {
         return this.request({
             url: requestUrl,
@@ -52,26 +62,30 @@ export default class ApiClient {
         });
     }
 
-    request({ url, method, params = {}, body }) {
+    request({ url, method, params = {}, body, contentType }) {
         //if (this.authToken) {
         //    /* eslint-disable */
         //    params.token = this.authToken;
         //    /* eslint-enable */
         //}
+        const JSON_CONTENT_TYPE = 'application/json'
+        contentType = contentType || JSON_CONTENT_TYPE;
         const paramUndefined = params === undefined || params === null;
 
         const urlWithQuery = paramUndefined ? `${url}` : `${url}?${queryString.stringify(params)}`;
 
-        const init = {
-            method,
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
+        let headers  = {
+            'Accept': 'application/json'
         };
-
+        if(contentType === JSON_CONTENT_TYPE) {
+            headers = {
+                ...headers,
+                'Content-Type': JSON_CONTENT_TYPE
+            }
+        }
+        const init = { method, headers: headers };
         if (method !== 'get' && method !== 'head') {
-            init.body = JSON.stringify(body);
+            init.body = (contentType === JSON_CONTENT_TYPE) ? JSON.stringify(body) : body;
         }
 
         return fetch(`${this.prefix}/${urlWithQuery}`, init)

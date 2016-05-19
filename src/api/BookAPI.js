@@ -21,4 +21,8 @@ export default class BookAPI extends Base {
     delete(id, token) {
         return this.apiClient.delete(`api/books/${id}`, {token: token});
     }
+
+    uploadBookImg(id, token, formData) {
+        return this.apiClient.postForUploadFile(`api/books/${id}/icon`, formData, {token: token});
+    }
 }

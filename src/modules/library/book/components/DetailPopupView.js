@@ -2,10 +2,13 @@ import React, { Component, PropTypes } from 'react';
 
 import {Dialog, RaisedButton, TextField, Paper} from 'material-ui';
 
+import config from '../../../../config';
+
 const BookDetailPopup = (props) => {
 
     const { book, onOk, open } = props;
     const c = { fullWidth: true, disabled: true }
+    const imgURL = book ? `${config.baseUrl}/api/books/${book.id}/icon` : '';
 
     return (
         <Dialog actions={<RaisedButton label="确定" primary={true} onTouchTap={onOk} />}
@@ -19,6 +22,7 @@ const BookDetailPopup = (props) => {
                         <TextField floatingLabelText="书名"    defaultValue={book.title} {...c} />
                         <TextField floatingLabelText="豆瓣连接" defaultValue={book.url} {...c} />
                         <TextField floatingLabelText="上传日期" defaultValue={book.onboardDate} {...c} />
+                        <label value="图书封面:"/><img src={imgURL} width={`100px`} height={`100px`}/>
                     </Paper> : <div />
             }
         </Dialog>

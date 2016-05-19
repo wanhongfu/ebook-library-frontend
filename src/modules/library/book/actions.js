@@ -97,6 +97,24 @@ export function resetSaveBookState() {
     }
 }
 
+export const UPLOAD_BOOK_IMG_SUCCESS    = 'library/book/img/upload/success';
+export const UPLOAD_BOOK_IMG_FAILURE    = 'library/book/img/upload/failure';
+export function uploadBookImg(bookId, formData) {
+    return (dispatch) => {
+        const _token = sessionStorage.getItem('token') || '';
+        if(_token.length <= 0) return;
+
+        api.books.uploadBookImg(bookId, _token, formData).then(response => {
+            dispatch({type: UPLOAD_BOOK_IMG_SUCCESS});
+        }).catch(error => {
+            dispatch({type: UPLOAD_BOOK_IMG_FAILURE, payload: { error }});
+        });
+    }
+}
+
+//=============================
+// internal use functions
+//=============================
 function mkSaveBookResetAction() {
     return {
         type: UPDATE_BOOK_STATE_RESET

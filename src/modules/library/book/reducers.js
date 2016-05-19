@@ -3,7 +3,8 @@ import { createReducer } from '../../../utils';
 import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST, FETCH_BOOKS_FAILURE,
          FETCH_BOOK_SUCCESS, FETCH_BOOK_FAILURE, FETCH_BOOK_STATE_RESET,
          SAVE_BOOK_SUCCESS, SAVE_BOOK_FAILURE, UPDATE_BOOK_STATE_RESET,
-         DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE
+         DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE,
+         UPLOAD_BOOK_IMG_FAILURE, UPLOAD_BOOK_IMG_SUCCESS
 } from './actions';
 
 //==================== Reducer for fetching booksReducer ====================
@@ -61,7 +62,8 @@ const viewBookReducer = createReducer(viewBookInitState, {
 const editleBookInitState = {
     error          : null,
     savedSuccess   : false,
-    deletedSuccess : false
+    deletedSuccess : false,
+    uploadBookImgSuccess    : false
 }
 
 const editBookReducer = createReducer(editleBookInitState, {
@@ -80,6 +82,12 @@ const editBookReducer = createReducer(editleBookInitState, {
     },
     [UPDATE_BOOK_STATE_RESET]: (state) => {
         return { ...state, savedSuccess: false, deletedSuccess: false, error: null };
+    },
+    [UPLOAD_BOOK_IMG_SUCCESS]: (state) => {
+        return { ...state, uploadBookImgSuccess: true, error: null };
+    },
+    [UPLOAD_BOOK_IMG_FAILURE]: (state, payload) => {
+        return { ...state, uploadBookImgSuccess: false, error: payload.error };
     }
 });
 
