@@ -81,6 +81,7 @@ class LoginPopupView extends Component {
 
         const {inputUsernameErrorMsg, inputPasswordErrorMsg, serverError} = this.state;
 
+
         return (
             <div>
                 <Dialog
@@ -119,3 +120,4 @@ class LoginPopupView extends Component {
 LoginPopupView.propTypes = propTypes;
 
 export default LoginPopupView;
+

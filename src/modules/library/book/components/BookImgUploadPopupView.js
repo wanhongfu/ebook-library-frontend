@@ -25,7 +25,35 @@ class BookImgUploadPopupView extends Component {
         open: false
     }
 
+    state = {
+        previewUrl: undefined
+    }
+
+    onDrop = (e) => {
+        e.preventDefault();
+        const droppedFiles = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+        const max = Math.min(droppedFiles.length, 1);
+        for (let i = 0; i < max; i++) {
+            const file = droppedFiles[i];
+            this.setState({previewUrl: window.URL.createObjectURL(file)});
+            break;
+        }
+    }
+
+    handleUploadZoneClick = (e) => {
+        this.fileInputEl.click();
+    }
+
     render() {
+
+        const uploadZoneStyle = {
+            width: 200,
+            height: 200,
+            borderWidth: 2,
+            borderColor: '#666',
+            borderStyle: 'dashed',
+            borderRadius: 5
+        };
 
         const { fields: { icon }, onOk, onCancel, open } = this.props;
 
@@ -54,14 +82,27 @@ class BookImgUploadPopupView extends Component {
                 onRequestClose={onCancel}
             >
                 <form onSubmit={onOk} encType="multipart/form-data">
-                    <TextField
+                    <input
+                        accept="image/*"
                         type="file"
-                        fullWidth={true}
-                        errorText={icon.touched && icon.error ? icon.error : ''}
                         {...icon}
+                        onChange={this.onDrop}
+                        ref={el => this.fileInputEl = el}
                         value={null}
                     />
+
+                    <div
+                        style={uploadZoneStyle}
+                        onClick={this.handleUploadZoneClick}
+                    >
+                        { this.state.previewUrl ? (<p><img src={this.state.previewUrl} width={`200px`} height={`200px`} /></p>) : null }
+
+                    </div>
+
+                    {icon.touched && icon.error ? icon.error : ''}
+
                 </form>
+
             </Dialog>
         );
     }

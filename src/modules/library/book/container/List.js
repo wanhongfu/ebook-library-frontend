@@ -4,7 +4,7 @@ import {reset} from 'redux-form';
 import _ from 'lodash';
 
 import { ContentAdd, ActionList, ActionViewModule } from 'material-ui/lib/svg-icons';
-import { IconButton, Snackbar, RaisedButton } from 'material-ui';
+import { IconButton, Snackbar } from 'material-ui';
 
 import Common from '../../../../common';
 
@@ -120,23 +120,16 @@ class List extends Component {
 
     handleSubmitUploadBookImgAction = (uploadForm) => {
 
-        let form_data = new FormData();
-        Object.keys(uploadForm).forEach((key) => {
+        let formData = new FormData();
+        _.keys(uploadForm).forEach((key) => {
             if (uploadForm[key] instanceof FileList) {
-                form_data.append('icon', uploadForm[key][0], uploadForm[key][0].name);
+                formData.append('icon', uploadForm[key][0], uploadForm[key][0].name);
             } else {
-                form_data.append('icon', uploadForm[key]);
+                formData.append('icon', uploadForm[key]);
             }
         });
-
-
-        // let formData = new FormData();
-        // if (uploadForm.icon && uploadForm.icon instanceof FileList) {
-        //     //Array.from(uploadForm.icon).map(file => formData.append('icon', file));
-        //     formData.append('icon', uploadForm.icon[0])
-        // }
         const { currentBook } = this.state;
-        this.props.uploadBookImg(currentBook.id, form_data);
+        this.props.uploadBookImg(currentBook.id, formData);
     }
 
     handleUploadBookImgOkAction = () => {

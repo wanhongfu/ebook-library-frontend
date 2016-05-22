@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch';
 import queryString from 'query-string';
-import Promise     from 'bluebird';
 
 import { parseJSON, checkHttpStatus } from '../utils';
 

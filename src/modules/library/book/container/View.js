@@ -43,7 +43,7 @@ class View extends Component {
             <div>
                 {this.renderToolbar()}
                 <Common.FineContentDiv>
-                    {book ? <DetailView readonly={true} book={book} onBackClick={this.handBackAction} /> : null }
+                    {book ? <DetailView readonly={true} book={book} onBackClick={this.handBackAction} /> : <Common.Loading /> }
                 </Common.FineContentDiv>
             </div>
         );
