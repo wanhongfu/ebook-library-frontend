@@ -12,15 +12,18 @@ export function fetchBooks({page, size, sort}) {
 
         api.books.list({page, size, sort})
             .then(response => {
-                dispatch({
-                    type    : FETCH_BOOKS_SUCCESS,
-                    payload : {
-                        datalist    : response.content,
-                        currentPage : response.number+1,
-                        totalRecNum : response.totalElements,
-                        pageSize    : response.size
-                    }
-                })
+
+                setTimeout(() => {//simulate the data loading is very slow
+                    dispatch({
+                        type    : FETCH_BOOKS_SUCCESS,
+                        payload : {
+                            datalist    : response.content,
+                            currentPage : response.number+1,
+                            totalRecNum : response.totalElements,
+                            pageSize    : response.size
+                        }
+                    })
+                }, 2000);
             }).catch(error => {
                 dispatch({
                     type    : FETCH_BOOKS_FAILURE,

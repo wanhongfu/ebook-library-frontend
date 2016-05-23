@@ -29,7 +29,7 @@ class BookListView extends Component {
 
     static defaultProps = {
         isAuthenticated : false,
-        fetching        : true
+        fetching        : false
     }
 
     constructor(props) {
@@ -67,8 +67,7 @@ class BookListView extends Component {
     }
 
     renderBodyRows() {
-        if(this.props.fetching) return <Common.Loading />;
-
+        if(this.props.fetching) return this.renderLoading();
         const rowStyle = {width: `30%`, textAlign: 'left'};
         const rowContent = this.props.books.map(book => (
             <TableRow key={book.id}>
@@ -86,6 +85,18 @@ class BookListView extends Component {
         return (
             <TableBody displayRowCheckbox={false}>
                 {rowContent}
+            </TableBody>
+        );
+    }
+
+    renderLoading() {
+        return (
+            <TableBody displayRowCheckbox={false}>
+                <TableRow>
+                    <TableRowColumn colSpan="7">
+                        <Common.Loading />
+                    </TableRowColumn>
+                </TableRow>
             </TableBody>
         );
     }

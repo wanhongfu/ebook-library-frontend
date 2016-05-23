@@ -44,6 +44,7 @@ class LoginPopupView extends Component {
         }
 
         if(errHit) {
+            
             this.setState({
                 inputUsernameErrorMsg: usernameErrMsg,
                 inputPasswordErrorMsg: passwordErrMsg

@@ -17,6 +17,7 @@ class GridView extends Component {
         onEditBook              : PropTypes.func,
         onDeleteBook            : PropTypes.func,
         onUploadBookIcon        : PropTypes.func,
+        fetching                : PropTypes.bool,
 
         onPageChanged   : PropTypes.func,
         currentPage     : PropTypes.number,
@@ -65,14 +66,12 @@ class GridView extends Component {
         );
     }
 
-    render() {
-
+    renderContent() {
         const styles = {
             gridList: {
                 margin: 20,
             }
         };
-
         return (
             <div>
                 <div>
@@ -102,8 +101,11 @@ class GridView extends Component {
                     />
                 </div>
             </div>
-
         );
+    }
+
+    render() {
+        return this.props.fetching ? <Common.Loading /> : this.renderContent();
     }
 
 }

@@ -268,6 +268,7 @@ class List extends Component {
             onDeleteBook            : this.handleDeleteAction,
             onUploadBookIcon        : this.handlePopupBookImgAction,
 
+            fetching        :   fetching,
             onPageChanged   :   this.handPageChanged,
             pageSize        :   pageSize,
             currentPage     :   currentPage,
@@ -275,17 +276,8 @@ class List extends Component {
         };
 
         return 'list' === this.state.viewType ?
-               ( <GridView {...viewProps} /> ) :
-               (
-                   <ListView
-                           onPageChanged = {this.handPageChanged}
-                           pageSize      = {pageSize}
-                           fetching      = {fetching}
-                           currentPage   = {currentPage}
-                           totalRecNum   = {totalRecNum}
-                           {...viewProps}
-                    />
-               );
+               <GridView {...viewProps} /> :
+               <ListView {...viewProps} /> ;
 
     }
 
