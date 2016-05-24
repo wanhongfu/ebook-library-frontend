@@ -23,7 +23,7 @@ export function fetchBooks({page, size, sort}) {
                             pageSize    : response.size
                         }
                     })
-                }, 2000);
+                }, 1000);
             }).catch(error => {
                 dispatch({
                     type    : FETCH_BOOKS_FAILURE,

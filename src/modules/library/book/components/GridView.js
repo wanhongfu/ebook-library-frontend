@@ -72,6 +72,7 @@ class GridView extends Component {
                 margin: 20,
             }
         };
+        const tag = new Date().getMilliseconds();
         return (
             <div>
                 <div>
@@ -87,7 +88,7 @@ class GridView extends Component {
                                 subtitle    =   {<span>{book.owner.name} 发布于 <b>{book.onboardDate}</b></span>}
                                 actionIcon  =   { this.renderIconMenu(book)}
                             >
-                                <img width="200" height="300" src={`${config.baseUrl}/api/books/${book.id}/icon`}/>
+                                <img width="200" height="300" src={`${config.baseUrl}/api/books/${book.id}/icon?_${tag}`}/>
                             </GridTile>
                         ))}
                     </GridList>
